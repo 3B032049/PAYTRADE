@@ -15,7 +15,7 @@ echo "
 <br>
 <table align=center border=1 >
 <td>
-<form method='post' name='register' action='register.php' onsubmit='return validateForm()'>
+<form method='post' name='register' action='register.php' enctype=multipart/form-data accept-charset=UTF-8>
 使用者帳號:<input type='text' name='account' placeholder='請輸入您的帳號' required><br>
 使用者密碼:<input type='password' id=password name='password' value='" . (isset($_POST['password']) ? htmlspecialchars($_POST['password']) : '') . "' placeholder='請輸入密碼' required>";
 echo "<input type='checkbox' id='showpassword'>顯示密碼<br>";
@@ -61,7 +61,7 @@ echo "
             $birthday = $_POST['birthday'];
             $birthday = mysqli_real_escape_string($link,$birthday);
             $status='0';
-            $authority = '3';
+            $authority = '5';
         
            
             //$date = date("Y-m-d");

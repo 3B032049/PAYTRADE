@@ -35,7 +35,7 @@
    session_start();
    if (isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 
    {
-    $link = @mysqli_connect('localhost', 'root', 'A@asdfgh123', 'project');
+    $link = @mysqli_connect('localhost:33060', 'root', 'root', 'booktrades');
     mysqli_query($link, 'SET CHARACTER SET utf8');
     $sendemail = $_POST['email'];
     $sendemail = mysqli_real_escape_string($link,$sendemail);
@@ -54,14 +54,14 @@
     $mail->From = "$sendemail";
     $mail->Subject = "密碼重設信";
     $linkText = "點擊這裡";
-    $url = "http://localhost:8080/reset.php";
+    $url = "http://localhost:8000/reset.php";
     $mail->Body = "請"."<a href='$url'>$linkText</a>"."來重設密碼";
     $mail->IsHTML(true);
     $mail->AddAddress("$sendemail");
 
     
 
-    $sql = "SELECT * FROM `user` WHERE account=? AND email=?";
+    $sql = "SELECT * FROM `users` WHERE account=? AND email=?";
     $stmt = mysqli_prepare($link, $sql);
 
     if ($stmt) 

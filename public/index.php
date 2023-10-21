@@ -44,7 +44,7 @@
                 ?>
                
             </li>
-            <li class="nav-item"><a href="mailto:3b032007@gm.student.ncut.edu.tw@gmail.com" style="color: black;">聯絡我們</a></li>
+            <li class="nav-item"><a href="mailto:3b032007@gm.student.ncut.edu.tw" style="color: black;">聯絡我們</a></li>
             
             <li class="nav-item"><a href='announce.php' style="color: black;">最新公告</a></li>
 

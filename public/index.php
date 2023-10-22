@@ -18,7 +18,7 @@
 
                     if (isset($_SESSION["login_session"])) 
                     {
-                        $accoumt=_SESSION["account"];
+                        $accoumt=$_SESSION["account"];
                         if ($_SESSION["login_session"] != true) 
                         {
                             echo "<li class='nav-item'><a href='login.php' style='color:black'>登入</a></li>";
@@ -28,6 +28,7 @@
                             if ($_SESSION["manager_login_session"] != true )
                             {
                                 echo "<li class='nav-item'><a href='user.php' style='color: black'>會員</a></li>";
+                                echo "<li class='nav-item'><a href='reset_user.php' style='color: black'>個人資料</a></li>";
                                 echo "<li class='nav-item'>$account<a href='logout.php' style='color: black'>登出</a></li>";
                             }
                             else

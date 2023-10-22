@@ -111,7 +111,7 @@ echo "
                                     if ($stmt2)
                                     {
                                         // 綁定參數
-                                        mysqli_stmt_bind_param($stmt2, "ssssssssss", $account, $password,$name,$sex,$phone,$email,$address $birthday, $status,$authority);
+                                        mysqli_stmt_bind_param($stmt2, "ssssssssss", $account, $password,$name,$sex,$phone,$email,$address,$birthday, $status,$authority);
         
                                         // 執行新增使用者
                                         mysqli_stmt_execute($stmt2);

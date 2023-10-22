@@ -76,6 +76,7 @@ session_start();
                            if($row['authority']=='1' || $row['authority']=='2')
                            {
                             $_SESSION["login_session"] = true;
+                            $_SESSION["account"]=$account;
                             $_SESSION["authority"] = '1';
                             $_SESSION["manager_login_session"] = true;
                            }

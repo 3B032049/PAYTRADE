@@ -7,6 +7,7 @@ body{
     background-color: #e5cf261a;
     line-height: 1.7;
     color:#333;
+    height: auto;
 }
 
 img{
@@ -19,14 +20,14 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 5%;
+    height: 10%;
     background-color: rgba(210, 133, 85, 0.5); /* 使用rgba色彩以實現背景半透明 */
     color: rgb(182, 147, 98);
     padding: 5px;
     text-align: center;
     z-index: 1000;
 }
-page-header {
+.page-header {
     text-align: center;
     background-color: #e0ba14; /* 設置背景顏色 */
 
@@ -111,32 +112,19 @@ td
     max-height: 500px;
 }
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    height: 10%;
     width: 100%;
-    height: 5%;
     color: black;
     padding: 5px;
-    text-align: center;
-    z-index: 1000;
-    opacity: 0.5;
-}
-.wrapper {
-    display: flex;
-    flex-wrap: wrap; /* 如果內容太多，則允許折行 */
-    justify-content: space-between; /* 元素之間的空間平均分配 */
-    align-items: center; /* 垂直居中對齊元素 */
-}
-#location {
-    padding: 4%;
-    display: flex;
 }
 
+#location {
+    display: flex;
+}
 
 .location-info {
     width: 22%;
-    flex:1;
+    flex: 1;
 }
 
 .location-info p {
@@ -145,12 +133,13 @@ footer {
 
 .location-map {
     width: 30%;
-    flex:1;
+    flex: 1;
 }
 
 iframe {
     width: 100%;
 }
+
 
 
 

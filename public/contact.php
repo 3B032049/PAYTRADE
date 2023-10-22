@@ -31,9 +31,9 @@
     mysqli_query($link, 'SET CHARACTER SET utf8');
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
-    require_once('C:/xampp/htdocs/PHPMailer-master/src/PHPMailer.php');
-    require_once('C:/xampp/htdocs/PHPMailer-master/src/Exception.php');
-    require_once('C:/xampp/htdocs/PHPMailer-master/src/SMTP.php');
+    require_once('C:/wagon/uwamp/www/PHPMailer-master/src/PHPMailer.php');
+    require_once('C:/wagon/uwamp/www/PHPMailer-master/src/Exception.php');
+    require_once('C:/wagon/uwamp/www/PHPMailer-master/src/SMTP.php');
    session_start();
    if (isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 
    {
@@ -50,8 +50,8 @@
     $mail->SMTPSecure = "ssl";
     $mail->Port = 465;
     $mail->CharSet = "utf-8";
-    $mail->Username = "antory040512@gmail.com";
-    $mail->Password = "jnnzsqlrjcweoqgy";
+    $mail->Username = "paytrade2000@gmail.com";
+    $mail->Password = "fvhijqpbhudhquer";
     $mail->From = "$sendemail";
     $mail->Subject = "密碼重設信";
     $linkText = "點擊這裡";

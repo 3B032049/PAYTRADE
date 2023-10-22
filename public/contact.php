@@ -27,6 +27,8 @@
 </td>
 </table>
     <?php
+    $link = @mysqli_connect('localhost:33060', 'root', 'root', 'booktrades');
+    mysqli_query($link, 'SET CHARACTER SET utf8');
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
     require_once('C:/xampp/htdocs/PHPMailer-master/src/PHPMailer.php');
@@ -35,8 +37,7 @@
    session_start();
    if (isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 
    {
-    $link = @mysqli_connect('localhost:33060', 'root', 'root', 'booktrades');
-    mysqli_query($link, 'SET CHARACTER SET utf8');
+    
     $sendemail = $_POST['email'];
     $sendemail = mysqli_real_escape_string($link,$sendemail);
     $account = $_POST['name'];

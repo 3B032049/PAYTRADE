@@ -105,20 +105,20 @@ echo "
                                 else 
                                 {
                                     // 電話號碼符合格式，執行相應的處理
-                                    $sql_insert = "INSERT INTO `users` (account, password,name,sex,birthday,phone,address, email,status,authority) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?)";
+                                    $sql_insert = "INSERT INTO `users` (account, password,name,sex,phone,email,address,birthday ,status,authority) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?)";
                                     $stmt2 = mysqli_prepare($link, $sql_insert);
         
                                     if ($stmt2)
                                     {
                                         // 綁定參數
-                                        mysqli_stmt_bind_param($stmt2, "ssssssssss", $account, $password,$name,$sex,$birthday,$phone,$email, $birthday, $status,$authority);
+                                        mysqli_stmt_bind_param($stmt2, "ssssssssss", $account, $password,$name,$sex,$phone,$email,$address $birthday, $status,$authority);
         
                                         // 執行新增使用者
                                         mysqli_stmt_execute($stmt2);
         
                                         if (mysqli_affected_rows($link) > 0)
                                         {
-                                            echo "<script>alert('新增成功')</script>";
+                                            echo "<script>alert('註冊成功')</script>";
                                             header('Refresh:1,login.php');
                                         }
                                     }

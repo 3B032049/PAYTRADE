@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
+//首頁
 Route::get('/', function () {
     return view ('index');
 });
+
+//登入
+Route::get('login', [App\Http\Controllers\LoginController::class, 'index'])->name('login.index');

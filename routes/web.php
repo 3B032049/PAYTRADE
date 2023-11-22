@@ -20,3 +20,6 @@ Route::get('/', function () {
 
 //登入
 Route::get('login', [App\Http\Controllers\LoginController::class, 'index'])->name('login.index');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

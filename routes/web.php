@@ -13,13 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//首頁
-Route::get('/', function () {
-    return view ('index');
-});
+#首頁
+//Route::get('/', function () {
+//    return view ('index');
+//});
 
+Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
+
+//Route::get('/', [App\Livewire\Shopping\Index::class,'render'])->name('livewire.shopping.index');
 //登入
-Route::get('login', [App\Http\Controllers\LoginController::class, 'index'])->name('login.index');
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

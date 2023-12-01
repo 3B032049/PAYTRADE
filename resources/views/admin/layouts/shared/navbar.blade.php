@@ -18,12 +18,19 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Settings</a></li>
-                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                 <li>
-                    <hr class="dropdown-divider"/>
+                    <ul class="dropdown-toggle">{{ Auth::user()->name }}</ul>
+                    <ul class="dropdown-content">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            {{ __('登出') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </ul>
                 </li>
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
             </ul>
         </li>
     </ul>

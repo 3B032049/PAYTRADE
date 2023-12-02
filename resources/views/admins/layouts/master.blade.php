@@ -12,17 +12,17 @@
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
-    @include('admin.layouts.shared.navbar')
-    <div id="layoutSidenav">
-        @include('admin.layouts.shared.sidenav')
-        <div id="layoutSidenav_content">
-            <main>
-                @yield('page-content')
-            </main>
-            @include('admin.layouts.shared.footer')
-        </div>
+@include('admins.layouts.shared.navbar')
+<div id="layoutSidenav">
+    @include('admins.layouts.shared.sidenav')
+    <div id="layoutSidenav_content">
+        <main>
+            @yield('page-content')
+        </main>
+        @include('admins.layouts.shared.footer')
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/admin-scripts.js') }}"></script>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('js/admin-scripts.js') }}"></script>
 </body>
 </html>

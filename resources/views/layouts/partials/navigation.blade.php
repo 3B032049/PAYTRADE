@@ -28,7 +28,7 @@
                             @endif
                             @if (Auth::check() && Auth::user()->isAdmin())
                                 <li>
-                                    <a class="nav-link" href="{{ route('admin.dashboard') }}" style="color:black">{{ __('後台管理') }}</a>
+                                    <a class="nav-link" href="{{ route('admins.dashboard') }}" style="color:black">{{ __('後台管理') }}</a>
                                 </li>
                             @endif
                             <li>

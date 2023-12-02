@@ -17,7 +17,22 @@
                     <li>
                         <ul class="dropdown-toggle">{{ Auth::user()->name }}</ul>
                         <ul class="dropdown-content">
-                            <a class="dropdown-item" href="{{ route('logout') }}" 
+                            @if (Auth::check() && Auth::user()->isSeller())
+                                <li>
+                                    <a class="nav-link" href="{{ route('home') }}" style="color:black">{{ __('進入賣家後台') }}</a>
+                                </li>
+                            @else
+                                <li>
+                                    <a class="nav-link" href="{{ route('home') }}" style="color:black">{{ __('申請成為賣家') }}</a>
+                                </li>
+                            @endif
+                            @if (Auth::check() && Auth::user()->isAdmin())
+                                <li>
+                                    <a class="nav-link" href="{{ route('admin.dashboard') }}" style="color:black">{{ __('後台管理') }}</a>
+                                </li>
+                            @endif
+                            <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                             {{ __('登出') }}

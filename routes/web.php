@@ -19,7 +19,7 @@ use App\Http\Controllers\AdminHomeController;
 //    return view ('index');
 //});
 
-Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
 
 
@@ -32,5 +32,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 Auth::routes();
+
+Route::group(['middleware' => 'admin'], function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/users',[App\Http\Controllers\AdminUsersController::class,'index'])->name('users.index');
+        Route::get('/users/create',[App\Http\Controllers\AdminUsersController::class,'create'])->name('users.create');
+        Route::post('/users', [App\Http\Controllers\AdminUsersController::class, 'store'])->name("users.store");
+        Route::get('/users/{user}/edit', [App\Http\Controllers\AdminUsersController::class, 'edit'])->name("users.edit");
+        Route::patch('/users/{user}',[App\Http\Controllers\AdminUsersController::class,'update'])->name('users.update');
+        Route::delete('/users/{user}', [App\Http\Controllers\AdminUsersController::class, 'destroy'])->name("users.destroy");
+    });
+});
 
 

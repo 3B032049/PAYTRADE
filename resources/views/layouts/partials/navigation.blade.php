@@ -13,37 +13,48 @@
                     <li class="nav-item"><a href="{{ route('register') }}">{{ __('註冊') }}</a></li>
                 @endif
             @else
-                <ul class="nav-item dropdown">
-                    <li>
-                        <ul class="dropdown-toggle">{{ Auth::user()->name }}</ul>
-                        <ul class="dropdown-content">
-                            @if (Auth::check() && Auth::user()->isSeller())
-                                <li>
-                                    <a class="nav-link" href="{{ route('home') }}" style="color:black">{{ __('進入賣家後台') }}</a>
-                                </li>
-                            @else
-                                <li>
-                                    <a class="nav-link" href="{{ route('home') }}" style="color:black">{{ __('申請成為賣家') }}</a>
-                                </li>
-                            @endif
-                            @if (Auth::check() && Auth::user()->isAdmin())
-                                <li>
-                                    <a class="nav-link" href="{{ route('admins.dashboard') }}" style="color:black">{{ __('後台管理') }}</a>
-                                </li>
-                            @endif
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ Auth::user()->name }} </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        @if (Auth::check() && Auth::user()->isSeller())
                             <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
-                            {{ __('登出') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </ul>
-                    </li>
-                </ul>
+                                <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('進入賣家後台') }}</a>
+                            </li>
+                        @else
+                            <li>
+                                <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('個人資料') }}</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('申請成為賣家') }}</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('訂購清單') }}</a>
+                            </li>
+                        @endif
+                        @if (Auth::check() && Auth::user()->isAdmin())
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admins.dashboard') }}" style="color:black">{{ __('後台管理') }}</a>
+                            </li>
+                        @endif
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();" style="color:black">{{ __('登出') }}</a>
+                        </li>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </ul>
+                </li>
             @endguest
+
         </ul>
+        <a class="cart-container" href="{{ route('admins.dashboard') }}">
+            <br>購物車<br>
+        </a>
     </nav>
 </header>

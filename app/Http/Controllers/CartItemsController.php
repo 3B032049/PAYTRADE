@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\CartItem;
 use App\Http\Requests\StoreCartItemRequest;
 use App\Http\Requests\UpdateCartItemRequest;
+use Illuminate\Support\Facades\Auth;
 
-class CartItemController extends Controller
+class CartItemsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,6 +15,7 @@ class CartItemController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -30,6 +32,9 @@ class CartItemController extends Controller
     public function store(StoreCartItemRequest $request)
     {
         //
+
+        CartItem::create($request->all());
+        return redirect()->route('index');
     }
 
     /**

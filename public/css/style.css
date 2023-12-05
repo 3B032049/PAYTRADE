@@ -110,7 +110,7 @@ ul {
     background-color: #ccc;
 }
 /* 設定標題文字的顏色和字體大小 */
-h1 
+h1
 {
     color: #333;
     font-size: 24px;
@@ -126,7 +126,7 @@ table {
 }
 
 /* 設定表格中的文字大小和間距 */
-td 
+td
 {
     font-size: 16px;
     padding: 10px;
@@ -171,7 +171,10 @@ iframe {
     width: 75%;
   }
 
-
+.cart-container {
+    float: right;
+    margin-right: 40px;
+}
 
 
 

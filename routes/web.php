@@ -4,10 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminHomeController;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+
+use App\Http\Controllers\CartItemsController;
+
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AdminProductsController;
 use App\Http\Controllers\AdminPostsController;
 use App\Http\Controllers\AdminAdminsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +39,15 @@ Route::get('products/images/{filename}', function ($filename) {
 
 //登入
 Auth::routes();
+
+Route::group(['middleware' => 'user'], function () {
+    Route::get('cartItems', [App\Http\Controllers\CartItemsController::class, 'index'])->name("cart_items.index");
+    Route::get('cartItems/create', [App\Http\Controllers\CartItemsController::class, 'create'])->name("cart_items.create");
+    Route::post('cartItems', [App\Http\Controllers\CartItemsController::class, 'store'])->name("cart_items.store");
+    Route::get('cartItems/{cartItem}/edit', [App\Http\Controllers\CartItemsController::class, 'edit'])->name("cart_items.edit");
+    Route::patch('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'update'])->name("cart_items.update");
+    Route::delete('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'destroy'])->name("cart_items.destroy");
+});
 
 Route::group(['middleware' => 'admin'], function () {
     Route::prefix('admins')->name('admins.')->group(function () {

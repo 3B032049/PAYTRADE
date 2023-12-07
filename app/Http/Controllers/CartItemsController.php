@@ -6,6 +6,7 @@ use App\Models\CartItem;
 use App\Http\Requests\StoreCartItemRequest;
 use App\Http\Requests\UpdateCartItemRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
 
 class CartItemsController extends Controller
 {
@@ -29,12 +30,12 @@ class CartItemsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCartItemRequest $request)
+    public function store(StoreCartItemRequest $request,Product $product)
     {
-        //
-
-        CartItem::create($request->all());
-        return redirect()->route('index');
+        auth()->user()->CartItems()->create([
+            'product_id' => $product->id,
+        ]);
+        return redirect()->route('home');
     }
 
     /**

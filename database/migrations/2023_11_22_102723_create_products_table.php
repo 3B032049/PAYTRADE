@@ -17,8 +17,6 @@ return new class extends Migration
 //            $table->unsignedBigInteger('category_id'); //使用者編號
 //            $table->foreign('category_id')->references('id')->on('product_categories');
             $table->integer('price');
-//            $table->string('slogan')->nullable();
-//            $table->text('specs')->nullable();
             $table->integer('quantity');
             $table->text('content')->nullable();
             $table->string('image_url')->nullable();

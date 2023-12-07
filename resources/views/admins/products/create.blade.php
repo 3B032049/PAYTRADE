@@ -9,7 +9,7 @@
             <li class="breadcrumb-item active">新增書籍</li>
         </ol>
         @include('admins.layouts.shared.errors')
-        <form action="{{ route('admins.products.store') }}" method="POST" role="form">
+        <form action="{{ route('admins.products.store') }}" method="POST" role="form" enctype="multipart/form-data">
             @method('POST')
             @csrf
             <div class="form-group">

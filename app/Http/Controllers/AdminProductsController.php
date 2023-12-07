@@ -46,11 +46,6 @@ class AdminProductsController extends Controller
             // 存儲原始圖片
             Storage::disk('products')->put($imageName, file_get_contents($image));
 
-            // 製作縮略圖
-            $thumbnailPath = 'thumbnails/'.$imageName;
-            $thumbnail = Image::make($image)->resize(100, 100);
-            Storage::disk('products')->put($thumbnailPath, $thumbnail->stream());
-
             $product->image_url = $imageName;
         }
 
@@ -58,7 +53,7 @@ class AdminProductsController extends Controller
         $product->name = $request->name;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
-        $product->content = $request->content;
+        $product->content =  $request->input('content');
 
         $product->save();
 

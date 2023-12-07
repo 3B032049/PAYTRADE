@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
     use HasFactory;
+
+    protected $table = 'products';
 
     protected $fillable = [
         'name',
@@ -18,6 +21,11 @@ class Product extends Model
         'price',
         'quantity',
     ];
+
+    public function getImageUrlAttribute()
+    {
+        return $this->attributes['image_url'];
+    }
 
 
     public function ProductCategory(): BelongsTo

@@ -24,8 +24,7 @@
             @foreach($products as $product)
                 <tr>
                     <td>{{ $product->name }}</td>
-                    <td><img src="{{ route('products.image', ['filename' => $product->image_url]) }}" alt="{{ $product->name }}"></td>
-                    {{--                <td><img src="{{ $product->image_url }}" alt="{{ $product->title }}" width="100" height="100"></td>--}}
+                    <td><img src="{{ asset( 'storage/products/' . $product->image_url) }}" alt="{{ $product->name }}" height="100px" width="100px"></td>
                     <td>{{ $product->content }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->quantity }}</td>

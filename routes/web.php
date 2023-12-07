@@ -32,18 +32,13 @@ use App\Http\Controllers\AdminAdminsController;
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
 
-Route::get('products/images/{filename}', function ($filename) {
-    $path = storage_path("app/public/products/{$filename}");
-    return Image::make($path)->response();
-})->name('products.image');
-
 //登入
 Auth::routes();
 
 Route::group(['middleware' => 'user'], function () {
     Route::get('cartItems', [App\Http\Controllers\CartItemsController::class, 'index'])->name("cart_items.index");
     Route::get('cartItems/create', [App\Http\Controllers\CartItemsController::class, 'create'])->name("cart_items.create");
-    Route::post('cartItems', [App\Http\Controllers\CartItemsController::class, 'store'])->name("cart_items.store");
+    Route::post('cartItems/{product}', [App\Http\Controllers\CartItemsController::class, 'store'])->name("cart_items.store");
     Route::get('cartItems/{cartItem}/edit', [App\Http\Controllers\CartItemsController::class, 'edit'])->name("cart_items.edit");
     Route::patch('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'update'])->name("cart_items.update");
     Route::delete('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'destroy'])->name("cart_items.destroy");

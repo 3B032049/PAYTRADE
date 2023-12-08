@@ -53,8 +53,8 @@
             @endguest
 
         </ul>
-        <a class="cart-container" href="{{ route('admins.dashboard') }}">
-            <br>購物車<br>
+        <a class="cart-container" href="{{ route('cart_items.index') }}">
+            <img src="{{ asset('images/products/car.jpg') }}" width="30px" height="30px">
         </a>
     </nav>
 </header>

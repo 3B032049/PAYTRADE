@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCartItemRequest;
 use App\Http\Requests\UpdateCartItemRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use Illuminate\Support\Facades\Redirect;
 
 class CartItemsController extends Controller
 {
@@ -15,8 +16,13 @@ class CartItemsController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
 
+        $cartItems = $user->CartItems;
+        $data = [
+          'cartItems' => $cartItems,
+        ];
+        return view('cart_items.index',$data);
     }
 
     /**
@@ -34,8 +40,9 @@ class CartItemsController extends Controller
     {
         auth()->user()->CartItems()->create([
             'product_id' => $product->id,
+//            'quantity' => $request->input('quantity'),
         ]);
-        return redirect()->route('home');
+        return Redirect::back()->with('success','成功加入購物車!');
     }
 
     /**
@@ -67,6 +74,7 @@ class CartItemsController extends Controller
      */
     public function destroy(CartItem $cartItem)
     {
-        //
+        $cartItem->delete();
+        return redirect()->route('cart_items.index');
     }
 }

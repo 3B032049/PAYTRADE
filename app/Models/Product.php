@@ -22,10 +22,10 @@ class Product extends Model
         'quantity',
     ];
 
-    public function getImageUrlAttribute()
-    {
-        return $this->attributes['image_url'];
-    }
+//    public function getImageUrlAttribute()
+//    {
+//        return $this->attributes['image_url'];
+//    }
 
 
     public function ProductCategory(): BelongsTo

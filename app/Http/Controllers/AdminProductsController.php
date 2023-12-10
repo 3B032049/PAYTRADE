@@ -36,6 +36,13 @@ class AdminProductsController extends Controller
     public function store(Request $request)
     {
         // 驗證請求...
+        $this->validate($request, [
+            'name' => 'required|max:25',
+            'content' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'image_url' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
         $product = new Product;
 
@@ -70,13 +77,40 @@ class AdminProductsController extends Controller
 
     public function update(Request $request, Product $product)
     {
-//        $this->validate($request,[
-//            'title' => 'required|max:50',
-//            'content' => 'required',
-//            'is_feature' => 'required|boolean',
-//        ]);
+        $this->validate($request, [
+            'name' => 'required|max:25',
+            'content' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'image_url' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-        $product->update($request->all());
+        if ($request->hasFile('image_url')) {
+            // Delete the old image from storage
+            if ($product->image_url) {
+                Storage::disk('products')->delete($product->image_url);
+            }
+
+
+            // Upload the new image
+            $image = $request->file('image_url');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+
+            // Log the image file name
+
+            Storage::disk('products')->put($imageName, file_get_contents($image));
+
+            // Set the new image URL in the Product instance
+            $product->image_url = $imageName;
+        }
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->content = $request->input('content');
+
+        $product->save();
+
         return redirect()->route('admins.products.index');
     }
 

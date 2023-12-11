@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title','賣場')
+@section('title','二手書拍賣平台')
 
 @section('content')
 <div class="wrapper mx-auto">

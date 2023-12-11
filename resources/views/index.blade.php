@@ -7,7 +7,7 @@
 {{--    <div class="mx-2 mt-2">--}}
 {{--        <h1>賣場商品一覽</h1>--}}
 {{--    </div>--}}
-    <div class="mx-4 mt-4 grid grid-cols-4 gap-5">
+    <div class="mx-2 mt-2 grid grid-cols-4 gap-5">
         <!-- 商品列表 -->
         @foreach($products as $product)
             <div id=product-grid>

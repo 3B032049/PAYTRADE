@@ -9,7 +9,7 @@
             <li class="breadcrumb-item active">編輯書籍資料</li>
         </ol>
         @include('admins.layouts.shared.errors')
-        <form action="{{ route('admins.products.update',$product->id) }}" method="POST" role="form">
+        <form action="{{ route('admins.products.update',$product->id) }}" method="POST" role="form" enctype="multipart/form-data">
             @method('PATCH')
             @csrf
             <div class="form-group">
@@ -17,20 +17,21 @@
                 <input id="name" name="name" type="text" class="form-control" value="{{ old('name',$product->name) }}" placeholder="請輸入帳號">
             </div>
             <div class="form-group">
-                <label for="name" class="form-label">書籍圖片</label>
-                <input id="name" name="name" type="text" class="form-control" value="{{ old('name',$user->name) }}" placeholder="請輸入姓名">
+                <label for="image_url" class="form-label">書籍圖片</label>
+                <input id="image_url" name="image_url" type="file" class="form-control" value="{{ old('image_url',$product->image_url ) }}" placeholder="請選擇商品圖片" onchange="previewImage(this);">
+                <img id="image-preview" src="#" alt="圖片預覽" style="display: none; width:200px; height:200px;" >
             </div>
             <div class="form-group">
-                <label for="email" class="form-label">書籍內容</label>
-                <input id="email" name="email" type="text" class="form-control" value="{{ old('email',$user->email) }}" placeholder="請輸入信箱">
+                <label for="content" class="form-label">書籍內容</label>
+                <input id="content" name="content" type="text" class="form-control" value="{{ old('content',$product->content) }}" placeholder="請輸入內容">
             </div>
             <div class="form-group">
-                <label for="password" class="form-label">價格</label>
-                <input id="password" name="password" type="text" class="form-control" value="{{ old('password',$user->password) }}" placeholder="請輸入密碼" readonly>
+                <label for="price" class="form-label">價格</label>
+                <input id="price" name="price" type="text" class="form-control" value="{{ old('price',$product->price) }}" placeholder="請輸入價格">
             </div>
             <div class="form-group">
-                <label for="birthday" class="form-label">數量</label>
-                <input id="birthday" name="birthday" type="date" class="form-control" value="{{ old('birthday',$user->birthday) }}" placeholder="請輸入日期">
+                <label for="quantity" class="form-label">庫存</label>
+                <input id="quantity" name="quantity" type="text" class="form-control" value="{{ old('quantity',$product->quantity) }}" placeholder="請輸入數量">
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -38,4 +39,21 @@
             </div>
         </form>
     </div>
+    <script>
+        function previewImage(input) {
+            var preview = document.getElementById('image-preview');
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function () {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '#';
+                preview.style.display = 'none';
+            }
+        }
+    </script>
 @endsection

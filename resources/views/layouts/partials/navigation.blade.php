@@ -40,15 +40,25 @@
                        aria-expanded="false">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ Auth::user()->name }} </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         @if (Auth::check() && Auth::user()->isSeller())
-                            <li>
-                                <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('進入賣家後台') }}</a>
-                            </li>
+                            @if(Auth::User()->Seller->status=='1')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('進入賣家後台') }}</a>
+                                </li>
+                            @elseif(Auth::User()->Seller->status=='2')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('申請失敗') }}</a>
+                                </li>
+                            @elseif(Auth::User()->Seller->status=='3')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('申請中') }}</a>
+                                </li>
+                            @endif
                         @else
                             <li>
                                 <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('個人資料') }}</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('申請成為賣家') }}</a>
+                                <a class="dropdown-item" href="{{ route('sellers.create') }}" style="color:black">{{ __('申請成為賣家') }}</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('訂購清單') }}</a>

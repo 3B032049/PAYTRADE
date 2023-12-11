@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title','賣場')
+@section('title','二手書拍賣平台')
 
 @section('content')
-    <hr>
+<hr>
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -206,7 +206,6 @@
         </div>
     </div>
 </section>
-
 {{--<div class="wrapper mx-auto">--}}
 {{--    <div class="mx-2 mt-2">--}}
 {{--        <h1>賣場商品一覽</h1>--}}
@@ -236,8 +235,6 @@
 {{--        @endforeach--}}
 {{--    </div>--}}
 {{--</div>--}}
-
-
 
 @endsection
 

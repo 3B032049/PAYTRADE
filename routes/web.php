@@ -31,7 +31,7 @@ use App\Http\Controllers\AdminAdminsController;
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
-
+Route::get('products/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 //登入
 Auth::routes();
 
@@ -62,6 +62,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/products/{product}/edit', [App\Http\Controllers\AdminProductsController::class, 'edit'])->name("products.edit");
         Route::patch('/products/{product}',[App\Http\Controllers\AdminProductsController::class,'update'])->name('products.update');
         Route::delete('/products/{product}', [App\Http\Controllers\AdminProductsController::class, 'destroy'])->name("products.destroy");
+
 
         //公告路由
         Route::get('posts', [App\Http\Controllers\AdminPostsController::class, 'index'])->name("posts.index");

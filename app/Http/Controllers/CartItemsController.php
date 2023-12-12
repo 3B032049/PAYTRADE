@@ -17,12 +17,17 @@ class CartItemsController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $cartItems = $user->cartItems;
+        $totalAmount = $cartItems->sum(function ($cartItem) {
+            return $cartItem->quantity * $cartItem->product->price;
+        });
 
-        $cartItems = $user->CartItems;
         $data = [
-          'cartItems' => $cartItems,
+            'cartItems' => $cartItems,
+            'totalAmount' => $totalAmount,
         ];
-        return view('cart_items.index',$data);
+
+        return view('cart_items.index', $data);
     }
 
     /**

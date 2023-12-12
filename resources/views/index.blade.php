@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('products.index.layouts.master')
 
 @section('title','二手書拍賣平台')
 
@@ -24,11 +24,16 @@
                         </div>
                     </div>
                     <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="card-footer p-3 pt-0 border-top-0 bg-transparent">
                         <form action="{{ route("cart_items.store",$product->id) }}" method="POST" role="form">
                             @csrf
                             @method('POST')
-                            <div class="text-center"><button class="btn btn-outline-dark mt-auto" type="submit">加入購物車</button></div>
+                            <span class="quantity-span mx-4">
+                            <button class="quantity-minus" type="button">-</button>
+                            <input class="quantity-input" type="text"  name="quantity" value="1" style="max-width: 5rem">
+                            <button class="quantity-plus" type="button">+</button>
+                            </span>
+                            <br><br><div class="text-center"><button class="btn btn-outline-dark mx-6 mt-auto" type="submit">加入購物車</button></div>
                         </form>
 
                     </div>
@@ -68,5 +73,35 @@
 {{--    </div>--}}
 {{--</div>--}}
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const quantitySpans = document.querySelectorAll('.quantity-span');
+
+        quantitySpans.forEach(span => {
+            const quantityInput = span.querySelector('.quantity-input');
+            const minusButton = span.querySelector('.quantity-minus');
+            const plusButton = span.querySelector('.quantity-plus');
+
+            minusButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                updateQuantity(quantityInput, -1);
+            });
+
+            plusButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                updateQuantity(quantityInput, 1);
+            });
+        });
+
+        function updateQuantity(input, change) {
+            let newValue = parseInt(input.value) + change;
+            if (newValue < 1) {
+                newValue = 1;
+            }
+            input.value = newValue;
+        }
+    });
+</script>
 @endsection
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -38,14 +39,27 @@ class ProductController extends Controller
     public function show($product)
     {
         //
-        $product = Product::where('id',$product)->first();
+        if (Auth::check())
+        {
+            $user = Auth::user();
+            $cartItems = $user->CartItems;
 
+            $product = Product::where('id',$product)->first();
+            $data = [
+                'cartItems' => $cartItems,
+                'product' => $product,
+            ];
+            return view('products.show', $data);
+        }
+        else
+        {
+            $product = Product::where('id',$product)->first();
+            $data = [
+                'product' => $product,
 
-        $data = [
-            'product' => $product,
-        ];
-
-        return view('products.show', $data);
+            ];
+            return view('products.show', $data);
+        }
     }
 
     /**

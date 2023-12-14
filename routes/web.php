@@ -67,6 +67,14 @@ Route::group(['middleware' => 'admin'], function () {
         Route::patch('/products/{product}',[App\Http\Controllers\AdminProductsController::class,'update'])->name('products.update');
         Route::delete('/products/{product}', [App\Http\Controllers\AdminProductsController::class, 'destroy'])->name("products.destroy");
 
+        Route::get('/product_categories',[App\Http\Controllers\AdminProductCategoriesController::class,'index'])->name('product_categories.index');
+        Route::get('/product_categories/create',[App\Http\Controllers\AdminProductCategoriesController::class,'create'])->name('product_categories.create');
+        Route::post('/product_categories', [App\Http\Controllers\AdminProductCategoriesController::class, 'store'])->name("product_categories.store");
+        Route::patch('/product_categories/{product_category}/statusOff', [App\Http\Controllers\AdminProductCategoriesController::class, 'statusOff'])->name("product_categories.statusOff");
+        Route::patch('/product_categories/{product_category}/statusOn', [App\Http\Controllers\AdminProductCategoriesController::class, 'statusOn'])->name("product_categories.statusOn");
+        Route::get('/product_categories/{product_category}/edit', [App\Http\Controllers\AdminProductCategoriesController::class, 'edit'])->name("product_categories.edit");
+        Route::patch('/product_categories/{product_category}',[App\Http\Controllers\AdminProductCategoriesController::class,'update'])->name('product_categories.update');
+        Route::delete('/product_categories/{product_category}', [App\Http\Controllers\AdminProductCategoriesController::class, 'destroy'])->name("product_categories.destroy");
 
         //公告路由
         Route::get('posts', [App\Http\Controllers\AdminPostsController::class, 'index'])->name("posts.index");

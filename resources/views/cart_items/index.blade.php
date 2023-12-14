@@ -4,12 +4,12 @@
 
 @section('content')
 <hr>
-    <div class="wrapper mx-auto">
-        <div class="container mx-auto mt-8">
-            <h1 class="text-2xl mb-4">購物車內容</h1>
+    <div class="wrapper">
+        <div class="container mt-8">
+            <h1 class="text-2xl mb-4" align="center">購物車內容</h1>
 
             @if ($cartItems->count() > 0)
-                <table class="min-w-full bg-white border border-gray-200">
+                <table class="min-w-full bg-white border border-gray-200 mx-auto">
                     <tr align="center">
                         <th> </th>
                         <th class="py-2">商品圖片</th>
@@ -33,13 +33,14 @@
                                 ${{ $cartItem->product->price }}
                             </td>
                             <td class="py-2 px-4 border-b">
-                                <form action="{{ route('cart_items.update', $cartItem->id) }}" method="POST">
+                                <form action="{{ route('cart_items.update', $cartItem->id) }}" method="POST" id="updateCartItemForm">
                                     @csrf
                                     @method('PATCH')
                                     <span class="quantity-span">
-                                    <button class="quantity-minus" type="button">-</button>
+                                    <button class="quantity-minus" type="button" onclick="setOperationInput('minus')">-</button>
                                     <input class="quantity-input" type="text"  name="quantity" value="{{ $cartItem->quantity }}" style="max-width: 6rem">
-                                    <button class="quantity-plus" type="button">+</button>
+                                    <button class="quantity-plus" type="button" onclick="setOperationInput('plus')">+</button>
+                                    <input type="hidden" name="operation" id="operationInput" value="">
                                     </span>
                                 </form>
                             </td>
@@ -64,7 +65,7 @@
                     </tr>
                     <tr>
                         <td colspan="7">
-                        <form action="" method="POST">
+                        <form action="" method="POST" id="checkoutForm">
                             @csrf
                             @method('POST')
                             <div class="text-center"><button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button></div><br><br>
@@ -81,7 +82,15 @@
 
 
     </div>
+<script>
+    function setOperationInput(operation) {
+        const operationInput = document.getElementById('operationInput');
+        operationInput.value = operation;
 
+        // 觸發表單提交
+        document.getElementById('updateCartItemForm').submit();
+    }
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const quantitySpans = document.querySelectorAll('.quantity-span');

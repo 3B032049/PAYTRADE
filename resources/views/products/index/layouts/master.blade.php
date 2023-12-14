@@ -18,9 +18,6 @@
         <section id="location">
             @yield('content')
         </section>
-
-        
-
         @include('layouts.partials.footer')
     </body>
 <html>

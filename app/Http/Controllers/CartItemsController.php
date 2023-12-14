@@ -84,9 +84,15 @@ class CartItemsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCartItemRequest $request, CartItem $cartItem)
+    public function update(UpdateCartItemRequest $request, $id)
     {
-        //
+//        $this->validate($request,[
+//            'quantity' => 'required|integer|min:1',
+//        ]);
+        $cartItem = CartItem::findOrFail($id);
+        $cartItem->update(['quantity' => $request->input('quantity')]);
+
+        return redirect()->route('cart_items.index');
     }
 
     /**

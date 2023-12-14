@@ -32,7 +32,7 @@
                 <form class="d-flex" action="{{ route('cart_items.index') }}">
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
-                        Cart
+                        購物車
                         <span class="badge bg-dark text-white ms-1 rounded-pill">{{ count($cartItems) }}</span>
                     </button>
                 </form>

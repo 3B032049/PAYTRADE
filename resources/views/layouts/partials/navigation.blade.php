@@ -43,11 +43,11 @@
                         @if (Auth::check() && Auth::user()->isSeller())
                             @if(Auth::User()->Seller->status=='1')
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('進入賣家後台') }}</a>
+                                    <a class="dropdown-item" href="{{ route('sellers.products.index') }}" style="color:black">{{ __('進入賣家後台') }}</a>
                                 </li>
                             @elseif(Auth::User()->Seller->status=='2')
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('申請失敗') }}</a>
+                                    <a class="dropdown-item" href="{{ route('sellers.create') }}" style="color:black">{{ __('申請失敗') }}</a>
                                 </li>
                             @elseif(Auth::User()->Seller->status=='3')
                                 <li>

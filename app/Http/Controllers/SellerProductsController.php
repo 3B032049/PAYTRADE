@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class ProductController extends Controller
+class SellerProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $products = Product::orderby('id','ASC')->get();
@@ -32,7 +29,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|max:25',
@@ -60,6 +57,7 @@ class ProductController extends Controller
         $product->save();
 
         return redirect()->route('sellers.products.index');
+        dd($product);
     }
 
     /**
@@ -105,7 +103,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         $this->validate($request, [
             'name' => 'required|max:25',

@@ -13,27 +13,11 @@ class IndexController extends BaseController
 {
     public function index()
     {
-        if (Auth::check())
-        {
-            $user = Auth::user();
-            $cartItems = $user->CartItems;
-
-            $products = Product::orderBy('id','DESC')->get();
-            $data = [
-                'cartItems' => $cartItems,
-                'products' => $products,
-            ];
-            return view('index',$data);
-        }
-        else
-        {
-            $products = Product::orderBy('id','DESC')->get();
-            $data = [
-                'products' => $products,
-
-            ];
-            return view('index',$data);
-        }
+        $products = Product::orderBy('id','DESC')->get();
+        $data = [
+            'products' => $products,
+        ];
+        return view('index',$data);
     }
 }
 

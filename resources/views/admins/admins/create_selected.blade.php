@@ -13,9 +13,9 @@
                 <select id="account" name="account" class="form-control" onchange="navigateToRoute(this.value)">
                     @foreach($users as $user_per)
                         @if($user_per->account == $user->account)
-                            <option value="{{ route('admins.admins.create_selected', ['id' => $user_per->id]) }}" selected>{{ $user_per->account }}</option>
+                            <option value="{{ route('admins.admins.create_selected', ['id' => $user_per->id]) }}" selected>{{ $user_per->name }}</option>
                         @else
-                            <option value="{{ route('admins.admins.create_selected', ['id' => $user_per->id]) }}">{{ $user_per->account }}</option>
+                            <option value="{{ route('admins.admins.create_selected', ['id' => $user_per->id]) }}">{{ $user_per->name }}</option>
                         @endif
                     @endforeach
                 </select>

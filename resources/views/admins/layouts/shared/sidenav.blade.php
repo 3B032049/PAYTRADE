@@ -8,6 +8,9 @@
                 <a class="nav-link" href="{{ route('admins.users.index') }}">
                     用戶管理
                 </a>
+                <a class="nav-link" href="{{ route('admins.sellers.index') }}">
+                    賣家管理
+                </a>
                 <a class="nav-link" href="{{ route('admins.products.index') }}">
                     商品管理
                 </a>

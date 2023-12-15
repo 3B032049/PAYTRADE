@@ -71,6 +71,16 @@ Route::group(['middleware' => 'admin'], function () {
         Route::patch('/users/{user}',[App\Http\Controllers\AdminUsersController::class,'update'])->name('users.update');
         Route::delete('/users/{user}', [App\Http\Controllers\AdminUsersController::class, 'destroy'])->name("users.destroy");
 
+        Route::get('/sellers',[App\Http\Controllers\AdminSellersController::class,'index'])->name('sellers.index');
+        Route::get('/sellers/create',[App\Http\Controllers\AdminSellersController::class,'create'])->name('sellers.create');
+        Route::patch('/sellers/{seller}/statusOn',[App\Http\Controllers\AdminSellersController::class,'statusOn'])->name('sellers.statusOn');
+        Route::patch('/sellers/{seller}/statusOff',[App\Http\Controllers\AdminSellersController::class,'statusOff'])->name('sellers.statusOff');
+        Route::post('/sellers', [App\Http\Controllers\AdminSellersController::class, 'store'])->name("sellers.store");
+        Route::get('/sellers/{seller}/edit', [App\Http\Controllers\AdminSellersController::class, 'edit'])->name("sellers.edit");
+        Route::patch('/sellers/{seller}/pass',[App\Http\Controllers\AdminSellersController::class,'pass'])->name('sellers.pass');
+        Route::patch('/sellers/{seller}/unpass',[App\Http\Controllers\AdminSellersController::class,'unpass'])->name('sellers.unpass');
+        Route::delete('/sellers/{seller}', [App\Http\Controllers\AdminSellersController::class, 'destroy'])->name("sellers.destroy");
+
         Route::get('/products',[App\Http\Controllers\AdminProductsController::class,'index'])->name('products.index');
         Route::get('/products/create',[App\Http\Controllers\AdminProductsController::class,'create'])->name('products.create');
         Route::post('/products', [App\Http\Controllers\AdminProductsController::class, 'store'])->name("products.store");

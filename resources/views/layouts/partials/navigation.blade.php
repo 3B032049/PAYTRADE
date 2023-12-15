@@ -44,17 +44,21 @@
                             <li>
                                 <a class="dropdown-item" href="{{ route('users.index') }}" style="color:black">{{ __('個人資料') }}</a>
                             </li>
-                            @if(Auth::User()->Seller->status=='1')
+                            @if(Auth::User()->Seller->status==0)
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('sellers.products.index') }}" style="color:black">{{ __('進入賣家後台') }}</a>
+                                    <a class="dropdown-item" href="{{ route('sellers.create') }}" style="color:black">{{ __('賣家申請失敗') }}</a>
                                 </li>
-                            @elseif(Auth::User()->Seller->status=='2')
+                            @elseif(Auth::User()->Seller->status==1)
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('sellers.create') }}" style="color:black">{{ __('申請失敗') }}</a>
+                                    <a class="dropdown-item" href="{{ route('sellers.create') }}" style="color:black">{{ __('賣場已被停權') }}</a>
                                 </li>
-                            @elseif(Auth::User()->Seller->status=='3')
+                            @elseif(Auth::User()->Seller->status==2)
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('申請中') }}</a>
+                                    <a class="dropdown-item" href="{{ route('sellers.products.index') }}" style="color:black">{{ __('賣家後台') }}</a>
+                                </li>
+                            @elseif(Auth::User()->Seller->status==3)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('賣家申請中') }}</a>
                                 </li>
                             @endif
                         @else

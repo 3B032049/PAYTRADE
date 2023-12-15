@@ -41,6 +41,9 @@
                        aria-expanded="false">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ Auth::user()->name }} </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         @if (Auth::check() && Auth::user()->isSeller())
+                            <li>
+                                <a class="dropdown-item" href="{{ route('users.index') }}" style="color:black">{{ __('個人資料') }}</a>
+                            </li>
                             @if(Auth::User()->Seller->status=='1')
                                 <li>
                                     <a class="dropdown-item" href="{{ route('sellers.products.index') }}" style="color:black">{{ __('進入賣家後台') }}</a>

@@ -37,6 +37,10 @@ Route::get('products/{product}', [App\Http\Controllers\ProductController::class,
 Auth::routes();
 
 Route::group(['middleware' => 'user'], function () {
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/',[App\Http\Controllers\UsersController::class,'index'])->name('index');
+        Route::patch('{user}',[App\Http\Controllers\UsersController::class,'update'])->name('update');
+    });
     Route::get('cartItems', [App\Http\Controllers\CartItemsController::class, 'index'])->name("cart_items.index");
     Route::get('cartItems/create', [App\Http\Controllers\CartItemsController::class, 'create'])->name("cart_items.create");
     Route::post('cartItems/{product}', [App\Http\Controllers\CartItemsController::class, 'store'])->name("cart_items.store");

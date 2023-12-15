@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('seller_id');
+            $table->integer('status');
+            $table->date('date');
+            $table->integer('score')->nullable();
+            $table->string('comment')->nullable();
+            $table->integer('pay');
+            $table->integer('price');
+            $table->string('receiver');
+            $table->string('receiver_phone');
+            $table->string('receiver_address');
             $table->timestamps();
         });
     }

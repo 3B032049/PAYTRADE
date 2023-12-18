@@ -20,6 +20,9 @@ class Product extends Model
         'content',
         'price',
         'quantity',
+        'product_category_id',
+        'seller_id',
+        'status',
     ];
 
 //    public function getImageUrlAttribute()

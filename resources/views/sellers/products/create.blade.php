@@ -12,6 +12,15 @@
         <form action="{{ route('sellers.products.store') }}" method="POST" role="form" enctype="multipart/form-data">
             @method('POST')
             @csrf
+
+            <div class="form-group">
+                <label for="product_category" class="form-label">選擇書籍類別</label>
+                <select id="product_category" name="product_category" class="form-control">
+                    @foreach($product_category as $product_category)
+                        <option value="{{ $product_category->id }}">{{ $product_category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="form-group">
                 <label for="name" class="form-label">書籍名稱</label>
                 <input id="name" name="name" type="text" class="form-control" value="{{ old('name') }}" placeholder="請輸入商品名稱">

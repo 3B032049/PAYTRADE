@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class AdminUsersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderby('id','ASC')->get();
+        $perPage = $request->input('perPage', 10); // Default: 10 records per page
+        $users = User::orderBy('id', 'ASC')->paginate($perPage);
         $data = ['users' => $users];
         return view('admins.users.index',$data);
     }

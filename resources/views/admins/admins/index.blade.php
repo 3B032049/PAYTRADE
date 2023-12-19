@@ -28,9 +28,9 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($admins as $admin)
+            @foreach($admins as $index => $admin)
                 <tr>
-                    <td style="text-align:left">{{ $admin->id }}</td>
+                    <td style="text-align:left">{{ $index + 1 }}</td>
                     <td style="text-align:left">{{ $admin->user_id }}</td>
                     <td>{{ $admin->name }}</td>
                     <td>{{ $admin->position }}

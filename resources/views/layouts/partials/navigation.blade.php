@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="{{ url('/') }}">二手書拍賣平台</a>
+        <a class="navbar-brand" href="{{ url('/') }}">二手書交易平台</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -63,7 +63,7 @@
                             @endif
                         @else
                             <li>
-                                <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('個人資料') }}</a>
+                                <a class="dropdown-item" href="{{ route('users.index') }}" style="color:black">{{ __('個人資料') }}</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('sellers.create') }}" style="color:black">{{ __('申請成為賣家') }}</a>

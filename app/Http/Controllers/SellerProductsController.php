@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\ProductCategory;
 
 class SellerProductsController extends Controller
 {
@@ -23,7 +24,10 @@ class SellerProductsController extends Controller
      */
     public function create()
     {
-        return view('sellers.products.create');
+        $product_category = ProductCategory::orderby('id','ASC')->get();
+        $data = ['product_category' => $product_category];
+
+        return view('sellers.products.create',$data);
     }
 
     /**
@@ -38,7 +42,7 @@ class SellerProductsController extends Controller
             'quantity' => 'required',
             'image_url' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+        $seller_id=auth()->user()->seller->id;
         $product = new Product;
 
         if ($request->hasFile('image_url')) {
@@ -50,14 +54,18 @@ class SellerProductsController extends Controller
             $product->image_url = $imageName;
         }
         $product->name = $request->name;
+        $product->product_category_id = $request->product_category;
+        $product->seller_id =$seller_id;
+        $product->status='0';
         $product->price = $request->price;
         $product->quantity = $request->quantity;
         $product->content =  $request->input('content');
 
+
         $product->save();
 
         return redirect()->route('sellers.products.index');
-        dd($product);
+
     }
 
     /**

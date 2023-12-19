@@ -63,7 +63,7 @@
                             @endif
                         @else
                             <li>
-                                <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('個人資料') }}</a>
+                                <a class="dropdown-item" href="{{ route('users.index') }}" style="color:black">{{ __('個人資料') }}</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('sellers.create') }}" style="color:black">{{ __('申請成為賣家') }}</a>

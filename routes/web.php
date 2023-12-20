@@ -66,6 +66,9 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('cartItems/{cartItem}/edit', [App\Http\Controllers\CartItemsController::class, 'edit'])->name("cart_items.edit");
     Route::patch('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'update'])->name("cart_items.update");
     Route::delete('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'destroy'])->name("cart_items.destroy");
+
+    Route::get('orders/create', [App\Http\Controllers\OrderController::class, 'create'])->name("orders.create");
+
     Route::get('sellers/create', [App\Http\Controllers\SellersController::class, 'create'])->name("sellers.create");
     Route::post('sellers/{selller}/store', [App\Http\Controllers\SellersController::class, 'store'])->name("sellers.store");
 
@@ -85,6 +88,11 @@ Route::group(['middleware' => 'seller'], function () {
         Route::get('/products/{product}/edit', [App\Http\Controllers\SellerProductsController::class, 'edit'])->name("products.edit");
         Route::patch('/products/{product}', [App\Http\Controllers\SellerProductsController::class, 'update'])->name('products.update');
         Route::delete('/products/{product}', [App\Http\Controllers\SellerProductsController::class, 'destroy'])->name("products.destroy");
+
+        Route::get('/orders', [App\Http\Controllers\SellerOrdersController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{order}/edit', [App\Http\Controllers\SellerOrdersController::class, 'edit'])->name("orders.edit");
+        Route::patch('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'update'])->name('orders.update');
+        Route::delete('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'destroy'])->name("orders.destroy");
     });
 });
 

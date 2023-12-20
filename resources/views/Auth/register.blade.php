@@ -62,7 +62,7 @@
 
                                     <div class="col-md-6">
                                         男<input id="sex" type="radio" name="sex" value="{{ '男' }}" required autocomplete="sex" checked="checked">
-                                        女<input id="sex" type="radio" name="sex" value="{{ '女' }}" required autocomplete="sex" checked="checked">
+                                        女<input id="sex" type="radio" name="sex" value="{{ '女' }}" required autocomplete="sex" >
                                     </div>
                                 </div>
 

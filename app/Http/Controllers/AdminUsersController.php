@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Admin;
+use App\Models\Seller;
 
 class AdminUsersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderby('id','ASC')->get();
+        $perPage = $request->input('perPage', 10); // Default: 10 records per page
+        $users = User::orderBy('id', 'ASC')->paginate($perPage);
         $data = ['users' => $users];
         return view('admins.users.index',$data);
     }
@@ -53,6 +56,18 @@ class AdminUsersController extends Controller
 
     public function destroy(User $user)
     {
+        # 檢測該使用者使否在Admin或Seller資料表內有資料
+        $admin = Admin::where('user_id', $user->id)->first();
+        $seller = Seller::where('user_id', $user->id)->first();
+
+        # 若有的話一同刪除
+        if ($admin) {
+            $admin->delete();
+        }
+        if ($seller) {
+            $seller->delete();
+        }
+
         $user->delete();
         return redirect()->route('admins.users.index');
     }

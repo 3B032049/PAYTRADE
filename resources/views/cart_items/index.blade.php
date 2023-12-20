@@ -65,6 +65,7 @@
                     </tr>
                     <tr>
                         <td colspan="7">
+<<<<<<< HEAD
                             <form action="{{ route('orders.create', $cartItem->user_id) }}" method="POST" id="checkoutForm">
                                 @csrf
                                 @method('POST')
@@ -72,6 +73,12 @@
                                     <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button>
                                 </div><br><br>
                             </form>
+=======
+                        <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm">
+                            @method('GET')
+                            <div class="text-center"><button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button></div><br><br>
+                        </form>
+>>>>>>> refs/remotes/origin/master
                         </td>
                     </tr>
                     </tbody>
@@ -81,8 +88,6 @@
                 <p class="text-gray-600">購物車內無商品。</p>
             @endif
         </div>
-
-
     </div>
 <script>
     function setOperationInput(operation) {

@@ -65,11 +65,13 @@
                     </tr>
                     <tr>
                         <td colspan="7">
-                        <form action="" method="POST" id="checkoutForm">
-                            @csrf
-                            @method('POST')
-                            <div class="text-center"><button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button></div><br><br>
-                        </form>
+                            <form action="{{ route('orders.create', $cartItem->user_id) }}" method="POST" id="checkoutForm">
+                                @csrf
+                                @method('POST')
+                                <div class="text-center">
+                                    <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button>
+                                </div><br><br>
+                            </form>
                         </td>
                     </tr>
                     </tbody>
@@ -94,6 +96,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const quantitySpans = document.querySelectorAll('.quantity-span');
+        const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
+        const totalAmountElement = document.getElementById('totalAmount');
 
         quantitySpans.forEach(span => {
             const quantityInput = span.querySelector('.quantity-input');
@@ -108,6 +112,12 @@
             plusButton.addEventListener('click', function(event) {
                 event.preventDefault();
                 updateQuantity(quantityInput, 1);
+            });
+        });
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                updateTotalAmount();
             });
         });
 
@@ -138,10 +148,13 @@
             let totalAmount = 0;
 
             subtotalElements.forEach(subtotalElement => {
-                totalAmount += parseFloat(subtotalElement.textContent.replace('$', ''));
+                const checkbox = subtotalElement.closest('tr').querySelector('input[name="selected_items[]"]');
+                if (checkbox.checked) {
+                    totalAmount += parseFloat(subtotalElement.textContent.replace('$', ''));
+                }
             });
 
-            document.getElementById('totalAmount').textContent = `$${totalAmount.toFixed(0)}`;
+            totalAmountElement.textContent = `$${totalAmount.toFixed(0)}`;
         }
     });
 </script>

@@ -5,9 +5,9 @@
 @section('page-content')
     <div class="container-fluid px-4">
         <h1 class="mt-4">書籍管理</h1>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-success btn-sm" href="{{ route('admins.products.create') }}">新增書籍</a>
-        </div>
+{{--        <div class="d-grid gap-2 d-md-flex justify-content-md-end">--}}
+{{--            <a class="btn btn-success btn-sm" href="{{ route('admins.products.create') }}">新增書籍</a>--}}
+{{--        </div>--}}
         <table class="table">
             <thead>
             <tr>

@@ -32,7 +32,17 @@
                     <td>{{ $user->sex }}</td>
                     <td>{{ $user->email }}</td>
                     @if ($user->isadmin())
-                        <td>管理員</td>
+                        <td>
+                            <div style="color:#FF0000;">
+                                @if($user->admin->position == 1)
+                                    超級管理員
+                                @elseif($user->admin->position == 2)
+                                    高階管理員
+                                @else
+                                    一般管理員
+                                @endif
+                            </div>
+                        </td>
                     @elseif($user->isseller())
                         <td>賣家</td>
                     @else

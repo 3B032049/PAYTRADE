@@ -65,9 +65,8 @@
                     </tr>
                     <tr>
                         <td colspan="7">
-                        <form action="" method="POST" id="checkoutForm">
-                            @csrf
-                            @method('POST')
+                        <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm">
+                            @method('GET')
                             <div class="text-center"><button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button></div><br><br>
                         </form>
                         </td>
@@ -79,8 +78,6 @@
                 <p class="text-gray-600">購物車內無商品。</p>
             @endif
         </div>
-
-
     </div>
 <script>
     function setOperationInput(operation) {

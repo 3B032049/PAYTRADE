@@ -15,8 +15,8 @@
                 <th scope="col" style="text-align:left">姓名</th>
                 <th scope="col" style="text-align:left">電子信箱</th>
                 <th scope="col" style="text-align:left">狀態</th>
-                <th scope="col" style="text-align:center">修改</th>
-                <th scope="col" style="text-align:center">刪除</th>
+                <th scope="col" style="text-align:center">操作</th>
+{{--                <th scope="col" style="text-align:center">刪除</th>--}}
             </tr>
             </thead>
             <tbody>
@@ -25,15 +25,23 @@
                     <td style="text-align:left">{{ $seller->id }}</td>
                     <td>{{ $seller->name }}</td>
                     <td>{{ $seller->email }}</td>
-                    <td>{{ $seller->status }}
+                    <td>
                         @if ($seller->status == 0)
+                            <div style="color:#FF0000; font-weight:bold;">
                             (申請未通過)
+                            </div>
                         @elseif ($seller->status == 1)
+                            <div style="color:#FF8033; font-weight:bold;">
                             (停權)
+                            </div>
                         @elseif ($seller->status == 2)
+                            <div style="color:#33FF33; font-weight:bold;">
                             (正式賣家)
+                            </div>
                         @elseif ($seller->status == 3)
+                            <div style="color:#FFB233; font-weight:bold;">
                             (申請中)
+                            </div>
                         @endif
                     </td>
                     <td style="text-align:center">
@@ -55,13 +63,13 @@
                             <a href="{{ route('admins.sellers.edit',$seller->id) }}" class="btn btn-secondary btn-sm">審核申請</a>
                         @endif
                     </td>
-                    <td style="text-align:center">
-                        <form action="{{ route('admins.sellers.destroy',$seller->id) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>
-                        </form>
-                    </td>
+{{--                    <td style="text-align:center">--}}
+{{--                        <form action="{{ route('admins.sellers.destroy',$seller->id) }}" method="POST">--}}
+{{--                            @method('DELETE')--}}
+{{--                            @csrf--}}
+{{--                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>--}}
+{{--                        </form>--}}
+{{--                    </td>--}}
                 </tr>
             @endforeach
             </tbody>

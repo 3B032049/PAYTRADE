@@ -22,11 +22,15 @@
             @foreach($product_categories as $product_category)
                 <tr>
                     <td>{{ $product_category->name }}</td>
-                    <td>{{ $product_category->status }}
+                    <td>
                         @if ($product_category->status == 1)
+                            <div style="color:#33FF33; font-weight:bold;">
                             (啟用中)
+                            </div>
                         @else
+                            <div style="color:#FF0000; font-weight:bold;">
                             (未啟用)
+                            </div>
                         @endif
                     </td>
                     <td style="text-align:center">

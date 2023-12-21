@@ -16,6 +16,7 @@
                 <th scope="col" style="text-align:left">書籍簡述</th>
                 <th scope="col" style="text-align:left">價格</th>
                 <th scope="col" style="text-align:left">數量</th>
+                <th scope="col" style="text-align:left">狀態</th>
                 <th scope="col" style="text-align:center">修改</th>
                 <th scope="col" style="text-align:center">刪除</th>
             </tr>
@@ -28,8 +29,29 @@
                     <td>{{ $product->content }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->quantity }}</td>
+                    <td>
+                        @if ($product->status == 0)
+                            <div style="color:#FF8033; font-weight:bold;">
+                                (審核中)
+                            </div>
+                        @elseif ($product->status == 1)
+                            <div style="color:#33FF33; font-weight:bold;">
+                                (通過)
+                            </div>
+                        @elseif ($product->status == 2)
+                            <div style="color:#FF0000; font-weight:bold;">
+                                (審核失敗)
+                            </div>
+                        @endif
+                    </td>
                     <td style="text-align:center">
-                        <a href="{{ route('admins.products.edit',$product->id) }}" class="btn btn-secondary btn-sm">編輯</a>
+                        @if ($product->status == 0)
+                            <a href="{{ route('admins.products.review',$product->id) }}" class="btn btn-secondary btn-sm">審核</a>
+                        @elseif ($product->status == 1)
+                            <a href="{{ route('admins.products.edit',$product->id) }}" class="btn btn-secondary btn-sm">編輯</a>
+                        @elseif ($product->status == 2)
+
+                        @endif
                     </td>
                     <td style="text-align:center">
                         <form action="{{ route('admins.products.destroy',$product->id) }}" method="POST">

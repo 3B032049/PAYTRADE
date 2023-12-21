@@ -13,7 +13,7 @@ class IndexController extends BaseController
 {
     public function index()
     {
-        $products = Product::orderBy('id','DESC')->get();
+        $products = Product::orderBy('id','DESC')->where('status',1)->get();
         $data = [
             'products' => $products,
         ];

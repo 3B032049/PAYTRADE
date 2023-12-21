@@ -73,9 +73,9 @@
             <div class="d-flex align-items-center">
                 <span class="mr-1">每</span>
                 <select id="records-per-page" class="form-control" onchange="changeRecordsPerPage()">
+                    <option value="5" {{ $users->perPage() == 5 ? 'selected' : '' }}>5</option>
                     <option value="10" {{ $users->perPage() == 10 ? 'selected' : '' }}>10</option>
                     <option value="20" {{ $users->perPage() == 20 ? 'selected' : '' }}>20</option>
-                    <option value="50" {{ $users->perPage() == 50 ? 'selected' : '' }}>50</option>
                 </select>
                 <span class="ml-1">筆</span>
             </div>

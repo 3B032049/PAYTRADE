@@ -122,7 +122,10 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/products/create',[App\Http\Controllers\AdminProductsController::class,'create'])->name('products.create');
         Route::post('/products', [App\Http\Controllers\AdminProductsController::class, 'store'])->name("products.store");
         Route::get('/products/{product}/edit', [App\Http\Controllers\AdminProductsController::class, 'edit'])->name("products.edit");
+        Route::get('/products/{product}/review',[App\Http\Controllers\AdminProductsController::class,'review'])->name('products.review');
         Route::patch('/products/{product}',[App\Http\Controllers\AdminProductsController::class,'update'])->name('products.update');
+        Route::patch('/products/{product}/pass',[App\Http\Controllers\AdminProductsController::class,'pass'])->name('products.pass');
+        Route::patch('/products/{product}/unpass',[App\Http\Controllers\AdminProductsController::class,'unpass'])->name('products.unpass');
         Route::delete('/products/{product}', [App\Http\Controllers\AdminProductsController::class, 'destroy'])->name("products.destroy");
 
         Route::get('/product_categories',[App\Http\Controllers\AdminProductCategoriesController::class,'index'])->name('product_categories.index');

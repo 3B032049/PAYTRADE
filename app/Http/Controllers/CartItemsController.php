@@ -90,10 +90,10 @@ class CartItemsController extends Controller
 //            'quantity' => 'required|integer|min:1',
 //        ]);
         $cartItem = CartItem::findOrFail($id);
-        $cartItem->update(['quantity' => $request->input('quantity')]);
-
+        $cartItem->update(['quantity' => $request->quantity]);
         return redirect()->route('cart_items.index');
     }
+
 
     /**
      * Remove the specified resource from storage.

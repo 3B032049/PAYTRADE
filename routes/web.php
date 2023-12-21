@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AdminProductsController;
 use App\Http\Controllers\AdminPostsController;
 use App\Http\Controllers\AdminAdminsController;
+use App\Http\Controllers\OrderController;
 
 
 /*
@@ -67,7 +68,6 @@ Route::group(['middleware' => 'user'], function () {
     Route::patch('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'update'])->name("cart_items.update");
     Route::delete('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'destroy'])->name("cart_items.destroy");
 
-    Route::get('orders/create', [App\Http\Controllers\OrderController::class, 'create'])->name("orders.create");
 
     Route::get('sellers/create', [App\Http\Controllers\SellersController::class, 'create'])->name("sellers.create");
     Route::post('sellers/{selller}/store', [App\Http\Controllers\SellersController::class, 'store'])->name("sellers.store");

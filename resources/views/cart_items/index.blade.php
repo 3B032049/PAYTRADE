@@ -48,10 +48,10 @@
                                 ${{ number_format($cartItem->quantity * $cartItem->product->price,0) }}
                             </td>
                             <td class="py-2 px-4 border-b">
-                                <form action="{{ route('cart_items.destroy', $cartItem->id) }}" method="POST">
+                                <form id="deleteForm{{ $cartItem->id }}" action="{{ route('cart_items.destroy', $cartItem->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">刪除</button>
+                                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ $cartItem->product->name }}', {{ $cartItem->id }})">刪除</button>
                                 </form>
                             </td>
                         </tr>
@@ -83,6 +83,13 @@
         </div>
     </div>
 <script>
+    function confirmDelete(name, Id)
+    {
+        if (confirm("確定要刪除 " + name + " 嗎？")) {
+            document.getElementById('deleteForm' + Id).submit();
+        }
+    }
+
     function prepareCheckout() {
         const selectedItems = getSelectedItems();
         const checkoutForm = document.getElementById('checkoutForm');

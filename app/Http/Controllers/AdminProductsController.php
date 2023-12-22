@@ -4,16 +4,37 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class AdminProductsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderby('id','ASC')->get();
+        $perPage = $request->input('perPage', 10);
+        $products = Product::orderby('id','ASC')->paginate($perPage);
         $data = ['products' => $products];
         return view('admins.products.index',$data);
+    }
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('query');
+        $perPage = $request->input('perPage', 10);
+
+        $products = Product::with(['seller.user'])
+            ->whereHas('seller.user', function ($query) use ($searchTerm) {
+                $query->where('name', 'like', "%$searchTerm%");
+            })
+            ->orWhere('name', 'like', "%$searchTerm%")
+            ->orderBy('id', 'ASC')
+            ->paginate($perPage);
+
+        return view('admins.products.index', [
+            'products' => $products,
+            'query' => $searchTerm,
+        ]);
     }
 
     public function create()

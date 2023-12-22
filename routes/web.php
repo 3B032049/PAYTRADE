@@ -102,6 +102,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/dashboard',[App\Http\Controllers\AdminHomeController::class,'index'])->name('dashboard');
 
         Route::get('/users',[App\Http\Controllers\AdminUsersController::class,'index'])->name('users.index');
+        Route::get('/users/search', [App\Http\Controllers\AdminUsersController::class, 'search'])->name('users.search');
         Route::get('/users/create',[App\Http\Controllers\AdminUsersController::class,'create'])->name('users.create');
         Route::post('/users', [App\Http\Controllers\AdminUsersController::class, 'store'])->name("users.store");
         Route::get('/users/{user}/edit', [App\Http\Controllers\AdminUsersController::class, 'edit'])->name("users.edit");
@@ -109,6 +110,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::delete('/users/{user}', [App\Http\Controllers\AdminUsersController::class, 'destroy'])->name("users.destroy");
 
         Route::get('/sellers',[App\Http\Controllers\AdminSellersController::class,'index'])->name('sellers.index');
+        Route::get('/sellers/search', [App\Http\Controllers\AdminSellersController::class, 'search'])->name('sellers.search');
         Route::get('/sellers/create',[App\Http\Controllers\AdminSellersController::class,'create'])->name('sellers.create');
         Route::patch('/sellers/{seller}/statusOn',[App\Http\Controllers\AdminSellersController::class,'statusOn'])->name('sellers.statusOn');
         Route::patch('/sellers/{seller}/statusOff',[App\Http\Controllers\AdminSellersController::class,'statusOff'])->name('sellers.statusOff');
@@ -119,6 +121,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::delete('/sellers/{seller}', [App\Http\Controllers\AdminSellersController::class, 'destroy'])->name("sellers.destroy");
 
         Route::get('/products',[App\Http\Controllers\AdminProductsController::class,'index'])->name('products.index');
+        Route::get('/products/search', [App\Http\Controllers\AdminProductsController::class, 'search'])->name('products.search');
         Route::get('/products/create',[App\Http\Controllers\AdminProductsController::class,'create'])->name('products.create');
         Route::post('/products', [App\Http\Controllers\AdminProductsController::class, 'store'])->name("products.store");
         Route::get('/products/{product}/edit', [App\Http\Controllers\AdminProductsController::class, 'edit'])->name("products.edit");
@@ -129,6 +132,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::delete('/products/{product}', [App\Http\Controllers\AdminProductsController::class, 'destroy'])->name("products.destroy");
 
         Route::get('/product_categories',[App\Http\Controllers\AdminProductCategoriesController::class,'index'])->name('product_categories.index');
+        Route::get('/product_categories/search', [App\Http\Controllers\AdminProductCategoriesController::class, 'search'])->name('product_categories.search');
         Route::get('/product_categories/create',[App\Http\Controllers\AdminProductCategoriesController::class,'create'])->name('product_categories.create');
         Route::post('/product_categories', [App\Http\Controllers\AdminProductCategoriesController::class, 'store'])->name("product_categories.store");
         Route::patch('/product_categories/{product_category}/statusOff', [App\Http\Controllers\AdminProductCategoriesController::class, 'statusOff'])->name("product_categories.statusOff");
@@ -138,12 +142,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::delete('/product_categories/{product_category}', [App\Http\Controllers\AdminProductCategoriesController::class, 'destroy'])->name("product_categories.destroy");
 
         //公告路由
-        Route::get('posts', [App\Http\Controllers\AdminPostsController::class, 'index'])->name("posts.index");
-        Route::get('posts/create', [App\Http\Controllers\AdminPostsController::class, 'create'])->name("posts.create");
-        Route::post('posts', [App\Http\Controllers\AdminPostsController::class, 'store'])->name("posts.store");
-        Route::get('posts/{post}/edit', [App\Http\Controllers\AdminPostsController::class, 'edit'])->name("posts.edit");
-        Route::patch('posts/{post}', [App\Http\Controllers\AdminPostsController::class, 'update'])->name("posts.update");
-        Route::delete('posts/{post}', [App\Http\Controllers\AdminPostsController::class, 'destroy'])->name("posts.destroy");
+        Route::get('/posts', [App\Http\Controllers\AdminPostsController::class, 'index'])->name("posts.index");
+        Route::get('/posts/search', [App\Http\Controllers\AdminPostsController::class, 'search'])->name('posts.search');
+        Route::get('/posts/create', [App\Http\Controllers\AdminPostsController::class, 'create'])->name("posts.create");
+        Route::post('/posts', [App\Http\Controllers\AdminPostsController::class, 'store'])->name("posts.store");
+        Route::get('/posts/{post}/edit', [App\Http\Controllers\AdminPostsController::class, 'edit'])->name("posts.edit");
+        Route::patch('/posts/{post}', [App\Http\Controllers\AdminPostsController::class, 'update'])->name("posts.update");
+        Route::delete('/posts/{post}', [App\Http\Controllers\AdminPostsController::class, 'destroy'])->name("posts.destroy");
 
 
         //管理員操作路由

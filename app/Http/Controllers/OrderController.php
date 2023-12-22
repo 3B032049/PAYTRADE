@@ -20,16 +20,13 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($order)
+    public function create()
     {
+//        $data = [
+//            'order' => CartItem::find($order),
+//        ];
 
-        $orders = CartItem::find($order);
-
-        $data = [
-            'orders' => $orders,
-        ];
-
-        return view('orders.create', $data);
+        return view('orders.create');
     }
 
     /**

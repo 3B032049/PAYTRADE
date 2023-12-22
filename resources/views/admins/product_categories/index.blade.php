@@ -65,11 +65,11 @@
                         <a href="{{ route('admins.product_categories.edit',$product_category->id) }}" class="btn btn-secondary btn-sm">編輯</a>
                     </td>
                     <td style="text-align:center">
-                        <form action="{{ route('admins.product_categories.destroy',$product_category->id) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>
-                        </form>
+{{--                        <form action="{{ route('admins.product_categories.destroy',$product_category->id) }}" method="POST">--}}
+{{--                            @method('DELETE')--}}
+{{--                            @csrf--}}
+{{--                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>--}}
+{{--                        </form>--}}
                     </td>
                 </tr>
             @endforeach

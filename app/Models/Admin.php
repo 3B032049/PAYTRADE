@@ -19,4 +19,9 @@ class Admin extends Model
 
         'position',
     ];
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

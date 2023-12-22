@@ -17,6 +17,24 @@ class AdminUsersController extends Controller
         return view('admins.users.index',$data);
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $perPage = $request->input('perPage', 10);
+        // 搜尋會員資料
+        $users = User::where('email', 'like', "%$query%")
+            ->orWhere('name', 'like', '%' . $query . '%')
+            ->orWhere('sex', 'like', '%' . $query . '%')
+            ->orWhere('phone', 'like', '%' . $query . '%')
+            ->paginate($perPage);
+
+        // 返回結果
+        return view('admins.users.index', [
+            'users' => $users,
+            'query' => $query,
+        ]);
+    }
+
     public function create()
     {
         return view('admins.users.create');

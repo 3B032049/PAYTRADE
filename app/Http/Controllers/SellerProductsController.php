@@ -149,6 +149,24 @@ class SellerProductsController extends Controller
 
         return redirect()->route('sellers.products.index');
     }
+    public function reply(Product $product)
+    {
+        $product->status='0';
+        $product->save();
+        return redirect()->route('sellers.products.index');
+    }
+    public function statusoff(Product $product)
+    {
+        $product->status='4';
+        $product->save();
+        return redirect()->route('sellers.products.index');
+    }
+    public function statuson(Product $product)
+    {
+        $product->status='3';
+        $product->save();
+        return redirect()->route('sellers.products.index');
+    }
 
     /**
      * Remove the specified resource from storage.

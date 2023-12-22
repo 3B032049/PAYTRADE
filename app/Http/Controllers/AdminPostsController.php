@@ -4,14 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Admin;
 
 class AdminPostsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::orderBy('created_at','DESC')->get();
+        $perPage = $request->input('perPage', 10);
+        $posts = Post::orderBy('created_at','DESC')->paginate($perPage);
         $data = ['posts' => $posts];
         return view('admins.posts.index',$data);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $perPage = $request->input('perPage', 10);
+        $posts = Post::where('title', 'like', "%$query%")
+            ->paginate($perPage);
+
+        // 返回結果
+        return view('admins.product_categories.index', [
+            'posts' => $posts,
+            'query' => $query,
+        ]);
     }
 
     public function create()
@@ -21,13 +38,23 @@ class AdminPostsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'posts_title' => 'required|max:50',
-            'posts_content' => 'required',
+        $admin = Auth::user()->admin;
+
+        $this->validate($request, [
+            'title' => 'required|max:50',
+            'content' => 'required',
             'is_feature' => 'required|boolean',
         ]);
 
-        Post::create($request->all());
+        // Create a new post instance
+        $post = new Post($request->all());
+
+        // Associate the admin with the post
+        $post->admin()->associate($admin);
+
+        // Save the post to the database
+        $post->save();
+
         return redirect()->route('admins.posts.index');
     }
 
@@ -42,8 +69,8 @@ class AdminPostsController extends Controller
     public function update(Request $request, Post $post)
     {
         $this->validate($request,[
-            'posts_title' => 'required|max:50',
-            'posts_content' => 'required',
+            'title' => 'required|max:50',
+            'content' => 'required',
             'is_feature' => 'required|boolean',
 
         ]);

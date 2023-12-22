@@ -7,11 +7,27 @@ use App\Models\ProductCategory;
 
 class AdminProductCategoriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $product_categories = ProductCategory::orderby('id','ASC')->get();
+        $perPage = $request->input('perPage', 10);
+        $product_categories = ProductCategory::orderby('id','ASC')->paginate($perPage);
         $data = ['product_categories' => $product_categories];
         return view('admins.product_categories.index',$data);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $perPage = $request->input('perPage', 10);
+        // 搜尋會員資料
+        $product_categories = ProductCategory::where('name', 'like', "%$query%")
+            ->paginate($perPage);
+
+        // 返回結果
+        return view('admins.product_categories.index', [
+            'product_categories' => $product_categories,
+            'query' => $query,
+        ]);
     }
 
     public function create()
@@ -55,8 +71,9 @@ class AdminProductCategoriesController extends Controller
 
     public function edit(ProductCategory $product_category)
     {
+        //dd($product_category);
         $data = [
-            '$product_category'=> $product_category,
+            'product_category'=> $product_category,
         ];
         return view('admins.product_categories.edit',$data);
     }

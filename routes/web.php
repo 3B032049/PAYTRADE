@@ -87,6 +87,9 @@ Route::group(['middleware' => 'seller'], function () {
         Route::post('/products', [App\Http\Controllers\SellerProductsController::class, 'store'])->name("products.store");
         Route::get('/products/{product}/edit', [App\Http\Controllers\SellerProductsController::class, 'edit'])->name("products.edit");
         Route::patch('/products/{product}', [App\Http\Controllers\SellerProductsController::class, 'update'])->name('products.update');
+        Route::patch('/products/{product}/reply', [App\Http\Controllers\SellerProductsController::class, 'reply'])->name('products.reply');
+        Route::patch('/products/{product}/statusoff', [App\Http\Controllers\SellerProductsController::class, 'statusoff'])->name('products.statusoff');
+        Route::patch('/products/{product}/statuson', [App\Http\Controllers\SellerProductsController::class, 'statuson'])->name('products.statuson');
         Route::delete('/products/{product}', [App\Http\Controllers\SellerProductsController::class, 'destroy'])->name("products.destroy");
 
         Route::get('/orders', [App\Http\Controllers\SellerOrdersController::class, 'index'])->name('orders.index');

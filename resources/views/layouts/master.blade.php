@@ -12,6 +12,16 @@
         <link href="{{asset('css/homepage-styles.css')}}" rel="stylesheet" />
 
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>賣家賣場</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/shopstyles.css" rel="stylesheet" />
+
     </head>
     <body>
         @include('layouts.partials.navigation')
@@ -25,5 +35,8 @@
 {{--        <script src="{{asset('js/scripts.js')}}"></script>--}}
 
         @include('layouts.partials.footer')
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
     </body>
 <html>

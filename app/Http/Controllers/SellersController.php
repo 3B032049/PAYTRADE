@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,6 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class SellersController extends Controller
 {
+    public function shopindex($seller_id)
+    {
+        $products = Product::where('seller_id', $seller_id)->orderby('id','ASC')->get();
+        $data = ['products' => $products];
+        return view('shopindex',$data);
+    }
 
     public function create()
     {

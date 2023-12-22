@@ -78,6 +78,7 @@ Route::group(['middleware' => 'user'], function () {
     Route::patch('orders/{order}', [App\Http\Controllers\OrderController::class, 'update'])->name("orders.update");
     Route::delete('orders/{order}', [App\Http\Controllers\OrderController::class, 'destroy'])->name("orders.destroy");
 
+
 });
 
 Route::group(['middleware' => 'seller'], function () {

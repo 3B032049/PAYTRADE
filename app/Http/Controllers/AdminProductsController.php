@@ -41,7 +41,7 @@ class AdminProductsController extends Controller
             'content' => 'required',
             'price' => 'required',
             'quantity' => 'required',
-            'image_url' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'image|mimes:jpeg,png,jpg,gif|max:8192',
         ]);
 
         $product = new Product;

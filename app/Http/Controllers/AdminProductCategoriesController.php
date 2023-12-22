@@ -55,8 +55,9 @@ class AdminProductCategoriesController extends Controller
 
     public function edit(ProductCategory $product_category)
     {
+        //dd($product_category);
         $data = [
-            '$product_category'=> $product_category,
+            'product_category'=> $product_category,
         ];
         return view('admins.product_categories.edit',$data);
     }

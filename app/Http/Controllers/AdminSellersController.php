@@ -8,13 +8,14 @@ use App\Models\Seller;
 
 class AdminSellersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->input('perPage', 10); // Default: 10 records per page
         $sellers = DB::table('sellers')
             ->join('users', 'sellers.user_id', '=', 'users.id')
             ->select('sellers.*', 'users.name', 'users.email') // 選擇需要的使用者資料
             ->orderBy('sellers.id', 'ASC')
-            ->get();
+            ->paginate($perPage);
         $data = ['sellers' => $sellers];
         return view('admins.sellers.index',$data);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -19,9 +20,16 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($order)
     {
-        //
+
+        $orders = CartItem::find($order);
+
+        $data = [
+            'orders' => $orders,
+        ];
+
+        return view('orders.create', $data);
     }
 
     /**

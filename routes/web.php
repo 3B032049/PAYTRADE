@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AdminProductsController;
 use App\Http\Controllers\AdminPostsController;
 use App\Http\Controllers\AdminAdminsController;
+use App\Http\Controllers\OrderController;
 
 
 /*
@@ -66,8 +67,17 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('cartItems/{cartItem}/edit', [App\Http\Controllers\CartItemsController::class, 'edit'])->name("cart_items.edit");
     Route::patch('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'update'])->name("cart_items.update");
     Route::delete('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'destroy'])->name("cart_items.destroy");
+
+
     Route::get('sellers/create', [App\Http\Controllers\SellersController::class, 'create'])->name("sellers.create");
-   Route::post('sellers/{selller}/store', [App\Http\Controllers\SellersController::class, 'store'])->name("sellers.store");
+    Route::post('sellers/{selller}/store', [App\Http\Controllers\SellersController::class, 'store'])->name("sellers.store");
+
+    Route::get('orders', [App\Http\Controllers\OrderController::class, 'index'])->name("orders.index");
+    Route::get('orders/create', [App\Http\Controllers\OrderController::class, 'create'])->name("orders.create");
+    Route::post('orders', [App\Http\Controllers\OrderController::class, 'store'])->name("orders.store");
+    Route::patch('orders/{order}', [App\Http\Controllers\OrderController::class, 'update'])->name("orders.update");
+    Route::delete('orders/{order}', [App\Http\Controllers\OrderController::class, 'destroy'])->name("orders.destroy");
+
 });
 
 Route::group(['middleware' => 'seller'], function () {
@@ -78,6 +88,11 @@ Route::group(['middleware' => 'seller'], function () {
         Route::get('/products/{product}/edit', [App\Http\Controllers\SellerProductsController::class, 'edit'])->name("products.edit");
         Route::patch('/products/{product}', [App\Http\Controllers\SellerProductsController::class, 'update'])->name('products.update');
         Route::delete('/products/{product}', [App\Http\Controllers\SellerProductsController::class, 'destroy'])->name("products.destroy");
+
+        Route::get('/orders', [App\Http\Controllers\SellerOrdersController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{order}/edit', [App\Http\Controllers\SellerOrdersController::class, 'edit'])->name("orders.edit");
+        Route::patch('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'update'])->name('orders.update');
+        Route::delete('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'destroy'])->name("orders.destroy");
     });
 });
 
@@ -107,7 +122,10 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/products/create',[App\Http\Controllers\AdminProductsController::class,'create'])->name('products.create');
         Route::post('/products', [App\Http\Controllers\AdminProductsController::class, 'store'])->name("products.store");
         Route::get('/products/{product}/edit', [App\Http\Controllers\AdminProductsController::class, 'edit'])->name("products.edit");
+        Route::get('/products/{product}/review',[App\Http\Controllers\AdminProductsController::class,'review'])->name('products.review');
         Route::patch('/products/{product}',[App\Http\Controllers\AdminProductsController::class,'update'])->name('products.update');
+        Route::patch('/products/{product}/pass',[App\Http\Controllers\AdminProductsController::class,'pass'])->name('products.pass');
+        Route::patch('/products/{product}/unpass',[App\Http\Controllers\AdminProductsController::class,'unpass'])->name('products.unpass');
         Route::delete('/products/{product}', [App\Http\Controllers\AdminProductsController::class, 'destroy'])->name("products.destroy");
 
         Route::get('/product_categories',[App\Http\Controllers\AdminProductCategoriesController::class,'index'])->name('product_categories.index');

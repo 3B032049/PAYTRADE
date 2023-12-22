@@ -15,8 +15,8 @@
                 <th scope="col" style="text-align:left">姓名</th>
                 <th scope="col" style="text-align:left">電子信箱</th>
                 <th scope="col" style="text-align:left">狀態</th>
-                <th scope="col" style="text-align:center">修改</th>
-                <th scope="col" style="text-align:center">刪除</th>
+                <th scope="col" style="text-align:center">操作</th>
+{{--                <th scope="col" style="text-align:center">刪除</th>--}}
             </tr>
             </thead>
             <tbody>
@@ -25,15 +25,23 @@
                     <td style="text-align:left">{{ $seller->id }}</td>
                     <td>{{ $seller->name }}</td>
                     <td>{{ $seller->email }}</td>
-                    <td>{{ $seller->status }}
+                    <td>
                         @if ($seller->status == 0)
+                            <div style="color:#FF0000; font-weight:bold;">
                             (申請未通過)
+                            </div>
                         @elseif ($seller->status == 1)
+                            <div style="color:#FF8033; font-weight:bold;">
                             (停權)
+                            </div>
                         @elseif ($seller->status == 2)
+                            <div style="color:#33FF33; font-weight:bold;">
                             (正式賣家)
+                            </div>
                         @elseif ($seller->status == 3)
+                            <div style="color:#FFB233; font-weight:bold;">
                             (申請中)
+                            </div>
                         @endif
                     </td>
                     <td style="text-align:center">
@@ -55,16 +63,47 @@
                             <a href="{{ route('admins.sellers.edit',$seller->id) }}" class="btn btn-secondary btn-sm">審核申請</a>
                         @endif
                     </td>
-                    <td style="text-align:center">
-                        <form action="{{ route('admins.sellers.destroy',$seller->id) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>
-                        </form>
-                    </td>
+{{--                    <td style="text-align:center">--}}
+{{--                        <form action="{{ route('admins.sellers.destroy',$seller->id) }}" method="POST">--}}
+{{--                            @method('DELETE')--}}
+{{--                            @csrf--}}
+{{--                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>--}}
+{{--                        </form>--}}
+{{--                    </td>--}}
                 </tr>
             @endforeach
             </tbody>
         </table>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <div class="d-flex align-items-center">
+                <span class="mr-1">每</span>
+                <select id="records-per-page" class="form-control" onchange="changeRecordsPerPage()">
+                    <option value="5" {{ $sellers->perPage() == 5 ? 'selected' : '' }}>5</option>
+                    <option value="10" {{ $sellers->perPage() == 10 ? 'selected' : '' }}>10</option>
+                    <option value="20" {{ $sellers->perPage() == 20 ? 'selected' : '' }}>20</option>
+                </select>
+                <span class="ml-1">筆</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            @if ($sellers->currentPage() > 1)
+                <a href="{{ $sellers->previousPageUrl() }}" class="btn btn-secondary">上一頁</a>
+            @endif
+
+            <span class="mx-2">全部 {{ $sellers->total() }} 筆資料，目前位於第 {{ $sellers->currentPage() }} 頁，共 {{ $sellers->lastPage() }} 頁</span>
+
+            @if ($sellers->hasMorePages())
+                <a href="{{ $sellers->nextPageUrl() }}" class="btn btn-secondary">下一頁</a>
+            @endif
+        </div>
     </div>
+    <script>
+        function changeRecordsPerPage() {
+            const select = document.getElementById('records-per-page');
+            const value = select.options[select.selectedIndex].value;
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('perPage', value);
+            window.location.href = currentUrl.href;
+        }
+    </script>
 @endsection

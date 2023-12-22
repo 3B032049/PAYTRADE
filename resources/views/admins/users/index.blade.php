@@ -32,7 +32,22 @@
                     <td>{{ $user->sex }}</td>
                     <td>{{ $user->email }}</td>
                     @if ($user->isadmin())
-                        <td>管理員</td>
+                        <td>
+                            @if($user->admin->position == 1)
+                                <div style="color:#FF0000;  font-weight:bold;">
+                                    超級管理員
+                                </div>
+                            @elseif($user->admin->position == 2)
+                                <div style="color:#FFB233;  font-weight:bold;">
+                                    高階管理員
+                                </div>
+                            @else
+                                <div style="color:#FFE333;  font-weight:bold;">
+                                    一般管理員
+                                </div>
+                            @endif
+
+                        </td>
                     @elseif($user->isseller())
                         <td>賣家</td>
                     @else
@@ -44,10 +59,10 @@
                         <a href="{{ route('admins.users.edit',$user->id) }}" class="btn btn-secondary btn-sm">編輯</a>
                     </td>
                     <td style="text-align:center">
-                        <form action="{{ route('admins.users.destroy',$user->id) }}" method="POST">
+                        <form id="deleteForm{{ $user->id }}" action="{{ route('admins.users.destroy',$user->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $user->name }}', {{ $user->id }})">刪除</button>
                         </form>
                     </td>
                 </tr>
@@ -58,14 +73,33 @@
             <div class="d-flex align-items-center">
                 <span class="mr-1">每</span>
                 <select id="records-per-page" class="form-control" onchange="changeRecordsPerPage()">
+                    <option value="5" {{ $users->perPage() == 5 ? 'selected' : '' }}>5</option>
                     <option value="10" {{ $users->perPage() == 10 ? 'selected' : '' }}>10</option>
                     <option value="20" {{ $users->perPage() == 20 ? 'selected' : '' }}>20</option>
-                    <option value="50" {{ $users->perPage() == 50 ? 'selected' : '' }}>50</option>
                 </select>
                 <span class="ml-1">筆</span>
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            @if ($users->currentPage() > 1)
+                <a href="{{ $users->previousPageUrl() }}" class="btn btn-secondary">上一頁</a>
+            @endif
+
+            <span class="mx-2">全部 {{ $users->total() }} 筆資料，目前位於第 {{ $users->currentPage() }} 頁，共 {{ $users->lastPage() }} 頁</span>
+
+            @if ($users->hasMorePages())
+                <a href="{{ $users->nextPageUrl() }}" class="btn btn-secondary">下一頁</a>
+            @endif
+        </div>
     </div>
+    <script>
+        function confirmDelete(username, userId)
+        {
+            if (confirm("確定要刪除使用者" + username + "嗎？")) {
+                document.getElementById('deleteForm' + userId).submit();
+            }
+        }
+    </script>
     <script>
         function changeRecordsPerPage() {
             const select = document.getElementById('records-per-page');

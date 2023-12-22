@@ -23,7 +23,7 @@
                     @foreach ($cartItems as $cartItem)
                         <tr>
                             <td class="py-2 px-4 border-b">
-                                <input type="checkbox" style="transform: scale(1.5)" name="selected_items[]" value="{{ $cartItem->id }}">
+                                <input type="checkbox" style="transform: scale(1.5)" name="selected_items[]" checked value="{{ $cartItem->id }}">
                             </td>
                             <td class="py-2 px-4 border-b">
                                 <img src="{{ asset('storage/products/' . $cartItem->product->image_url) }}" alt="{{ $cartItem->product->name }}" width="150px" height="150px">
@@ -37,9 +37,9 @@
                                     @csrf
                                     @method('PATCH')
                                     <span class="quantity-span">
-                                    <button class="quantity-minus" type="button" onclick="setOperationInput('minus')">-</button>
-                                    <input class="quantity-input" type="text"  name="quantity" value="{{ $cartItem->quantity }}" style="max-width: 6rem">
-                                    <button class="quantity-plus" type="button" onclick="setOperationInput('plus')">+</button>
+                                    <button class="quantity-minus" type="submit" onclick="setOperationInput('minus')">-</button>
+                                    <input class="quantity-input" type="number"  name="quantity" value="{{ $cartItem->quantity }}" style="max-width: 6rem">
+                                    <button class="quantity-plus" type="submit" onclick="setOperationInput('plus')">+</button>
                                     <input type="hidden" name="operation" id="operationInput" value="">
                                     </span>
                                 </form>
@@ -48,10 +48,10 @@
                                 ${{ number_format($cartItem->quantity * $cartItem->product->price,0) }}
                             </td>
                             <td class="py-2 px-4 border-b">
-                                <form action="{{ route('cart_items.destroy', $cartItem->id) }}" method="POST">
+                                <form id="deleteForm{{ $cartItem->id }}" action="{{ route('cart_items.destroy', $cartItem->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">刪除</button>
+                                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ $cartItem->product->name }}', {{ $cartItem->id }})">刪除</button>
                                 </form>
                             </td>
                         </tr>
@@ -65,20 +65,13 @@
                     </tr>
                     <tr>
                         <td colspan="7">
-<<<<<<< HEAD
-                            <form action="{{ route('orders.create', $cartItem->user_id) }}" method="POST" id="checkoutForm">
+                            <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm" onsubmit="prepareCheckout()">
                                 @csrf
-                                @method('POST')
+                                @method('GET')
                                 <div class="text-center">
                                     <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button>
                                 </div><br><br>
                             </form>
-=======
-                        <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm">
-                            @method('GET')
-                            <div class="text-center"><button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button></div><br><br>
-                        </form>
->>>>>>> refs/remotes/origin/master
                         </td>
                     </tr>
                     </tbody>
@@ -90,6 +83,43 @@
         </div>
     </div>
 <script>
+    function confirmDelete(name, Id)
+    {
+        if (confirm("確定要刪除 " + name + " 嗎？")) {
+            document.getElementById('deleteForm' + Id).submit();
+        }
+    }
+
+    function prepareCheckout() {
+        const selectedItems = getSelectedItems();
+        const checkoutForm = document.getElementById('checkoutForm');
+
+        // 將選擇的商品ID添加到結帳表單的 query string 中
+        const queryString = selectedItems.length > 0 ? `?selected_items=${selectedItems.join(',')}` : '';
+        checkoutForm.action = "{{ route('orders.create') }}" + queryString;
+
+        // 如果有選擇的商品，觸發表單提交
+        if (selectedItems.length > 0) {
+            return true;
+        } else {
+            // 如果沒有選擇商品，取消表單提交
+            alert("請勾選至少一個商品進行結帳。");
+            return false;
+        }
+    }
+    function getSelectedItems() {
+        const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
+        const selectedItems = [];
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                selectedItems.push(checkbox.value);
+            }
+        });
+
+        return selectedItems;
+    }
+
     function setOperationInput(operation) {
         const operationInput = document.getElementById('operationInput');
         operationInput.value = operation;
@@ -99,6 +129,8 @@
     }
 </script>
 <script>
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const quantitySpans = document.querySelectorAll('.quantity-span');
         const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');

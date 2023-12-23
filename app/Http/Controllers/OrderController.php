@@ -48,21 +48,21 @@ class OrderController extends Controller
         // 這裡假設你已經登入並取得會員資訊
         $user = auth()->user();
 
-        // Collect products associated with each cart item
+        // 將購物車商品與商品資料表連結
         $productsByCartItem = collect($selectedItems)->map(function ($item) {
-            // Assuming $item['product_id'] is the product ID in the cart item
+            // 利用product_id關聯
             $product = Product::find($item['product_id']);
 
-            // Return an array with product and cart item information
+            // 回傳商品 &　購物車商品連結
             return [
                 'product' => $product,
                 'cart_item' => $item,
             ];
         });
 
-        // Group by seller_id
+        // 將購買的商品以賣家做區隔
         $groupedItems = $productsByCartItem->groupBy(function ($item) {
-            // Assuming the seller_id is in the products table
+            // 以seller_id區隔
             return $item['product']->seller_id;
         });
 
@@ -97,6 +97,17 @@ class OrderController extends Controller
 
                 // 儲存訂單明細
                 $orderDetail->save();
+
+
+                // 訂單建立後，將商品資料表的庫存扣除
+                $product = $item['cart_item']['product'];
+                $quantity = $item['cart_item']['quantity'];
+                // 檢查庫存是否足夠
+                if ($product['quantity'] >= $quantity) {
+                    // 扣除商品庫存
+                    $product['quantity'] -= $quantity;
+                    Product::where('id', $product['id'])->update(['quantity' => $product['quantity']]);
+                }
             }
 
             $productIdsToRemove = $items->pluck('cart_item.product_id');

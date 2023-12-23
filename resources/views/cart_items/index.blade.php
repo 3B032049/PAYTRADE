@@ -65,9 +65,10 @@
                     </tr>
                     <tr>
                         <td colspan="7">
-                            <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm" onsubmit="prepareCheckout()">
+                            <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm" onsubmit="return prepareCheckout(event)">
                                 @csrf
                                 @method('GET')
+                                <input type="hidden" name="selected_items" id="selectedItemsInput" value="">
                                 <div class="text-center">
                                     <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button>
                                 </div><br><br>
@@ -83,16 +84,21 @@
         </div>
     </div>
 <script>
-    function confirmDelete(name, Id)
-    {
+    function confirmDelete(name, Id) {
         if (confirm("確定要刪除 " + name + " 嗎？")) {
             document.getElementById('deleteForm' + Id).submit();
         }
     }
 
-    function prepareCheckout() {
+    function prepareCheckout(event) {
+        event.preventDefault();  // 防止表單直接提交
+
         const selectedItems = getSelectedItems();
         const checkoutForm = document.getElementById('checkoutForm');
+        const selectedItemsInput = document.getElementById('selectedItemsInput');
+
+        // 將選擇的商品ID添加到結帳表單的 input value 中
+        selectedItemsInput.value = selectedItems.join(',');
 
         // 將選擇的商品ID添加到結帳表單的 query string 中
         const queryString = selectedItems.length > 0 ? `?selected_items=${selectedItems.join(',')}` : '';
@@ -100,13 +106,14 @@
 
         // 如果有選擇的商品，觸發表單提交
         if (selectedItems.length > 0) {
-            return true;
+            checkoutForm.submit();
         } else {
             // 如果沒有選擇商品，取消表單提交
             alert("請勾選至少一個商品進行結帳。");
-            return false;
         }
     }
+
+
     function getSelectedItems() {
         const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
         const selectedItems = [];
@@ -123,17 +130,11 @@
     function setOperationInput(operation) {
         const operationInput = document.getElementById('operationInput');
         operationInput.value = operation;
-
-        // 觸發表單提交
         document.getElementById('updateCartItemForm').submit();
     }
-</script>
-<script>
-
 
     document.addEventListener('DOMContentLoaded', function() {
         const quantitySpans = document.querySelectorAll('.quantity-span');
-        const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
         const totalAmountElement = document.getElementById('totalAmount');
 
         quantitySpans.forEach(span => {
@@ -152,12 +153,6 @@
             });
         });
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                updateTotalAmount();
-            });
-        });
-
         function updateQuantity(input, change) {
             let newValue = parseInt(input.value) + change;
             if (newValue < 1) {
@@ -165,18 +160,12 @@
             }
             input.value = newValue;
 
-            // 獲取價格元素和小計元素
             const priceElement = input.closest('tr').querySelector('.price');
             const subtotalElement = input.closest('tr').querySelector('.subtotal');
-
-            // 獲取商品價格和小計
             const productPrice = parseFloat(priceElement.dataset.price);
             const subtotal = newValue * productPrice;
 
-            // 更新小計價格
             subtotalElement.textContent = `$${subtotal.toFixed(0)}`;
-
-            // 更新總金額
             updateTotalAmount();
         }
 

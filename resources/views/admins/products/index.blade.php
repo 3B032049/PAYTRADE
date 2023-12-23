@@ -49,11 +49,19 @@
                             </div>
                         @elseif ($product->status == 1)
                             <div style="color:#33FF33; font-weight:bold;">
-                                (上架中)
+                                (審核成功)
                             </div>
                         @elseif ($product->status == 2)
                             <div style="color:#FF0000; font-weight:bold;">
                                 (審核失敗)
+                            </div>
+                        @elseif ($product->status == 3)
+                            <div style="color:#FF0000; font-weight:bold;">
+                                (上架中)
+                            </div>
+                        @elseif ($product->status == 4)
+                            <div style="color:#FF0000; font-weight:bold;">
+                                (下架中)
                             </div>
                         @endif
                     </td>

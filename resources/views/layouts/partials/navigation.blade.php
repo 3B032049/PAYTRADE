@@ -44,6 +44,9 @@
                             <li>
                                 <a class="dropdown-item" href="{{ route('users.index') }}" style="color:black">{{ __('個人資料') }}</a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('orders.index') }}" style="color:black">{{ __('訂購清單') }}</a>
+                            </li>
                             @if(Auth::User()->Seller->status==0)
                                 <li>
                                     <a class="dropdown-item" href="{{ route('sellers.create') }}" style="color:black">{{ __('賣家申請失敗') }}</a>

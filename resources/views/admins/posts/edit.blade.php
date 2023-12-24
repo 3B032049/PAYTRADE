@@ -20,13 +20,6 @@
                 <label for="content" class="form-label">文章內容</label>
                 <textarea id="content" name="content" class="form-control" rows="10" >{{ old('content',$post->content) }}</textarea>
             </div>
-            <div class="form-group">
-                <label for="is_feature" class="form-label">精選?</label>
-                <select id="is_feature" name="is_feature" class="form-control">
-                    <option value="0" {{(!$post->is_feature)?'selected':""}}>否</option>
-                    <option value="1" {{($post->is_feature)?'selected':""}}>是</option>
-                </select>
-            </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="submit" class="btn btn-primary btn-sm">儲存</button>
             </div>

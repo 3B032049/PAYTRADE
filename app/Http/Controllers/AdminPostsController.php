@@ -25,7 +25,7 @@ class AdminPostsController extends Controller
             ->paginate($perPage);
 
         // 返回結果
-        return view('admins.product_categories.index', [
+        return view('admins.posts.index', [
             'posts' => $posts,
             'query' => $query,
         ]);
@@ -43,7 +43,6 @@ class AdminPostsController extends Controller
         $this->validate($request, [
             'title' => 'required|max:50',
             'content' => 'required',
-            'is_feature' => 'required|boolean',
         ]);
 
         // Create a new post instance
@@ -55,6 +54,18 @@ class AdminPostsController extends Controller
         // Save the post to the database
         $post->save();
 
+        return redirect()->route('admins.posts.index');
+    }
+
+    public function statusOn(Request $request, Post $post)
+    {
+        $post->update(['status' => 1]);
+        return redirect()->route('admins.posts.index');
+    }
+
+    public function statusOff(Request $request, Post $post)
+    {
+        $post->update(['status' => 0]);
         return redirect()->route('admins.posts.index');
     }
 

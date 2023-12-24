@@ -24,13 +24,6 @@
                 <label for="file" class="form-label">上傳</label>
                 <input id="file" name="file" type="file" class="form-control" rows="10" placeholder="附檔">{{ old('file') }}</input>
             </div>
-            <div class="form-group">
-                <label for="is_feature" class="form-label">精選?</label>
-                <select id="is_feature" name="is_feature" class="form-control">
-                    <option value="0">否</option>
-                    <option value="1">是</option>
-                </select>
-            </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="submit" class="btn btn-primary btn-sm">儲存</button>
             </div>

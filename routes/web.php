@@ -152,6 +152,8 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/posts/search', [App\Http\Controllers\AdminPostsController::class, 'search'])->name('posts.search');
         Route::get('/posts/create', [App\Http\Controllers\AdminPostsController::class, 'create'])->name("posts.create");
         Route::post('/posts', [App\Http\Controllers\AdminPostsController::class, 'store'])->name("posts.store");
+        Route::patch('/posts/{post}/statusOff', [App\Http\Controllers\AdminPostsController::class, 'statusOff'])->name("posts.statusOff");
+        Route::patch('/posts/{post}/statusOn', [App\Http\Controllers\AdminPostsController::class, 'statusOn'])->name("posts.statusOn");
         Route::get('/posts/{post}/edit', [App\Http\Controllers\AdminPostsController::class, 'edit'])->name("posts.edit");
         Route::patch('/posts/{post}', [App\Http\Controllers\AdminPostsController::class, 'update'])->name("posts.update");
         Route::delete('/posts/{post}', [App\Http\Controllers\AdminPostsController::class, 'destroy'])->name("posts.destroy");
@@ -159,6 +161,7 @@ Route::group(['middleware' => 'admin'], function () {
 
         //管理員操作路由
         Route::get('/admins',[App\Http\Controllers\AdminAdminsController::class,'index'])->name('admins.index');
+        Route::get('/admins/search', [App\Http\Controllers\AdminAdminsController::class, 'search'])->name('admins.search');
         Route::get('/admins/create',[App\Http\Controllers\AdminAdminsController::class,'create'])->name('admins.create');
         Route::get('/admins/create_selected/{id}',[App\Http\Controllers\AdminAdminsController::class,'create_selcted'])->name('admins.create_selected');
         Route::post('/admins', [App\Http\Controllers\AdminAdminsController::class, 'store'])->name("admins.store");

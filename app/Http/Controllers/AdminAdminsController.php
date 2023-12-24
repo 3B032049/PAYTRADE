@@ -9,15 +9,33 @@ use Illuminate\Support\Facades\DB;
 
 class AdminAdminsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->input('perPage', 10);
         $admins = DB::table('admins')
             ->join('users', 'admins.user_id', '=', 'users.id')
             ->select('admins.*', 'users.name', 'users.email') // 選擇需要的使用者資料
             ->orderBy('admins.id', 'ASC')
-            ->get();
+            ->paginate($perPage);
         $data = ['admins' => $admins];
         return view('admins.admins.index',$data);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $perPage = $request->input('perPage', 10);
+        $admins = DB::table('admins')
+            ->join('users', 'admins.user_id', '=', 'users.id')
+            ->where('users.name', 'like', "%$query%")
+            ->orderBy('admins.id', 'ASC')
+            ->paginate($perPage);
+
+        // 返回結果
+        return view('admins.admins.index', [
+            'admins' => $admins,
+            'query' => $query,
+        ]);
     }
 
     public function create()

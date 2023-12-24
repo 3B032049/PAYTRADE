@@ -25,8 +25,10 @@
             <tr>
                 <th scope="col" style="text-align:center">標題</th>
                 <th scope="col" style="text-align:center">內容</th>
-                <th scope="col" style="text-align:center">公告時間</th>
-                <th scope="col">功能</th>
+                <th scope="col" style="text-align:center">公告建立時間</th>
+                <th scope="col" style="text-align:center">狀態</th>
+                <th scope="col" style="text-align:center">功能</th>
+                <th scope="col" style="text-align:center">刪除</th>
             </tr>
             </thead>
             <tbody>
@@ -36,7 +38,30 @@
                     <td style="text-align:center">{{$post->content}}</td>
                     <td style="text-align:center">{{$post->created_at}}</td>
                     <td style="text-align:center">
-                        <a href="{{ route('admins.posts.edit',$post->id) }}" class="btn btn-primary btn-sm">編輯</a>
+                        @if ($post->status == 0)
+                            未上架
+                        @elseif ($post->status == 1)
+                            已上架
+                        @endif
+                    </td>
+                    <td style="text-align:center">
+                        @if ($post->status == 0)
+                            <form action="{{ route('admins.posts.statusOn',$post->id) }}" method="POST" role="form">
+                                @method('PATCH')
+                                @csrf
+                                <button type="submit" class="btn btn-secondary btn-sm">上架</button>
+                            </form>
+                            <a href="{{ route('admins.posts.edit',$post->id) }}" class="btn btn-primary btn-sm">編輯</a>
+                        @elseif ($post->status == 1)
+                            <form action="{{ route('admins.posts.statusOff',$post->id) }}" method="POST" role="form">
+                                @method('PATCH')
+                                @csrf
+                                <button type="submit" class="btn btn-secondary btn-sm">下架</button>
+                            </form>
+                        @endif
+
+                    </td>
+                    <td style="text-align:center">
                         <form action="{{ route('admins.posts.destroy',$post->id) }}" method="POST">
                             @method('DELETE')
                             @csrf

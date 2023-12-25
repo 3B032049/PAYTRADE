@@ -11,7 +11,7 @@
                         <div class="card-header">{{ __('個人資料') }}</div>
 
                         <div class="card-body">
-                            <form method="POST" action="{{ route('users.update',$user->id) }}">
+                            <form method="POST" action="{{ route('users.update',$user->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
 
@@ -21,6 +21,25 @@
 {{--                                        {{ $user->account }}--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
+
+                                <div class="row mb-3">
+                                    <label for="photo" class="col-md-4 col-form-label text-md-end">{{ __('個人頭像 / photo') }}</label>
+                                    <div class="col-md-6">
+                                        <label for="photo" class="form-label">頭像</label>
+                                        <input id="photo" name="photo" type="file" class="form-control" onchange="previewImage(this);">
+                                        <img id="image-preview" src="#" alt="圖片預覽" style="display: none; width:200px; height:200px;" >
+
+                                        @if(isset($user->photo))
+                                            <img  src="{{ asset('storage/user/' . $user->photo) }}" alt="{{ $user->name }}" style="max-width: 100%; height: 250px" />
+                                        @endif
+
+                                        @error('photo')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
                                 <div class="row mb-3">
                                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('姓名 / Name') }}</label>
@@ -150,4 +169,22 @@
             </div>
         </div>
     </section>
+    <script>
+        function previewImage(input) {
+            var preview = document.getElementById('image-preview');
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function () {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '#';
+                preview.style.display = 'none';
+            }
+        }
+    </script>
+
 @endsection

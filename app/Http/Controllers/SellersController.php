@@ -14,7 +14,7 @@ class SellersController extends Controller
     {
         $products = Product::where('seller_id', $seller_id)->orderby('id','ASC')->get();
         $data = ['products' => $products];
-        return view('home',$data);
+        return view('shop',$data);
     }
 
     public function create()

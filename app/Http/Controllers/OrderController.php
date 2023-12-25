@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -17,7 +18,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $data = ['orders' => $orders];
+        return view('orders.index',$data);
     }
 
     /**
@@ -122,7 +126,11 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        $orderDetails = OrderDetail::where('order_id', $order->id)->get();
+
+        $data = ['order_details' => $orderDetails];
+
+        return view('orders.show', $data);
     }
 
     /**

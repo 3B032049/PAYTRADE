@@ -3,7 +3,7 @@
 @section('title', '訂單')
 
 @section('content')
-<hr>
+    <hr>
     <div class="wrapper">
         <div class="container mt-8">
             <h3 class="text-2xl mb-4" align="center">訂單結帳</h3>
@@ -11,43 +11,55 @@
     </div>
 
     @if ($selectedCartItems->count() > 0)
-    <form id="checkoutForm" action="{{ route('orders.store') }}" method="POST">
-        @csrf
-        @method('POST')
-        <table class="min-w-full bg-white border border-gray-200 mx-auto" border="1">
-            <tr align="center">
-                <th class="py-2">商品圖片</th>
-                <th>商品名稱</th>
-                <th>價格</th>
-                <th>數量</th>
-                <th>小計</th>
-            </tr>
-            <tbody>
-            @php
-                $totalSum = 0;
-            @endphp
-            @foreach ($selectedCartItems as $selectedCartItem)
-                <tr>
-                    <td class="py-2 px-4 border-b">
-                        <img src="{{ asset('storage/products/' . $selectedCartItem->product->image_url) }}" alt="{{ $selectedCartItem->product->name }}" width="80px" height="80px">
-                    </td>
-                    <td class="py-2 px-4 border-b">{{ $selectedCartItem->product->name }}</td>
-                    <td class="py-2 px-4 border-b price" data-price="{{ $selectedCartItem->product->price }}">
-                        ${{ $selectedCartItem->product->price }}
-                    </td>
-                    <td class="py-2 px-4 border-b">
-                        <span class="quantity-span">
-                            {{ $selectedCartItem->quantity }}
-                        </span>
-                    </td>
-                    <td class="py-2 px-4 border-b subtotal">
-                        ${{ number_format($selectedCartItem->quantity * $selectedCartItem->product->price, 0) }}
-                    </td>
+        <form id="checkoutForm" action="{{ route('orders.store') }}" method="POST">
+            @csrf
+            @method('POST')
+            <table class="min-w-full bg-white border border-gray-200 mx-auto" border="1">
+                <tr align="center">
+                    <th class="py-2">商品圖片</th>
+                    <th>商品名稱</th>
+                    <th>價格</th>
+                    <th>數量</th>
+                    <th>小計</th>
                 </tr>
+                <tbody>
                 @php
-                    $totalSum += $selectedCartItem->quantity * $selectedCartItem->product->price;
+                    $currentSeller = null;
+                    $totalSum = 0;
                 @endphp
-            @endforeach
+                @foreach ($selectedCartItems as $selectedCartItem)
+                    @if ($currentSeller !== $selectedCartItem->product->seller->id)
+                        <tr>
+                            <td colspan="5">
+                                <br>&nbsp賣家：{{ $selectedCartItem->product->seller->user->name }}
+                            </td>
+                        </tr>
+                        @php
+                            $currentSeller = $selectedCartItem->product->seller->id;
+                        @endphp
+                    @endif
+
+                    <tr>
+                        <td class="py-2 px-4 border-b">
+                            <img src="{{ asset('storage/products/' . $selectedCartItem->product->image_url) }}" alt="{{ $selectedCartItem->product->name }}" width="80px" height="80px">
+                        </td>
+                        <td class="py-2 px-4 border-b">{{ $selectedCartItem->product->name }}</td>
+                        <td class="py-2 px-4 border-b price" data-price="{{ $selectedCartItem->product->price }}">
+                            ${{ $selectedCartItem->product->price }}
+                        </td>
+                        <td class="py-2 px-4 border-b">
+                            <span class="quantity-span">
+                                {{ $selectedCartItem->quantity }}
+                            </span>
+                        </td>
+                        <td class="py-2 px-4 border-b subtotal">
+                            ${{ number_format($selectedCartItem->quantity * $selectedCartItem->product->price, 0) }}
+                        </td>
+                    </tr>
+                    @php
+                        $totalSum += $selectedCartItem->quantity * $selectedCartItem->product->price;
+                    @endphp
+                @endforeach
             <tr>
                 <td colspan="5">
                     <br><h4>&nbsp會員資訊</h4>
@@ -93,16 +105,16 @@
                 </td>
             </tr>
             <input type="hidden" name="selected_items" value="{{ json_encode($selectedCartItems) }}">
-            <tr>
-                <td colspan="5">
-                    <div class="text-center">
-                        總金額：${{ number_format($totalSum, 0) }}
-                        <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">下單</button><br><br>
-                    </div>
-                </td >
-            </tr>
-            </tbody>
-        </table>
+                <tr>
+                    <td colspan="5">
+                        <div class="text-center">
+                            總金額：${{ number_format($totalSum, 0) }}
+                            <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">下單</button><br><br>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </form>
     @else
         <p class="text-gray-600">購物車內無商品。</p>

@@ -3,24 +3,29 @@
 @section('title','購物車')
 
 @section('content')
-<hr>
+    <hr>
     <div class="wrapper">
         <div class="container mt-8">
             <h1 class="text-2xl mb-4" align="center">購物車內容</h1>
 
             @if ($cartItems->count() > 0)
                 <table class="min-w-full bg-white border border-gray-200 mx-auto">
-                    <tr align="center">
-                        <th> </th>
-                        <th class="py-2">商品圖片</th>
-                        <th>商品名稱</th>
-                        <th>價格</th>
-                        <th>數量</th>
-                        <th>小計</th>
-                        <th>刪除</th>
-                    </tr>
                     <tbody>
+                    @php
+                        $currentSeller = null;
+                    @endphp
                     @foreach ($cartItems as $cartItem)
+                        @if ($currentSeller !== $cartItem->product->seller->id)
+                            <tr>
+                                <td class="py-2 px-4 border-b" colspan="7">
+                                    賣家：{{ $cartItem->product->seller->user->name }}
+                                </td>
+                            </tr>
+                            @php
+                                $currentSeller = $cartItem->product->seller->id;
+                            @endphp
+                        @endif
+
                         <tr>
                             <td class="py-2 px-4 border-b">
                                 <input type="checkbox" style="transform: scale(1.5)" name="selected_items[]" checked value="{{ $cartItem->id }}">
@@ -45,7 +50,7 @@
                                 </form>
                             </td>
                             <td class="py-2 px-4 border-b subtotal">
-                                ${{ number_format($cartItem->quantity * $cartItem->product->price,0) }}
+                                ${{ number_format($cartItem->quantity * $cartItem->product->price, 0) }}
                             </td>
                             <td class="py-2 px-4 border-b">
                                 <form id="deleteForm{{ $cartItem->id }}" action="{{ route('cart_items.destroy', $cartItem->id) }}" method="POST">
@@ -56,27 +61,29 @@
                             </td>
                         </tr>
                     @endforeach
-                    <tr>
-                        <td colspan="7"><hr></td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="text-left" style="height: 80px">總金額：</td>
-                        <td colspan="2" class="text-center" id="totalAmount">${{ number_format($totalAmount, 0) }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="7">
-                            <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm" onsubmit="return prepareCheckout(event)">
-                                @csrf
-                                @method('GET')
-                                <input type="hidden" name="selected_items" id="selectedItemsInput" value="">
-                                <div class="text-center">
-                                    <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button>
-                                </div><br><br>
-                            </form>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
+
+                <hr>
+
+                <div class="text-left"  >
+                    <strong>商品總運費：</strong>${{ number_format($totalShippingFee, 0) }}
+                </div>
+                <div class="text-left"  >
+                    <strong>商品總金額：</strong>${{ number_format($totalAmount, 0) }}
+                </div><br>
+                <div class="text-left" style="height: 80px">
+                    <strong>總金額：</strong>${{ number_format($totalAmount+$totalShippingFee, 0) }}
+                </div>
+
+                <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm" onsubmit="return prepareCheckout(event)">
+                    @csrf
+                    @method('GET')
+                    <input type="hidden" name="selected_items" id="selectedItemsInput" value="">
+                    <div class="text-center">
+                        <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">結帳</button>
+                    </div>
+                </form>
 
             @else
                 <p class="text-gray-600">購物車內無商品。</p>
@@ -172,6 +179,7 @@
         function updateTotalAmount() {
             const subtotalElements = document.querySelectorAll('.subtotal');
             let totalAmount = 0;
+            let totalShippingFee = parseFloat(document.getElementById('totalShippingFee').textContent.replace('$', ''));
 
             subtotalElements.forEach(subtotalElement => {
                 const checkbox = subtotalElement.closest('tr').querySelector('input[name="selected_items[]"]');
@@ -180,8 +188,11 @@
                 }
             });
 
+            totalAmount += totalShippingFee;
+
             totalAmountElement.textContent = `$${totalAmount.toFixed(0)}`;
         }
+
     });
 </script>
 @endsection

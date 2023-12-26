@@ -29,8 +29,10 @@
                                         <input id="photo" name="photo" type="file" class="form-control" onchange="previewImage(this);">
                                         <img id="image-preview" src="#" alt="圖片預覽" style="display: none; width:200px; height:200px;" >
 
-                                        @if(isset($user->photo))
-                                            <img  src="{{ asset('storage/user/' . $user->photo) }}" alt="{{ $user->name }}" style="max-width: 100%; height: 250px" />
+                                        @if ($user->photo == 'head.jpg')
+                                            <img class="card-img-top w-100 h-100 object-cover" src="images/head.jpg" alt="{{ htmlspecialchars($user->name) }}" />
+                                        @else
+                                            <img class="card-img-top w-100 h-100 object-cover" src="{{ asset('storage/user/' . $user->photo) }}" alt="{{ htmlspecialchars($user->name) }}" />
                                         @endif
 
                                         @error('photo')

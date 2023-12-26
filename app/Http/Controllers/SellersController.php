@@ -10,10 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SellersController extends Controller
 {
-    public function shopindex($seller_id)
+    public function shopindex($product,$seller_id)
     {
+//        dd($product, $seller_id);
         $products = Product::where('seller_id', $seller_id)->orderby('id','ASC')->get();
-        $data = ['products' => $products];
+        $seller = Seller::where('id', $seller_id)->first();
+        $data = ['products' => $products , 'seller' => $seller];
+
         return view('shop',$data);
     }
 

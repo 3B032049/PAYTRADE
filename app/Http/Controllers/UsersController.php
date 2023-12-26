@@ -21,8 +21,10 @@ class UsersController extends Controller
         $this->validate($request, [
             'photo' => 'image|mimes:jpeg,png,jpg,gif|max:4089',
         ]);
-
-        if ($request->hasFile('photo')) {
+        if (!$request->hasFile('photo')) {
+            $user->photo = 'images/default.jpg';
+        }
+        else if ($request->hasFile('photo')) {
             // Delete the old image from storage
             if ($user->photo) {
                 Storage::disk('user')->delete($user->photo);
@@ -38,6 +40,7 @@ class UsersController extends Controller
             // Set the new image URL in the Product instance
             $user->photo = $imageName;
         }
+
 
         // Update other user attributes
             $user->update($request->except('photo'));

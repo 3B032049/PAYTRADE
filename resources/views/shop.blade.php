@@ -16,77 +16,97 @@
 <div class="container px-4 px-lg-5">
     <!-- Heading Row-->
     <div class="row gx-4 gx-lg-5 align-items-center my-5">
-        <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="..." /></div>
-        <div class="col-lg-5">
-            <h1 class="font-weight-light">Business Name or Tagline</h1>
-            <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
-            <a class="btn btn-primary" href="#!">Call to Action!</a>
-        </div>
-    </div>
-    <!-- Call to Action-->
-    <div class="card text-white bg-secondary my-5 py-4 text-center">
-        <div class="card-body"><p class="text-white m-0">This call to action card is a great place to showcase some important information or display a clever tagline!</p></div>
-    </div>
-    <!-- Content Row-->
-    <div class="row gx-4 gx-lg-5">
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h2 class="card-title">Card One</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+        <div class="row">
+            <div class="col-lg-7 d-flex align-items-center">
+                <div class="rounded-circle overflow-hidden" style="width: 200px; height: 200px;">
+                    @if ($seller->user->photo == 'head.jpg')
+                        <img class="card-img-top w-100 h-100 object-cover" src="{{ asset('images/head.jpg') }}" alt="{{ htmlspecialchars($seller->user->name) }}" />
+                    @else
+                        <img class="card-img-top w-100 h-100 object-cover" src="{{ asset('storage/user/' . $seller->user->photo) }}" alt="{{ htmlspecialchars($seller->user->name) }}" />
+                    @endif
                 </div>
-                <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
             </div>
-        </div>
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h2 class="card-title">Card Two</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
-                </div>
-                <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h2 class="card-title">Card Three</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-                </div>
-                <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+            <div class="col-lg-6">
+                <h1 class="font-weight-light">{{ $seller->user->name }}</h1>
+                <p>歡迎來到我的賣場</p>
             </div>
         </div>
     </div>
-</div>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            @if (count($products) > 0)
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    @foreach($products as $product)
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const quantitySpans = document.querySelectorAll('.quantity-span');
+                        <div class="col mb-5">
+                            <div class="card h-100">
+                                <!-- Product image-->
+                                <a href="{{ route("products.show",$product->id) }}">
+                                    <img class="card-img-top" src="{{ asset('storage/products/' . $product->image_url) }}" alt="{{ $product->title }}" style="max-width: 100%; height: 250px" />
+                                </a>
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{ $product->name }}</h5>
+                                        <!-- Product price-->
+                                        <span class="price" style="color: red; font-size: 1.6em; font-weight: bold;">${{ $product->price }}</span>
+                                    </div>
+                                </div>
+                                <!-- Product actions-->
+                                <div class="card-footer p-3 pt-0 border-top-0 bg-transparent d-flex justify-content-center align-items-center">
+                                    <form action="{{ route("cart_items.store",$product->id) }}" method="POST" role="form">
+                                        @csrf
+                                        @method('POST')
+                                        <span class="quantity-span">
+                            <button class="quantity-minus" type="button">-</button>
+                            <input class="quantity-input" type="text"  name="quantity" value="1" style="max-width: 5rem">
+                            <button class="quantity-plus" type="button">+</button>
+                            </span>
+                                        <br><br><div class="text-center"><button class="btn btn-outline-dark mx-6 mt-auto" type="submit">加入購物車</button></div>
+                                    </form>
 
-        quantitySpans.forEach(span => {
-            const quantityInput = span.querySelector('.quantity-input');
-            const minusButton = span.querySelector('.quantity-minus');
-            const plusButton = span.querySelector('.quantity-plus');
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div align="center">
+                    <h3>賣場內無商品</h3>
+                </div>
+            @endif
+        </div>
+    </section>
 
-            minusButton.addEventListener('click', function(event) {
-                event.preventDefault();
-                updateQuantity(quantityInput, -1);
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantitySpans = document.querySelectorAll('.quantity-span');
+
+            quantitySpans.forEach(span => {
+                const quantityInput = span.querySelector('.quantity-input');
+                const minusButton = span.querySelector('.quantity-minus');
+                const plusButton = span.querySelector('.quantity-plus');
+
+                minusButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    updateQuantity(quantityInput, -1);
+                });
+
+                plusButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    updateQuantity(quantityInput, 1);
+                });
             });
 
-            plusButton.addEventListener('click', function(event) {
-                event.preventDefault();
-                updateQuantity(quantityInput, 1);
-            });
-        });
-
-        function updateQuantity(input, change) {
-            let newValue = parseInt(input.value) + change;
-            if (newValue < 1) {
-                newValue = 1;
+            function updateQuantity(input, change) {
+                let newValue = parseInt(input.value) + change;
+                if (newValue < 1) {
+                    newValue = 1;
+                }
+                input.value = newValue;
             }
-            input.value = newValue;
-        }
-    });
-</script>
+        });
+    </script>
 @endsection
 

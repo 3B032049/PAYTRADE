@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <a href="{{ route("shopindex", $product->seller_id) }}">賣家：{{$product->seller->user->name}}賣場</a>
+{{--        <a href="{{ route("shopindex", $product->seller_id) }}">賣家：{{$product->seller->user->name}}賣場</a>--}}
     </div>
 </section>
 <!-- Related items section-->

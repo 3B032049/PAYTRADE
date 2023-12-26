@@ -21,7 +21,41 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $order->user_id }}</td>
-                    <td>{{ $order->status }}</td>
+                    <td> @if ($order->status == '1')
+                            <div style="color:#FF0000; font-weight:bold;">
+                                (待確認)
+                            </div>
+
+                        @elseif ($order->status == '2')
+                            <div style="color:#ff6f00; font-weight:bold;">
+                                (出貨中)
+                            </div>
+                        @elseif ($order->status == '3')
+                            <div style="color:#ffea00; font-weight:bold;">
+                                (已出貨)
+                            </div>
+                        @elseif ($order->status == '4')
+                            <div style="color:#48ff00; font-weight:bold;">
+                                (已送達)
+                            </div>
+                        @elseif ($order->status == '5')
+                            <div style="color:#002aff; font-weight:bold;">
+                                (已完成)
+                            </div>
+                        @elseif ($order->status == '6')
+                            <div style="color:#002aff; font-weight:bold;">
+                                (退貨)
+                            </div>
+                        @elseif ($order->status == '7')
+                            <div style="color:#002aff; font-weight:bold;">
+                                (取消)
+                            </div>
+                        @elseif ($order->status == '8')
+                            <div style="color:#002aff; font-weight:bold;">
+                                (未成立)
+                            </div>
+
+                        @endif</td>
                     <td>{{ $order->date }}</td>
                     <td style="text-align:center">
                         <a href="{{ route('sellers.orders.edit',$order->id) }}" class="btn btn-secondary btn-sm">檢視訂單</a>

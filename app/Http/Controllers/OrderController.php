@@ -76,7 +76,7 @@ class OrderController extends Controller
             $order = new Order();
             $order->user_id = $user->id;
             $order->seller_id = $sellerId; // 賣家的 ID
-            $order->status = 1; // 這裡可以根據需求填入適當的初始狀態
+            $order->status = 0; // 這裡可以根據需求填入適當的初始狀態
             $order->date = now(); // 或者你想要的訂單日期
             $order->pay = 0;
             # 抓取該在該賣家購買的訂單總額
@@ -131,6 +131,21 @@ class OrderController extends Controller
         $data = ['order_details' => $orderDetails];
 
         return view('orders.show', $data);
+    }
+
+    public function payment($orderId)
+    {
+        //
+        $orderDetails = OrderDetail::where('order_id', $orderId)->get();
+
+        $data = ['order_details' => $orderDetails];
+
+        return view('orders.payment', $data);
+    }
+
+    public function store_card(Order $order)
+    {
+        //
     }
 
     /**

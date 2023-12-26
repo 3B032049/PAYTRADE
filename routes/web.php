@@ -77,6 +77,9 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('orders/create', [App\Http\Controllers\OrderController::class, 'create'])->name("orders.create");
     Route::get('orders/{order}', [App\Http\Controllers\OrderController::class, 'show'])->name("orders.show");
     Route::post('orders', [App\Http\Controllers\OrderController::class, 'store'])->name("orders.store");
+    Route::GET('orders/payment/{orders}', [App\Http\Controllers\OrderController::class, 'payment'])->name("orders.payment");
+
+    Route::post('orders/{store_card}', [App\Http\Controllers\OrderController::class, 'store_card'])->name("orders.store_card");
     Route::patch('orders/{order}', [App\Http\Controllers\OrderController::class, 'update'])->name("orders.update");
     Route::delete('orders/{order}', [App\Http\Controllers\OrderController::class, 'destroy'])->name("orders.destroy");
 

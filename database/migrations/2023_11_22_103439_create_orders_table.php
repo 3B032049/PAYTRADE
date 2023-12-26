@@ -24,6 +24,11 @@ return new class extends Migration
             $table->string('receiver');
             $table->string('receiver_phone');
             $table->string('receiver_address');
+            $table->integer('card_number')->nullable();
+            $table->integer('pay_code')->nullable();
+            $table->integer('year')->nullable();
+            $table->integer('month')->nullable();
+            $table->integer('day')->nullable();
             $table->timestamps();
         });
     }

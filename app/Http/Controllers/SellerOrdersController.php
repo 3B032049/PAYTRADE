@@ -17,10 +17,6 @@ class SellerOrdersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($product)
-    {
-
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -31,6 +27,31 @@ class SellerOrdersController extends Controller
             'order'=> $order,
         ];
         return view('sellers.orders.edit',$data);
+    }
+    public function pass(Order $order)
+    {
+       $order->status='2';
+        $order->save();
+        return redirect()->route('sellers.orders.index');
+    }
+    public function unpass(Order $order)
+    {
+        $order->status='8';
+        $order->save();
+        return redirect()->route('sellers.orders.index');
+    }
+    public function transport(Order $order)
+    {
+        $order->status='3';
+        $order->save();
+
+        return redirect()->route('sellers.orders.index');
+    }
+    public function arrive(Order $order)
+    {
+        $order->status='4';
+        $order->save();
+        return redirect()->route('sellers.orders.index');
     }
 
     /**

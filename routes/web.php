@@ -52,14 +52,14 @@ Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
 Route::get('products/search', [App\Http\Controllers\ProductController::class, 'search'])->name('products.search');
 Route::get('products/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
-//Route::get('/{seller_id}', [App\Http\Controllers\SellersController::class, 'shopindex'])->name('shopindex');
+Route::get('products/{product}/{seller_id}', [App\Http\Controllers\SellersController::class, 'shopindex'])->name('shopindex');
 //登入
 Auth::routes();
 
 Route::group(['middleware' => 'user'], function () {
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/',[App\Http\Controllers\UsersController::class,'index'])->name('index');
-        Route::patch('{user}',[App\Http\Controllers\UsersController::class,'update'])->name('update');
+        Route::patch('/{user}',[App\Http\Controllers\UsersController::class,'update'])->name('update');
     });
     Route::get('cartItems', [App\Http\Controllers\CartItemsController::class, 'index'])->name("cart_items.index");
     Route::get('cartItems/create', [App\Http\Controllers\CartItemsController::class, 'create'])->name("cart_items.create");
@@ -101,6 +101,10 @@ Route::group(['middleware' => 'seller'], function () {
         Route::get('/orders', [App\Http\Controllers\SellerOrdersController::class, 'index'])->name('orders.index');
         Route::get('/orders/{order}/edit', [App\Http\Controllers\SellerOrdersController::class, 'edit'])->name("orders.edit");
         Route::patch('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'update'])->name('orders.update');
+        Route::patch('/orders/{order}/pass', [App\Http\Controllers\SellerOrdersController::class, 'pass'])->name('orders.pass');
+        Route::patch('/orders/{order}/unpass', [App\Http\Controllers\SellerOrdersController::class, 'unpass'])->name('orders.unpass');
+        Route::patch('/orders/{order}/transport', [App\Http\Controllers\SellerOrdersController::class, 'transport'])->name('orders.transport');
+        Route::patch('/orders/{order}/arrive', [App\Http\Controllers\SellerOrdersController::class, 'arrive'])->name('orders.arrive');
         Route::delete('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'destroy'])->name("orders.destroy");
     });
 });

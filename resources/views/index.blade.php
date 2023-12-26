@@ -19,7 +19,7 @@
                 <div class="card h-100">
                     <!-- Product image-->
                     <a href="{{ route("products.show",$product->id) }}">
-                    <img class="card-img-top" src="{{ asset('storage/products/' . $product->image_url) }}" alt="{{ $product->title }}" style="max-width: 100%; height: 250px" />
+                    <img class="card-img-top" src="{{ asset('storage/products/' . $product->image_url) }}" alt="{{ $product->title }}" style="max-width: 150%; height: 250px" />
                     </a>
                         <!-- Product details-->
                     <div class="card-body p-4">
@@ -37,7 +37,7 @@
                             @method('POST')
                             <span class="quantity-span">
                             <button class="quantity-minus" type="button">-</button>
-                            <input class="quantity-input" type="text"  name="quantity" value="1" style="max-width: 5rem">
+                            <input class="quantity-input" type="text" min="1" name="quantity" value="1" style="max-width: 5rem">
                             <button class="quantity-plus" type="button">+</button>
                             </span>
                             <br><br><div class="text-center"><button class="btn btn-outline-dark mx-6 mt-auto" type="submit">加入購物車</button></div>

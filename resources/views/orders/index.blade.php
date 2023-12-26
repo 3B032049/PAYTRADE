@@ -33,7 +33,11 @@
                     <td width="200" height="50">訂單{{ $order->id }}</td>
                     <td width="200" height="50">{{ $order->created_at }}</td>
                     <td width="200" height="50">
-                    @if ($order->status == '1')
+                    @if ($order->status == '0')
+                        <div style="color:#8d00ff; font-weight:bold;">
+                            (未付款)
+                        </div>
+                    @elseif ($order->status == '1')
                         <div style="color:#FF0000; font-weight:bold;">
                             (待確認)
                         </div>

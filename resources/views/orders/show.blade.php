@@ -114,7 +114,12 @@
                     訂單狀態資訊
                 </div>
             </td>
-            <td colspan="4">@if ($order_detail->order->status == '1')
+            <td colspan="4">
+                @if ($order_detail->order->status == '0')
+                    <div style="color:#8d00ff; font-weight:bold;">
+                        (未付款)
+                    </div>
+                @elseif ($order_detail->order->status == '1')
                     <div style="color:#FF0000; font-weight:bold;">
                         (待確認)
                     </div>
@@ -141,11 +146,36 @@
             <td colspan="5" ><div class="text-center"><hr></div></td>
         </tr>
         <tr>
-            <td colspan="4"></td>
+            <td colspan="3"></td>
             <td>
-                <div class="text-center">
-                    <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">取消訂單</button><br><br>
-                </div>
+                @if ($order_detail->order->status == '0')
+                    <form action="{{ route('orders.payment', $order_detail->order->id) }}" method="GET">
+                        @csrf
+                        @method('GET')
+                        <div class="text-left">
+                            <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">付款</button><br><br>
+                        </div>
+                    </form>
+                @endif
+            </td>
+            <td>
+                @if ($order_detail->order->status == '4')
+                    <form action="#" method="GET">
+                        @csrf
+                        @method('GET')
+                        <div class="text-left">
+                            <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">完成訂單</button><br><br>
+                        </div>
+                    </form>
+                @elseif
+                    <form action="#" method="GET">
+                        @csrf
+                        @method('GET')
+                        <div class="text-left">
+                            <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">取消訂單</button><br><br>
+                        </div>
+                    </form>
+                @endif
             </td>
         </tr>
         </tbody>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
@@ -16,13 +18,38 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user)
     {
-//        $this->validate($request,[
-//            'title' => 'required|max:50',
-//            'content' => 'required',
-//            'is_feature' => 'required|boolean',
-//        ]);
+        $this->validate($request, [
+            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:4089',
+        ]);
+        if (!$request->hasFile('photo')) {
+            $user->photo = 'images/default.jpg';
+        }
+        else if ($request->hasFile('photo')) {
+            // Delete the old image from storage
+            if ($user->photo) {
+                Storage::disk('user')->delete($user->photo);
+            }
 
-        $user->update($request->all());
+            // Upload the new image
+            $image = $request->file('photo');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+
+            // Log the image file name
+            Storage::disk('user')->put($imageName, file_get_contents($image));
+
+            // Set the new image URL in the Product instance
+            $user->photo = $imageName;
+        }
+
+
+        // Update other user attributes
+            $user->update($request->except('photo'));
+
+        // Save the user model
+            $user->save();
+
+
         return redirect()->route('users.index');
+
     }
 }

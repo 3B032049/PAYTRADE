@@ -159,9 +159,23 @@
                 @endif
             </td>
             <td>
-                <div class="text-left">
-                    <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">取消訂單</button><br><br>
-                </div>
+                @if ($order_detail->order->status == '4')
+                    <form action="#" method="GET">
+                        @csrf
+                        @method('GET')
+                        <div class="text-left">
+                            <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">完成訂單</button><br><br>
+                        </div>
+                    </form>
+                @elseif
+                    <form action="#" method="GET">
+                        @csrf
+                        @method('GET')
+                        <div class="text-left">
+                            <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">取消訂單</button><br><br>
+                        </div>
+                    </form>
+                @endif
             </td>
         </tr>
         </tbody>

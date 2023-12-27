@@ -53,6 +53,10 @@ Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->nam
 Route::get('products/search', [App\Http\Controllers\ProductController::class, 'search'])->name('products.search');
 Route::get('products/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::get('products/{product}/{seller_id}', [App\Http\Controllers\ProductController::class, 'shopindex'])->name('shopindex');
+
+
+Route::get('products/by_category/{category_id}', [App\Http\Controllers\ProductController::class, 'by_category'])->name('products.by_category');
+
 //登入
 Auth::routes();
 

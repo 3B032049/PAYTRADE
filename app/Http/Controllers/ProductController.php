@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+<<<<<<< HEAD
 use App\Models\Seller;
+=======
+use App\Models\ProductCategory;
+>>>>>>> refs/remotes/origin/master
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -179,6 +183,17 @@ class ProductController extends Controller
             'products' => $products,
 //            'sellers' => $sellers,
             'query' => $query,
+        ]);
+    }
+
+    public function by_category(Request $request,$category_id)
+    {
+        $category = ProductCategory::find($category_id);
+        $products = Product::where('product_category_id', $category_id)->get();
+
+        return view('products.by_category', [
+            'category' => $category,
+            'products' => $products,
         ]);
     }
 }

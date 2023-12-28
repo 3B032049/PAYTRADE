@@ -14,7 +14,8 @@ class SellerProductsController extends Controller
 {
     public function index()
     {
-        $products = Product::orderby('id','ASC')->get();
+        $seller = Auth::user()->seller;
+        $products = Product::orderby('id','ASC')->where('seller_id',$seller->id)->get();
         $data = ['products' => $products];
         return view('sellers.products.index',$data);
     }

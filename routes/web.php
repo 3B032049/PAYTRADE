@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminHomeController;
 use Illuminate\Support\Facades\Storage;
@@ -136,6 +137,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::patch('/sellers/{seller}/unpass',[App\Http\Controllers\AdminSellersController::class,'unpass'])->name('sellers.unpass');
         Route::delete('/sellers/{seller}', [App\Http\Controllers\AdminSellersController::class, 'destroy'])->name("sellers.destroy");
 
+        Route::get('/products',[App\Http\Controllers\AdminSellersController::class,'index'])->name('products.index');
         Route::get('/products/search', [App\Http\Controllers\AdminProductsController::class, 'search'])->name('products.search');
         Route::get('/products/create',[App\Http\Controllers\AdminProductsController::class,'create'])->name('products.create');
         Route::post('/products', [App\Http\Controllers\AdminProductsController::class, 'store'])->name("products.store");

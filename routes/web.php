@@ -54,6 +54,7 @@ Route::get('products/search', [App\Http\Controllers\ProductController::class, 's
 Route::get('products/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 
 Route::get('products/by_category/{category_id}', [App\Http\Controllers\ProductController::class, 'by_category'])->name('products.by_category');
+Route::get('products/by_category/search/{category_id}', [App\Http\Controllers\ProductController::class, 'by_category_search'])->name('products.by_category.search');
 Route::get('products/{product}/{seller_id}', [App\Http\Controllers\SellersController::class, 'shopindex'])->name('shopindex');
 //登入
 Auth::routes();

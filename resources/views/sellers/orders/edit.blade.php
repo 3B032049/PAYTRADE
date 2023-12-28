@@ -48,7 +48,6 @@
                             </form>
                         @endif
                     </div>
-
                 @elseif ($order->status == '2')
                     <div style="color:#ff6f00; font-weight:bold;">
                         (發貨中)

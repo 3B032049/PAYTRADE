@@ -9,7 +9,6 @@
             <h3 class="text-2xl mb-4" align="center">付款明細</h3>
         </div>
     </div>
-    <form id="checkoutForm" action="{{ route('orders.store') }}" method="POST">
         <table class="min-w-full bg-white border border-gray-200 mx-auto" border="1">
             <tbody>
             @php
@@ -86,13 +85,16 @@
                 <td colspan="5" ><div class="text-center"><hr></div></td>
             </tr>
             <tr>
-                <td>
-                    <div class="text-left">
-                        <button class="btn btn-danger btn-lg btn-block" type="submit">立即付款 (${{ number_format($totalSum, 0) }})</button><br><br>
-                    </div>
+                <td colspan="5" align="right">
+                    <form action="{{ route('orders.update_pay', $order_detail->order->id) }}" method="POST" role="form">
+                        @method('PATCH')
+                        @csrf
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary btn-sm">立即付款 (${{ number_format($totalSum, 0) }})</button><br><br>
+                        </div><br>
+                    </form>
                 </td>
             </tr>
             </tbody>
         </table>
-    </form>
 @endsection

@@ -164,9 +164,9 @@
             </td>
             <td>
                 @if ($order_detail->order->status == '4')
-                    <form action="#" method="GET">
+                    <form action="{{ route('orders.complete_order', $order_detail->order->id) }}" method="POST">
                         @csrf
-                        @method('GET')
+                        @method('PATCH')
                         <div class="text-left">
                             <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">完成訂單</button><br><br>
                         </div>

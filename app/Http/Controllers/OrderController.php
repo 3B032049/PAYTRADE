@@ -172,6 +172,14 @@ class OrderController extends Controller
         return redirect()->route('orders.index');
     }
 
+    public function complete_order(Order $order)
+    {
+        //
+        $order->status='5';
+        $order->save();
+        return redirect()->route('orders.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      */

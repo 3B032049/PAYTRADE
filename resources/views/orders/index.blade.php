@@ -11,11 +11,6 @@
 {{--            <a href="#" style="text-decoration: none;color: black" >歷史訂單</a>--}}
         </div>
     </div>
-
-    <form id="checkoutForm" action="{{ route('orders.store') }}" method="POST">
-        @csrf
-        @method('POST')
-
         <table class="min-w-full bg-white border border-gray-200 mx-auto" border="1">
             <thead align="center">
             <tr  align="center">
@@ -57,6 +52,10 @@
                         <div style="color:#002aff; font-weight:bold;">
                             (已完成)
                         </div>
+                    @elseif ($order->status == '7')
+                        <div style="color:#ff00ea; font-weight:bold;">
+                            (已取消)
+                        </div>
                     @endif
                     </td>
                     <td width="200" height="50">
@@ -66,6 +65,7 @@
             @endforeach
             </tbody>
         </table>
-    </form>
-
 @endsection
+
+
+

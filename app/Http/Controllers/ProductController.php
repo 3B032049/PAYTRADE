@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+<<<<<<< HEAD
+use App\Models\Seller;
+=======
+use App\Models\ProductCategory;
+>>>>>>> refs/remotes/origin/master
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -19,6 +24,15 @@ class ProductController extends Controller
         $products = Product::orderby('id','ASC')->get();
         $data = ['products' => $products];
         return view('sellers.products.index',$data);
+    }
+    public function shopindex($product,$seller_id)
+    {
+//        dd($product, $seller_id);
+        $products = Product::where('seller_id', $seller_id)->orderby('id','ASC')->get();
+        $seller = Seller::where('id', $seller_id)->first();
+        $data = ['products' => $products , 'seller' => $seller];
+
+        return view('shop',$data);
     }
 
     /**
@@ -169,6 +183,17 @@ class ProductController extends Controller
             'products' => $products,
 //            'sellers' => $sellers,
             'query' => $query,
+        ]);
+    }
+
+    public function by_category(Request $request,$category_id)
+    {
+        $category = ProductCategory::find($category_id);
+        $products = Product::where('product_category_id', $category_id)->get();
+
+        return view('products.by_category', [
+            'category' => $category,
+            'products' => $products,
         ]);
     }
 }

@@ -137,7 +137,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::patch('/sellers/{seller}/unpass',[App\Http\Controllers\AdminSellersController::class,'unpass'])->name('sellers.unpass');
         Route::delete('/sellers/{seller}', [App\Http\Controllers\AdminSellersController::class, 'destroy'])->name("sellers.destroy");
 
-        Route::get('/products',[App\Http\Controllers\AdminSellersController::class,'index'])->name('products.index');
+        Route::get('/products',[App\Http\Controllers\AdminProductsController::class,'index'])->name('products.index');
         Route::get('/products/search', [App\Http\Controllers\AdminProductsController::class, 'search'])->name('products.search');
         Route::get('/products/create',[App\Http\Controllers\AdminProductsController::class,'create'])->name('products.create');
         Route::post('/products', [App\Http\Controllers\AdminProductsController::class, 'store'])->name("products.store");
@@ -157,6 +157,10 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/product_categories/{product_category}/edit', [App\Http\Controllers\AdminProductCategoriesController::class, 'edit'])->name("product_categories.edit");
         Route::patch('/product_categories/{product_category}',[App\Http\Controllers\AdminProductCategoriesController::class,'update'])->name('product_categories.update');
         Route::delete('/product_categories/{product_category}', [App\Http\Controllers\AdminProductCategoriesController::class, 'destroy'])->name("product_categories.destroy");
+
+        Route::get('/orders', [App\Http\Controllers\AdminOrdersController::class, 'index'])->name('orders.index');
+        Route::get('/orders/search', [App\Http\Controllers\AdminOrdersController::class, 'search'])->name('orders.search');
+        Route::get('/orders/{order}/info', [App\Http\Controllers\AdminOrdersController::class, 'show'])->name('orders.show');
 
         //公告路由
         Route::get('/posts', [App\Http\Controllers\AdminPostsController::class, 'index'])->name("posts.index");

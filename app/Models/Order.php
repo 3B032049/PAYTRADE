@@ -36,7 +36,7 @@ class Order extends Model
 
     public function seller()
     {
-        return $this->belongsTo(seller::class);
+        return $this->belongsTo(Seller::class);
     }
 
 }

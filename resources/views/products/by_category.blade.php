@@ -5,15 +5,20 @@
 @section('content')
     <hr>
     <div class="container px-4 px-lg-5 mt-2 mb-4">
-        <form action="{{ route('products.search') }}" method="GET" class="d-flex">
+        <form action="{{ route('products.by_category.search',$category_selected->id) }}" method="GET" class="d-flex">
             <input type="text" name="query" class="form-control me-2" placeholder="關鍵字搜尋...">
             <button type="submit" class="btn btn-outline-dark">搜尋</button>
         </form>
     </div>
+    @if ($category_selected)
+        <div class="container px-4 px-lg-5 mt-2 mb-4">
+            查找「{{ $category_selected->name }}」類商品
+        </div>
+    @endif
     @if (request()->has('query'))
         <div class="container px-4 px-lg-5 mt-2 mb-4">
             查找「{{ request('query') }}」
-            <a class="btn btn-success btn-sm" href="{{ route('home') }}">取消搜尋</a>
+            <a class="btn btn-success btn-sm" href="{{ route('products.by_category',$category_selected->id) }}">取消搜尋</a>
         </div>
     @endif
     @if (count($products) > 0)

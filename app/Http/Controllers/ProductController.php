@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\ProductCategory;
+
 use App\Models\Seller;
+use App\Models\ProductCategory;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -185,12 +187,28 @@ class ProductController extends Controller
 
     public function by_category(Request $request,$category_id)
     {
-        $category = ProductCategory::find($category_id);
+        $category_selected = ProductCategory::find($category_id);
         $products = Product::where('product_category_id', $category_id)->get();
 
+//        dd($category_selected);
         return view('products.by_category', [
-            'category' => $category,
+            'category_selected' => $category_selected,
             'products' => $products,
+        ]);
+    }
+
+    public function by_category_search(Request $request,$category_id)
+    {
+        $query = $request->input('query');
+        $category_selected = ProductCategory::find($category_id);
+        $products = Product::where('product_category_id', $category_id)
+            ->where('name', 'like', "%$query%")
+            ->get();
+
+        return view('products.by_category', [
+            'category_selected' => $category_selected,
+            'products' => $products,
+            'query' => $query,
         ]);
     }
 }

@@ -4,38 +4,56 @@
 
 @section('page-content')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">書籍管理</h1>
+        <h1 class="mt-4">訂單管理</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">編輯書籍資料</li>
+            <li class="breadcrumb-item active">檢視訂單資料</li>
         </ol>
         @include('admins.layouts.shared.errors')
-        <form action="{{ route('admins.products.update',$product->id) }}" method="POST" role="form" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="buyer" class="form-label">買家</label>
+            <input id="buyer" name="buyer" type="text" class="form-control" value="{{ old('buyer',$order->user->name) }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="seller" class="form-label">賣家</label>
+            <input id="seller" name="seller" type="text" class="form-control" value="{{ old('seller',$order->seller->user->name) }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="date" class="form-label">訂單日期</label>
+            <input id="date" name="date" type="text" class="form-control" value="{{ old('date',$order->date) }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="status" class="form-label">狀態</label>
+            @if ($order->status == '1')
+                <input id="status" name="status" type="text" class="form-control" value="待確認" readonly>
+            @elseif ($order->status == '2')
+                <input id="status" name="status" type="text" class="form-control" value="出貨中" readonly>
+            @elseif ($order->status == '3')
+                <input id="status" name="status" type="text" class="form-control" value="已出貨" readonly>
+            @elseif ($order->status == '4')
+                <input id="status" name="status" type="text" class="form-control" value="已送達" readonly>
+            @elseif ($order->status == '5')
+                <input id="status" name="status" type="text" class="form-control" value="已完成" readonly>
+            @elseif ($order->status == '6')
+                <input id="status" name="status" type="text" class="form-control" value="退貨" readonly>
+            @elseif ($order->status == '7')
+                <input id="status" name="status" type="text" class="form-control" value="取消" readonly>
+            @elseif ($order->status == '8')
+                <input id="status" name="status" type="text" class="form-control" value="未成立" readonly>
+            @endif</td>
+        </div>
+        <br><h3>訂單明細</h3>
+        @foreach ($order -> orderDetails as $index => $orderDetail)
+        <div class="form-group">
+            <label for="order_detail" class="form-label">書籍{{$index + 1}}</label>
+            <input id="order_detail" name="order_detail" type="text" class="form-control" value="{{ old('order_detail',$orderDetail->product->name) }}" readonly>
+        </div>
+        @endforeach
+        <form action="{{ route('admins.orders.cancel',$order->id) }}" method="POST" role="form">
             @method('PATCH')
             @csrf
-            <div class="form-group">
-                <label for="name" class="form-label">書籍名稱</label>
-                <input id="name" name="name" type="text" class="form-control" value="{{ old('name',$product->name) }}" placeholder="請輸入書籍名稱">
-            </div>
-            <div class="form-group">
-                <label for="image_url" class="form-label">書籍圖片</label>
-                <input id="image_url" name="image_url" type="file" class="form-control" value="{{ old('image_url',$product->image_url ) }}" placeholder="請選擇書籍圖片" onchange="previewImage(this);">
-                <img id="image-preview" src="{{ $product->image_url ? asset('storage/products/' . $product->image_url) : '#' }}" alt="圖片預覽" style="width:200px; height:200px; display: {{ $product->image_url ? 'block' : 'none' }}" >
-            </div>
-            <div class="form-group">
-                <label for="content" class="form-label">書籍內容</label>
-                <input id="content" name="content" type="text" class="form-control" value="{{ old('content',$product->content) }}" placeholder="請輸入內容">
-            </div>
-            <div class="form-group">
-                <label for="price" class="form-label">價格</label>
-                <input id="price" name="price" type="text" class="form-control" value="{{ old('price',$product->price) }}" placeholder="請輸入價格">
-            </div>
-            <div class="form-group">
-                <label for="quantity" class="form-label">庫存</label>
-                <input id="quantity" name="quantity" type="text" class="form-control" value="{{ old('quantity',$product->quantity) }}" placeholder="請輸入數量">
-            </div>
-
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="submit" class="btn btn-primary btn-sm">儲存</button>
+                <button type="submit" class="btn btn-primary btn-sm">強制取消訂單</button>
             </div>
         </form>
     </div>

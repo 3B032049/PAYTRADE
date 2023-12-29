@@ -161,6 +161,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/orders', [App\Http\Controllers\AdminOrdersController::class, 'index'])->name('orders.index');
         Route::get('/orders/search', [App\Http\Controllers\AdminOrdersController::class, 'search'])->name('orders.search');
         Route::get('/orders/{order}/info', [App\Http\Controllers\AdminOrdersController::class, 'show'])->name('orders.show');
+        Route::patch('/orders/{order}', [App\Http\Controllers\AdminOrdersController::class, 'cancel'])->name("orders.cancel");
 
         //公告路由
         Route::get('/posts', [App\Http\Controllers\AdminPostsController::class, 'index'])->name("posts.index");

@@ -41,4 +41,10 @@ class AdminOrdersController extends Controller
         ];
         return view('admins.orders.show',$data);
     }
+
+    public function cancel(Request $request, Order $order)
+    {
+        $order->update(['status' => 7]);
+        return redirect()->route('admins.orders.index');
+    }
 }

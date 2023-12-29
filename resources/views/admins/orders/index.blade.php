@@ -69,9 +69,9 @@
                             </div>
 
                         @endif</td>
-{{--                    <td style="text-align:center">--}}
-{{--                        <a href="{{ route('admins.orders.show',$order->id) }}" class="btn btn-secondary btn-sm">編輯</a>--}}
-{{--                    </td>--}}
+                    <td style="text-align:center">
+                        <a href="{{ route('admins.orders.show',$order->id) }}" class="btn btn-secondary btn-sm">檢視</a>
+                    </td>
 {{--                    <td style="text-align:center">--}}
 {{--                        <form action="{{ route('admins.products.destroy',$product->id) }}" method="POST">--}}
 {{--                            @method('DELETE')--}}

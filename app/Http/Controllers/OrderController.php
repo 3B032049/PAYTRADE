@@ -190,13 +190,12 @@ class OrderController extends Controller
 
     public function filter(Request $request)
     {
-        dd($request);
         $status = $request->input('status');
         $orders = Order::where('status', $status)->get();
 
         // You can pass $orders to the view and display the filtered orders
 
         // Redirect back to the order list
-        return redirect()->route('orders.index', ['orders' => $orders]);
+        return view('orders.index', ['orders' => $orders]);
     }
 }

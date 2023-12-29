@@ -50,8 +50,10 @@
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
+                        <a href="{{ route("products.show",$relatedProduct->id) }}">
                         <img class="card-img-top" src="{{ asset('storage/products/' . $relatedProduct->image_url) }}" alt="..." style="max-width: 150%; height: 250px" />
-                        <!-- Product details-->
+                        </a>
+                            <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->

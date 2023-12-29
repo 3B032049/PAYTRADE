@@ -80,29 +80,48 @@ class ProductController extends Controller
      */
     public function show($product)
     {
-        //
         if (Auth::check())
         {
             $user = Auth::user();
             $cartItems = $user->CartItems;
 
-            $product = Product::where('id',$product)->first();
+            $product = Product::where('id', $product)->first();
+
+            // 取得相同 product_category_id 的其他產品
+            $relatedProducts = Product::where('product_category_id', $product->product_category_id)
+                ->where('id', '!=', $product->id) // 排除當前產品
+                ->inRandomOrder() // 隨機排序
+                ->limit(4) // 限制取得的數量，根據你的需求調整
+                ->get();
+
             $data = [
                 'cartItems' => $cartItems,
                 'product' => $product,
+                'relatedProducts' => $relatedProducts,
             ];
+
             return view('products.show', $data);
         }
         else
         {
-            $product = Product::where('id',$product)->first();
+            $product = Product::where('id', $product)->first();
+
+            // 取得相同 product_category_id 的其他產品
+            $relatedProducts = Product::where('product_category_id', $product->product_category_id)
+                ->where('id', '!=', $product->id) // 排除當前產品
+                ->inRandomOrder() // 隨機排序
+                ->limit(4) // 限制取得的數量，根據你的需求調整
+                ->get();
+
             $data = [
                 'product' => $product,
-
+                'relatedProducts' => $relatedProducts,
             ];
+
             return view('products.show', $data);
         }
     }
+
 
     /**
      * Show the form for editing the specified resource.

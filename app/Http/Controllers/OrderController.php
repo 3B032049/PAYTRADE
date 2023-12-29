@@ -83,7 +83,7 @@ class OrderController extends Controller
             $sellerTotal = $items->sum(function ($item) {
                 return $item['cart_item']['quantity'] * $item['cart_item']['product']['price'];
             });
-            $order->price = $sellerTotal;
+            $order->price = $sellerTotal+60;
             $order->receiver = $request->receiver;
             $order->receiver_phone = $request->receiver_phone;
             $order->receiver_address = $request->receiver_address;

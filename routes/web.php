@@ -81,11 +81,14 @@ Route::group(['middleware' => 'user'], function () {
 
     Route::get('orders', [App\Http\Controllers\OrderController::class, 'index'])->name("orders.index");
     Route::get('orders/create', [App\Http\Controllers\OrderController::class, 'create'])->name("orders.create");
-    Route::get('orders/{order}', [App\Http\Controllers\OrderController::class, 'show'])->name("orders.show");
+    Route::get('orders/{order}/show', [App\Http\Controllers\OrderController::class, 'show'])->name("orders.show");
     Route::post('orders', [App\Http\Controllers\OrderController::class, 'store'])->name("orders.store");
     Route::get('orders/{order}/payment', [App\Http\Controllers\OrderController::class, 'payment'])->name("orders.payment");
     Route::patch('orders/{order}/update_pay', [App\Http\Controllers\OrderController::class, 'update_pay'])->name("orders.update_pay");
-//    Route::delete('orders/{order}', [App\Http\Controllers\OrderController::class, 'destroy'])->name("orders.destroy");
+    Route::patch('orders/{order}/cancel_order', [App\Http\Controllers\OrderController::class, 'cancel_order'])->name("orders.cancel_order");
+    Route::patch('orders/{order}/complete_order', [App\Http\Controllers\OrderController::class, 'complete_order'])->name("orders.complete_order");
+    Route::get('orders/filter', [App\Http\Controllers\OrderController::class, 'filter'])->name('orders.filter');
+    Route::get('orders/comment/{order}', [App\Http\Controllers\OrderController::class, 'comment'])->name('orders.comment');
 
 
 });

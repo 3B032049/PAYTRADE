@@ -164,11 +164,38 @@ class OrderController extends Controller
         return redirect()->route('orders.index');
     }
 
+    public function cancel_order(Order $order)
+    {
+        //
+        $order->status='7';
+        $order->save();
+        return redirect()->route('orders.index');
+    }
+
+    public function complete_order(Order $order)
+    {
+        //
+        $order->status='5';
+        $order->save();
+        return redirect()->route('orders.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function filter(Request $request)
+    {
+        $status = $request->input('status');
+        $orders = Order::where('status', $status)->get();
+
+        // You can pass $orders to the view and display the filtered orders
+
+        // Redirect back to the order list
+        return view('orders.index', ['orders' => $orders]);
     }
 }

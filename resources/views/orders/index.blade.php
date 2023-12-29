@@ -16,6 +16,13 @@
         <tr style="height: 100px">
             <td>
                 <div class="container mt-4 text-center">
+                    <form action="{{ route('orders.index') }}" method="GET">
+                        <button type="submit" class="btn btn-secondary mx-2">所有訂單</button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                <div class="container mt-4 text-center">
                     <form action="{{ route('orders.filter') }}" method="GET">
                         @csrf
                         @method('GET')
@@ -67,6 +74,7 @@
         </tr>
         </tbody>
     </table>
+    @if(count($orders) > 0)
         <table class="min-w-full bg-white border border-gray-200 mx-auto" border="1">
             <thead align="center">
             <tr  align="center">
@@ -121,6 +129,9 @@
             @endforeach
             </tbody>
         </table>
+    @else
+        <br><br><div align="center"><h3>目前無訂單</h3></div>
+    @endif
 @endsection
 
 

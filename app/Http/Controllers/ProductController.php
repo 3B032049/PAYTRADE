@@ -24,7 +24,7 @@ class ProductController extends Controller
         $data = ['products' => $products];
         return view('sellers.products.index',$data);
     }
-    public function shopindex($seller_id)
+    public function by_seller($seller_id)
     {
 //        dd($product, $seller_id);
         $products = Product::where('seller_id', $seller_id)->orderby('id','ASC')->get();

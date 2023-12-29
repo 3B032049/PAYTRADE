@@ -38,5 +38,9 @@ class Order extends Model
     {
         return $this->belongsTo(seller::class);
     }
+    public function message()
+    {
+        return $this->hasOne(message::class);
+    }
 
 }

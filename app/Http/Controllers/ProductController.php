@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-<<<<<<< HEAD
+
 use App\Models\Seller;
-=======
 use App\Models\ProductCategory;
->>>>>>> refs/remotes/origin/master
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;

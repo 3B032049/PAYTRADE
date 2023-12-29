@@ -10,7 +10,7 @@ class Message extends Model
     use HasFactory;
     protected $fillable = [
         'order_id',
-        'buyer_rating',
+        'buying_rating',
         'buyer_message',
         'seller_rating',
         'seller_message',

@@ -46,7 +46,7 @@
                     <form action="{{ route('orders.filter') }}" method="GET">
                         @csrf
                         @method('GET')
-                        <input type="text" name="status" value="2" hidden>
+                        <input type="text" name="status" value="4" hidden>
                         <button type="submit" class="btn btn-secondary mx-2">待收貨</button>
                     </form>
                 </div>

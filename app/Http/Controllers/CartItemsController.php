@@ -17,7 +17,11 @@ class CartItemsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $cartItems = $user->cartItems;
+        $cartItems = $user->cartItems
+            ->sortBy(function ($cartItem) {
+                return $cartItem->product->seller_id;
+            });
+
         $totalAmount = $cartItems->sum(function ($cartItem) {
             return $cartItem->quantity * $cartItem->product->price;
         });

@@ -11,6 +11,62 @@
 {{--            <a href="#" style="text-decoration: none;color: black" >歷史訂單</a>--}}
         </div>
     </div>
+    <table border="0" align="center">
+        <tbody>
+        <tr style="height: 100px">
+            <td>
+                <div class="container mt-4 text-center">
+                    <form action="{{ route('orders.filter') }}" method="GET">
+                        @csrf
+                        @method('GET')
+                        <input type="text" name="status" value="0" hidden>
+                        <button type="submit" class="btn btn-secondary mx-2">未付款</button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                <div class="container mt-4 text-center">
+                    <form action="{{ route('orders.filter') }}" method="GET">
+                        @csrf
+                        @method('GET')
+                        <input type="text" name="status" value="1" hidden>
+                        <button type="submit" class="btn btn-secondary mx-2">代出貨</button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                <div class="container mt-4 text-center">
+                    <form action="{{ route('orders.filter') }}" method="GET">
+                        @csrf
+                        @method('GET')
+                        <input type="text" name="status" value="2" hidden>
+                        <button type="submit" class="btn btn-secondary mx-2">代收貨</button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                <div class="container mt-4 text-center">
+                    <form action="{{ route('orders.filter') }}" method="GET">
+                        @csrf
+                        @method('GET')
+                        <input type="text" name="status" value="5" hidden>
+                        <button type="submit" class="btn btn-secondary mx-2">已完成</button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                <div class="container mt-4 text-center">
+                    <form action="{{ route('orders.filter') }}" method="GET">
+                        @csrf
+                        @method('GET')
+                        <input type="text" name="status" value="7" hidden>
+                        <button type="submit" class="btn btn-secondary mx-2">不成立</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
         <table class="min-w-full bg-white border border-gray-200 mx-auto" border="1">
             <thead align="center">
             <tr  align="center">

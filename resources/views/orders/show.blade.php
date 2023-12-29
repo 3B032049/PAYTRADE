@@ -139,6 +139,10 @@
                     <div style="color:#002aff; font-weight:bold;">
                         (已完成)
                     </div>
+                @elseif ($order_detail->order->status == '7')
+                    <div style="color:#ff00ea; font-weight:bold;">
+                        (已取消訂單)
+                    </div>
                 @endif
             </td>
         </tr>
@@ -160,17 +164,25 @@
             </td>
             <td>
                 @if ($order_detail->order->status == '4')
-                    <form action="#" method="GET">
+                    <form action="{{ route('orders.complete_order', $order_detail->order->id) }}" method="POST">
                         @csrf
-                        @method('GET')
+                        @method('PATCH')
                         <div class="text-left">
                             <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">完成訂單</button><br><br>
                         </div>
                     </form>
-                @elseif
-                    <form action="#" method="GET">
+                @elseif($order_detail->order->status == '5')
+                    <form action="{{ route('orders.comment', $order_detail->order->id) }}" method="GET">
                         @csrf
                         @method('GET')
+                        <div class="text-left">
+                            <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">評論</button><br><br>
+                        </div>
+                    </form>
+                @elseif($order_detail->order->status != '7' and $order_detail->order->status != '5')
+                    <form action="{{ route('orders.cancel_order', $order_detail->order->id) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
                         <div class="text-left">
                             <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">取消訂單</button><br><br>
                         </div>

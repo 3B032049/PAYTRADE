@@ -1,6 +1,6 @@
 @extends('admins.layouts.master')
 
-@section('page-title', 'Article list')
+@section('page-title', '書籍管理')
 
 @section('page-content')
     <div class="container-fluid px-4">
@@ -41,7 +41,15 @@
                     <td>{{ $product->name }}</td>
                     <td><img src="{{ asset( 'storage/products/' . $product->image_url) }}" alt="{{ $product->name }}" height="100px" width="100px"></td>
                     <td>{{ $product->price }}</td>
-                    <td>{{ $product->quantity }}</td>
+                    <td>
+                        @if ($product->quantity == 0)
+                            <div style="color:#FF0000; font-weight:bold;">
+                                {{ $product->quantity }}
+                            </div>
+                        @else
+                            {{ $product->quantity }}
+                        @endif
+                    </td>
                     <td>
                         @if ($product->status == 0)
                             <div style="color:#FF8033; font-weight:bold;">

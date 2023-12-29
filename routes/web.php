@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminHomeController;
 use Illuminate\Support\Facades\Storage;
@@ -56,6 +57,7 @@ Route::get('products/{product}/{seller_id}', [App\Http\Controllers\ProductContro
 
 
 Route::get('products/by_category/{category_id}', [App\Http\Controllers\ProductController::class, 'by_category'])->name('products.by_category');
+Route::get('products/by_category/search/{category_id}', [App\Http\Controllers\ProductController::class, 'by_category_search'])->name('products.by_category.search');
 
 //登入
 Auth::routes();
@@ -79,8 +81,9 @@ Route::group(['middleware' => 'user'], function () {
 
     Route::get('orders', [App\Http\Controllers\OrderController::class, 'index'])->name("orders.index");
     Route::get('orders/create', [App\Http\Controllers\OrderController::class, 'create'])->name("orders.create");
-    Route::get('orders/{order}', [App\Http\Controllers\OrderController::class, 'show'])->name("orders.show");
+    Route::get('orders/{order}/show', [App\Http\Controllers\OrderController::class, 'show'])->name("orders.show");
     Route::post('orders', [App\Http\Controllers\OrderController::class, 'store'])->name("orders.store");
+
     Route::GET('orders/payment/{orders}', [App\Http\Controllers\OrderController::class, 'payment'])->name("orders.payment");
 
     Route::post('orders/{store_card}', [App\Http\Controllers\OrderController::class, 'store_card'])->name("orders.store_card");
@@ -89,6 +92,15 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('/products/create', [App\Http\Controllers\SellerProductsController::class, 'create'])->name('products.create');
     Route::post('/products', [App\Http\Controllers\SellerProductsController::class, 'store'])->name("products.store");
     Route::delete('/products/{product}', [App\Http\Controllers\SellerProductsController::class, 'destroy'])->name("products.destroy");
+
+    Route::get('orders/{order}/payment', [App\Http\Controllers\OrderController::class, 'payment'])->name("orders.payment");
+    Route::patch('orders/{order}/update_pay', [App\Http\Controllers\OrderController::class, 'update_pay'])->name("orders.update_pay");
+    Route::patch('orders/{order}/cancel_order', [App\Http\Controllers\OrderController::class, 'cancel_order'])->name("orders.cancel_order");
+    Route::patch('orders/{order}/complete_order', [App\Http\Controllers\OrderController::class, 'complete_order'])->name("orders.complete_order");
+    Route::get('orders/filter', [App\Http\Controllers\OrderController::class, 'filter'])->name('orders.filter');
+    Route::get('orders/comment/{order}', [App\Http\Controllers\OrderController::class, 'comment'])->name('orders.comment');
+
+
 });
 
 Route::group(['middleware' => 'seller'], function () {
@@ -143,7 +155,9 @@ Route::group(['middleware' => 'admin'], function () {
         Route::patch('/sellers/{seller}/unpass',[App\Http\Controllers\AdminSellersController::class,'unpass'])->name('sellers.unpass');
         Route::delete('/sellers/{seller}', [App\Http\Controllers\AdminSellersController::class, 'destroy'])->name("sellers.destroy");
 
-        Route::get('/products', [App\Http\Controllers\AdminProductsController::class, 'index'])->name('products.index');
+
+
+        Route::get('/products',[App\Http\Controllers\AdminProductsController::class,'index'])->name('products.index');
         Route::get('/products/search', [App\Http\Controllers\AdminProductsController::class, 'search'])->name('products.search');
         Route::get('/products/create',[App\Http\Controllers\AdminProductsController::class,'create'])->name('products.create');
         Route::post('/products', [App\Http\Controllers\AdminProductsController::class, 'store'])->name("products.store");
@@ -163,6 +177,11 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/product_categories/{product_category}/edit', [App\Http\Controllers\AdminProductCategoriesController::class, 'edit'])->name("product_categories.edit");
         Route::patch('/product_categories/{product_category}',[App\Http\Controllers\AdminProductCategoriesController::class,'update'])->name('product_categories.update');
         Route::delete('/product_categories/{product_category}', [App\Http\Controllers\AdminProductCategoriesController::class, 'destroy'])->name("product_categories.destroy");
+
+        Route::get('/orders', [App\Http\Controllers\AdminOrdersController::class, 'index'])->name('orders.index');
+        Route::get('/orders/search', [App\Http\Controllers\AdminOrdersController::class, 'search'])->name('orders.search');
+        Route::get('/orders/{order}/info', [App\Http\Controllers\AdminOrdersController::class, 'show'])->name('orders.show');
+        Route::patch('/orders/{order}', [App\Http\Controllers\AdminOrdersController::class, 'cancel'])->name("orders.cancel");
 
         //公告路由
         Route::get('/posts', [App\Http\Controllers\AdminPostsController::class, 'index'])->name("posts.index");

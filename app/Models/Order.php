@@ -29,14 +29,14 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function orderdetail()
+    public function orderDetails()
     {
         return $this->hasMany(orderdetail::class);
     }
 
     public function seller()
     {
-        return $this->belongsTo(seller::class);
+        return $this->belongsTo(Seller::class);
     }
     public function message()
     {

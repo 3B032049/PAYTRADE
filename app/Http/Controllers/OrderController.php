@@ -133,20 +133,16 @@ class OrderController extends Controller
         return view('orders.show', $data);
     }
 
-    public function payment($orderId)
+    public function payment($order_id)
     {
         //
-        $orderDetails = OrderDetail::where('order_id', $orderId)->get();
-
+//        $order = Order::where('id',$order_id)->get();
+        $orderDetails = OrderDetail::where('order_id', $order_id)->get();
         $data = ['order_details' => $orderDetails];
 
         return view('orders.payment', $data);
     }
 
-    public function store_card(Order $order)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -159,9 +155,29 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update_pay(Order $order)
     {
         //
+        $order->status='1';
+        $order->pay='1';
+        $order->save();
+        return redirect()->route('orders.index');
+    }
+
+    public function cancel_order(Order $order)
+    {
+        //
+        $order->status='7';
+        $order->save();
+        return redirect()->route('orders.index');
+    }
+
+    public function complete_order(Order $order)
+    {
+        //
+        $order->status='5';
+        $order->save();
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -170,5 +186,16 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function filter(Request $request)
+    {
+        $status = $request->input('status');
+        $orders = Order::where('status', $status)->get();
+
+        // You can pass $orders to the view and display the filtered orders
+
+        // Redirect back to the order list
+        return view('orders.index', ['orders' => $orders]);
     }
 }

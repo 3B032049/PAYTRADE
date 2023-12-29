@@ -77,13 +77,6 @@
                 @elseif ($order->status == '5')
                     <div style="color:#002aff; font-weight:bold;">
                         (已完成)
-                        <form action="{{ route('sellers.message.edit',$order->id) }}" method="GET" role="form">
-                            @method('GET')
-                            @csrf
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button type="submit" class="btn btn-primary btn-sm">評價</button>
-                            </div>
-                        </form>
                     </div>
                 @elseif ($order->status == '6')
                     <div style="color:#002aff; font-weight:bold;">

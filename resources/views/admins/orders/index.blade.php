@@ -35,7 +35,11 @@
                     <td>{{ $order->user->name }}</td>
                     <td>{{ $order->seller->user->name }}</td>
                     <td>{{ $order->date }}</td>
-                    <td> @if ($order->status == '1')
+                    <td> @if ($order->status == '0')
+                            <div style="color:#8d00ff; font-weight:bold;">
+                                (未付款)
+                            </div>
+                        @elseif ($order->status == '1')
                             <div style="color:#FF0000; font-weight:bold;">
                                 (待確認)
                             </div>

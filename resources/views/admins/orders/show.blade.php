@@ -8,8 +8,7 @@
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active">檢視訂單資料</li>
         </ol>
-        @include('admins.layouts.shared.errors')
-
+{{--        @include('admins.layouts.shared.errors')--}}
         <div class="form-group">
             <label for="buyer" class="form-label">買家</label>
             <input id="buyer" name="buyer" type="text" class="form-control" value="{{ old('buyer',$order->user->name) }}" readonly>
@@ -49,6 +48,7 @@
             <input id="order_detail" name="order_detail" type="text" class="form-control" value="{{ old('order_detail',$orderDetail->product->name) }}" readonly>
         </div>
         @endforeach
+        @if (!in_array($order->status, [5, 6, 7, 8]))
         <form action="{{ route('admins.orders.cancel',$order->id) }}" method="POST" role="form">
             @method('PATCH')
             @csrf
@@ -56,6 +56,9 @@
                 <button type="submit" class="btn btn-primary btn-sm">強制取消訂單</button>
             </div>
         </form>
+        @else
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">目前狀態無法取消訂單</div>
+        @endif
     </div>
     <script>
         function previewImage(input) {

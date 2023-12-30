@@ -184,6 +184,9 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/orders/{order}/info', [App\Http\Controllers\AdminOrdersController::class, 'show'])->name('orders.show');
         Route::patch('/orders/{order}', [App\Http\Controllers\AdminOrdersController::class, 'cancel'])->name("orders.cancel");
 
+        Route::get('/moneys', [App\Http\Controllers\AdminMoneysController::class, 'index'])->name('moneys.index');
+        Route::get('/moneys/search', [App\Http\Controllers\AdminMoneysController::class, 'search'])->name('moneys.search');
+
         //公告路由
         Route::get('/posts', [App\Http\Controllers\AdminPostsController::class, 'index'])->name("posts.index");
         Route::get('/posts/search', [App\Http\Controllers\AdminPostsController::class, 'search'])->name('posts.search');

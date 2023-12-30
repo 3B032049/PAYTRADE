@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartItem;
+use App\Models\Message;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -83,7 +84,7 @@ class OrderController extends Controller
             $sellerTotal = $items->sum(function ($item) {
                 return $item['cart_item']['quantity'] * $item['cart_item']['product']['price'];
             });
-            $order->price = $sellerTotal;
+            $order->price = $sellerTotal+60;
             $order->receiver = $request->receiver;
             $order->receiver_phone = $request->receiver_phone;
             $order->receiver_address = $request->receiver_address;
@@ -180,13 +181,33 @@ class OrderController extends Controller
         return redirect()->route('orders.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Order $order)
+    public function comment(Order $order)
     {
-        //
+        $data = ['order' => $order];
+
+        return view('orders.comment', $data);
     }
+
+    public function store_comment(Request $request, Order $order)
+    {
+
+        // 使用 updateOrCreate 方法更新或創建 Message 模型
+        $message = Message::updateOrCreate(
+            ['order_id' => $order->id],
+            [
+                'buyer_message' => $request->input('comment'),
+                'buying_rating' => $request->input('comment_rating'),
+            ]
+        );
+
+        if ($message) {
+            $message->save();
+        }
+
+        // 重定向到訂單列表頁面
+        return redirect()->route('orders.index');
+    }
+
 
     public function filter(Request $request)
     {

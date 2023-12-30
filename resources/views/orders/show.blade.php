@@ -39,12 +39,24 @@
                     ${{ number_format($order_detail->quantity * $order_detail->product->price, 0) }}
                 </td>
             </tr>
-            @php
-                $totalSum += $order_detail->quantity * $order_detail->product->price;
-            @endphp
         @endforeach
         <tr>
             <td colspan="5" ><div class="text-center"><hr></div></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="text-center">
+                   訂單運費
+                </div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <div class="text-center" style="color: red">
+                    $60
+                </div>
+            </td>
         </tr>
         <tr>
             <td>
@@ -57,7 +69,7 @@
             <td></td>
             <td>
                 <div class="text-center" style="color: red">
-                    ${{ number_format($totalSum, 0) }}
+                    ${{ $order_detail->order->price }}
                 </div>
             </td>
         </tr>

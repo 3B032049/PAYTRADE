@@ -43,16 +43,6 @@
                 <td colspan="5">
                     <div class='form-row row'>
                         <div class='col-xs-12 form-group required'>
-                            <label class='control-label'>持卡人姓名：</label> <input
-                                class='form-control' size='4' type='text'>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    <div class='form-row row'>
-                        <div class='col-xs-12 form-group required'>
                             <label class='control-label'>卡片號碼：</label> <input
                                 class='form-control' size='4' type='text'>
                         </div>

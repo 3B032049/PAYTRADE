@@ -53,10 +53,12 @@ Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
 Route::get('products/search', [App\Http\Controllers\ProductController::class, 'search'])->name('products.search');
 Route::get('products/{product}/show', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
-Route::get('products/by_seller/{seller_id}/shop', [App\Http\Controllers\ProductController::class, 'by_seller'])->name('by_seller');
 Route::get('products/by_category/{category_id}/show', [App\Http\Controllers\ProductController::class, 'by_category'])->name('products.by_category');
 Route::get('products/by_category/search/{category_id}', [App\Http\Controllers\ProductController::class, 'by_category_search'])->name('products.by_category.search');
-
+Route::get('products/by_seller/{seller_id}/shop', [App\Http\Controllers\ProductController::class, 'by_seller'])->name('products.by_seller');
+Route::get('products/by_seller/{seller_id}/search', [App\Http\Controllers\ProductController::class, 'by_seller_search'])->name('products.by_seller.search');
+Route::get('products/by_seller_and_category/{seller_id}/shop/{category_id}', [App\Http\Controllers\ProductController::class, 'by_seller_and_category'])->name('products.by_seller_and_category');
+Route::get('products/by_seller_and_category/{seller_id}/shop/{category_id}/search', [App\Http\Controllers\ProductController::class, 'by_seller_and_category_search'])->name('products.by_seller_and_category.search');
 //登入
 Auth::routes();
 

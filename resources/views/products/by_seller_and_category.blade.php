@@ -1,17 +1,21 @@
-@extends('layouts.master')
+@extends('products.by_seller.layouts.master')
 
 @section('title','二手書拍賣平台')
 
 @section('content')
 <hr>
 <div class="container px-4 px-lg-5 mt-2 mb-4">
-    <form action="{{ route('products.search') }}" method="GET" class="d-flex">
+    <form action="{{ route('products.by_seller_and_category.search',['seller_id' => $seller->id, 'category_id' => $selectedCategory->id]) }}" method="GET" class="d-flex">
         <input type="text" name="query" class="form-control me-2" placeholder="關鍵字搜尋...">
         <button type="submit" class="btn btn-outline-dark">搜尋</button>
     </form>
 </div>
+@if ($selectedCategory)
+    <div class="container px-4 px-lg-5 mt-2 mb-4">
+        查找「{{ $selectedCategory->name }}」類商品
+    </div>
+@endif
 <!-- Responsive navbar-->
-
 <!-- Page Content-->
 <div class="container px-4 px-lg-5">
     <!-- Heading Row-->

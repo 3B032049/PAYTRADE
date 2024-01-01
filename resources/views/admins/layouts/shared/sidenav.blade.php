@@ -18,10 +18,10 @@
                     金流管理
                 </a>
                 <a class="nav-link" href="{{ route('admins.products.index') }}">
-                    商品管理
+                    賣場書籍管理
                 </a>
                 <a class="nav-link" href="{{ route('admins.product_categories.index') }}">
-                    商品類別管理
+                    書籍類別管理
                 </a>
                 <a class="nav-link" href="{{ route('admins.posts.index') }}">
                     公告管理

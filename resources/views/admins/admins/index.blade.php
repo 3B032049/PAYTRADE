@@ -31,10 +31,10 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col" style="text-align:left">使用者id</th>
                 <th scope="col" style="text-align:left">姓名</th>
                 <th scope="col" style="text-align:left">階級</th>
                 <th scope="col" style="text-align:left">電子信箱</th>
+                <th scope="col" style="text-align:left">電話</th>
                 <th scope="col" style="text-align:center">修改</th>
                 <th scope="col" style="text-align:center">刪除</th>
             </tr>
@@ -43,8 +43,7 @@
             @foreach($admins as $index => $admin)
                 <tr>
                     <td style="text-align:left">{{ $index + 1 }}</td>
-                    <td style="text-align:left">{{ $admin->user_id }}</td>
-                    <td>{{ $admin->name }}</td>
+                    <td>{{ $admin->user->name }}</td>
                     <td>{{ $admin->position }}
                         @if ($admin->position == '3')
                             (一般管理員)
@@ -54,15 +53,16 @@
                             (超級管理員)
                         @endif
                     </td>
-                    <td>{{ $admin->email }}</td>
+                    <td>{{ $admin->user->email }}</td>
+                    <td>{{ $admin->user->phone }}</td>
                     <td style="text-align:center">
                         <a href="{{ route('admins.admins.edit',$admin->id) }}" class="btn btn-secondary btn-sm">編輯</a>
                     </td>
                     <td style="text-align:center">
-                        <form action="{{ route('admins.admins.destroy',$admin->id) }}" method="POST">
+                        <form id="deleteForm{{ $admin->id }}" action="{{ route('admins.admins.destroy',$admin->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $admin->user->name }}', {{ $admin->id }})">刪除</button>
                         </form>
                     </td>
                 </tr>
@@ -92,4 +92,19 @@
             @endif
         </div>
     </div>
+    <script>
+        function confirmDelete(admin_name, adminId)
+        {
+            if (confirm("確定要刪除管理員" + admin_name + "嗎？")) {
+                document.getElementById('deleteForm' + adminId).submit();
+            }
+        }
+    </script>
+    <script>
+        function changeRecordsPerPage() {
+            const select = document.getElementById('records-per-page');
+            const value = select.options[select.selectedIndex].value;
+            window.location.href = `{{ route('admins.users.index') }}?perPage=${value}`;
+        }
+    </script>
 @endsection

@@ -82,8 +82,6 @@ class AdminPostsController extends Controller
         $this->validate($request,[
             'title' => 'required|max:50',
             'content' => 'required',
-            'is_feature' => 'required|boolean',
-
         ]);
 
         $post->update($request->all());

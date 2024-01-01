@@ -12,10 +12,8 @@ class AdminAdminsController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('perPage', 10);
-        $admins = DB::table('admins')
-            ->join('users', 'admins.user_id', '=', 'users.id')
-            ->select('admins.*', 'users.name', 'users.email') // 選擇需要的使用者資料
-            ->orderBy('admins.id', 'ASC')
+        $admins = Admin::with('user')
+            ->orderBy('id', 'ASC')
             ->paginate($perPage);
         $data = ['admins' => $admins];
         return view('admins.admins.index',$data);

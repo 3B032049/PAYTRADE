@@ -25,7 +25,7 @@
             <tr>
                 <th scope="col" style="text-align:center">標題</th>
                 <th scope="col" style="text-align:center">內容</th>
-                <th scope="col" style="text-align:center">公告建立時間</th>
+                <th scope="col" style="text-align:center">公告更動時間</th>
                 <th scope="col" style="text-align:center">狀態</th>
                 <th scope="col" style="text-align:center">功能</th>
                 <th scope="col" style="text-align:center">刪除</th>
@@ -36,7 +36,7 @@
                 <tr>
                     <td style="text-align:center">{{ $post->title }}</td>
                     <td style="text-align:center">{{$post->content}}</td>
-                    <td style="text-align:center">{{$post->created_at}}</td>
+                    <td style="text-align:center">{{$post->updated_at}}</td>
                     <td style="text-align:center">
                         @if ($post->status == 0)
                             未上架
@@ -62,10 +62,10 @@
 
                     </td>
                     <td style="text-align:center">
-                        <form action="{{ route('admins.posts.destroy',$post->id) }}" method="POST">
+                        <form id="deleteForm{{ $post->id }}" action="{{ route('admins.posts.destroy',$post->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $post->name }}', {{ $post->id }})">刪除</button>
                         </form>
                     </td>
                 </tr>
@@ -95,4 +95,19 @@
             @endif
         </div>
     </div>
+    <script>
+        function confirmDelete(post_name, posttId)
+        {
+            if (confirm("確定要刪除公告" + post_name + "嗎？")) {
+                document.getElementById('deleteForm' + posttId).submit();
+            }
+        }
+    </script>
+    <script>
+        function changeRecordsPerPage() {
+            const select = document.getElementById('records-per-page');
+            const value = select.options[select.selectedIndex].value;
+            window.location.href = `{{ route('admins.users.index') }}?perPage=${value}`;
+        }
+    </script>
 @endsection

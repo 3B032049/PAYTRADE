@@ -61,6 +61,7 @@ Route::get('products/by_seller_and_category/{seller_id}/shop/{category_id}', [Ap
 Route::get('products/by_seller_and_category/{seller_id}/shop/{category_id}/search', [App\Http\Controllers\ProductController::class, 'by_seller_and_category_search'])->name('products.by_seller_and_category.search');
 
 Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/{post}', [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
 //登入
 Auth::routes();
 

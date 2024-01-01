@@ -11,6 +11,9 @@
                 <a class="nav-link" href="{{ route('sellers.message.index') }}">
                     訂單評價管理
                 </a>
+                <a class="nav-link" href="{{ route('sellers.orders.show') }}">
+                    訂單進帳管理
+                </a>
             </div>
         </div>
     </nav>

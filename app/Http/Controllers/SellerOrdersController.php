@@ -13,6 +13,13 @@ class SellerOrdersController extends Controller
         $data = ['orders' => $orders];
         return view('sellers.orders.index',$data);
     }
+    public function show()
+    {
+        $orders = Order::orderby('id','ASC')->get();
+        $data = ['orders' => $orders];
+        return view('sellers.orders.show',$data);
+
+    }
 
     /**
      * Display the specified resource.

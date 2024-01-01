@@ -12,10 +12,6 @@
         <form action="{{ route('admins.users.store') }}" method="POST" role="form">
             @method('POST')
             @csrf
-            {{--        <div class="form-group">--}}
-            {{--            <label for="account" class="form-label">帳號</label>--}}
-            {{--            <input id="account" name="account" type="text" class="form-control" value="{{ old('account') }}" placeholder="請輸入帳號">--}}
-            {{--        </div>--}}
             <div class="form-group">
                 <label for="name" class="form-label">姓名</label>
                 <input id="name" name="name" type="text" class="form-control" value="{{ old('name') }}" placeholder="請輸入姓名">
@@ -28,25 +24,33 @@
                 <label for="password" class="form-label">密碼</label>
                 <input id="password" name="password" type="text" class="form-control" value="{{ old('password') }}" placeholder="請輸入密碼">
             </div>
-            {{--        <div class="form-group">--}}
-            {{--            <label for="sex" class="form-label">性別</label>--}}
-            {{--            <select id="sex" name="sex" class="form-control">--}}
-            {{--                <option value="男">男</option>--}}
-            {{--                <option value="女">女</option>--}}
-            {{--            </select>--}}
-            {{--        </div>--}}
-            {{--        <div class="form-group">--}}
-            {{--            <label for="birthday" class="form-label">生日</label>--}}
-            {{--            <input id="birthday" name="birthday" type="date" class="form-control" value="{{ old('birthday') }}" placeholder="請輸入日期">--}}
-            {{--        </div>--}}
-            {{--        <div class="form-group">--}}
-            {{--            <label for="phone" class="form-label">電話</label>--}}
-            {{--            <input id="phone" name="phone" type="text" class="form-control" value="{{ old('phone') }}" placeholder="請輸入電話">--}}
-            {{--        </div>--}}
-            {{--        <div class="form-group">--}}
-            {{--            <label for="address" class="form-label">地址</label>--}}
-            {{--            <input id="address" name="address" type="text" class="form-control" value="{{ old('address') }}" placeholder="請輸入地址">--}}
-            {{--        </div>--}}
+            <div class="form-group">
+                <label for="sex" class="form-label">性別</label>
+                <select id="sex" name="sex" class="form-control">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="birthday" class="form-label">生日</label>
+                <input id="birthday" name="birthday" type="date" class="form-control" value="{{ old('birthday') }}" placeholder="請輸入日期">
+            </div>
+            <div class="form-group">
+                <label for="phone" class="form-label">電話</label>
+                <input id="phone" name="phone" type="text" class="form-control" value="{{ old('phone') }}" placeholder="請輸入電話">
+            </div>
+            <div class="form-group">
+                <label for="address" class="form-label">地址</label>
+                <input id="address" name="address" type="text" class="form-control" value="{{ old('address') }}" placeholder="請輸入地址">
+            </div>
+            <div class="form-group">
+                <label for="bank_branch" class="form-label">銀行代號</label>
+                <input id="bank_branch" name="bank_branch" type="text" class="form-control" value="{{ old('bank_branch') }}" placeholder="選填">
+            </div>
+            <div class="form-group">
+                <label for="bank_account" class="form-label">銀行帳號</label>
+                <input id="bank_account" name="bank_account" type="text" class="form-control" value="{{ old('bank_account') }}" placeholder="選填">
+            </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="submit" class="btn btn-primary btn-sm">儲存</button>
             </div>

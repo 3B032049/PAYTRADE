@@ -23,10 +23,11 @@ class AdminAdminsController extends Controller
     {
         $query = $request->input('query');
         $perPage = $request->input('perPage', 10);
-        $admins = DB::table('admins')
-            ->join('users', 'admins.user_id', '=', 'users.id')
-            ->where('users.name', 'like', "%$query%")
-            ->orderBy('admins.id', 'ASC')
+        $admins = Admin::with('user')
+            ->whereHas('user', function ($queryBuilder) use ($query) {
+                $queryBuilder->where('name', 'like', "%$query%");
+            })
+            ->orderBy('id', 'ASC')
             ->paginate($perPage);
 
         // 返回結果
@@ -58,12 +59,6 @@ class AdminAdminsController extends Controller
 
     public function store(Request $request)
     {
-//        $this->validate($request,[
-//            'title' => 'required|max:50',
-//            'content' => 'required',
-//            'is_feature' => 'required|boolean',
-//        ]);
-
         Admin::create($request->all());
         return redirect()->route('admins.admins.index');
     }
@@ -72,7 +67,6 @@ class AdminAdminsController extends Controller
     {
         $user_id = $request->input('user_id');
         $position = $request->input('position');
-
 
         Admin::create([
             'user_id' => $user_id,
@@ -92,12 +86,6 @@ class AdminAdminsController extends Controller
 
     public function update(Request $request, Admin $admin)
     {
-//        $this->validate($request,[
-//            'title' => 'required|max:50',
-//            'content' => 'required',
-//            'is_feature' => 'required|boolean',
-//        ]);
-
         $admin->update($request->all());
         return redirect()->route('admins.admins.index');
     }

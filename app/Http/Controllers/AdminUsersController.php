@@ -42,11 +42,15 @@ class AdminUsersController extends Controller
 
     public function store(Request $request)
     {
-//        $this->validate($request,[
-//            'title' => 'required|max:50',
-//            'content' => 'required',
-//            'is_feature' => 'required|boolean',
-//        ]);
+        $this->validate($request,[
+            'name' => 'required|max:20',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+            'sex' => 'required',
+            'birthday' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
 
         User::create($request->all());
         return redirect()->route('admins.users.index');
@@ -62,11 +66,15 @@ class AdminUsersController extends Controller
 
     public function update(Request $request, User $user)
     {
-//        $this->validate($request,[
-//            'title' => 'required|max:50',
-//            'content' => 'required',
-//            'is_feature' => 'required|boolean',
-//        ]);
+        $this->validate($request, [
+            'name' => 'required|max:20',
+            'email' => 'required|email|unique:users,email,' . $user->id, // 判段多個行列
+            'password' => 'required',
+            'sex' => 'required',
+            'birthday' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
 
         $user->update($request->all());
         return redirect()->route('admins.users.index');

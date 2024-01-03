@@ -13,7 +13,7 @@ class SellersOredersMessageController extends Controller
 {
     public function index()
     {
-        $orders = Order::orderby('id','ASC')->get();
+        $orders = Order::where('status','5',)->orderby('id','ASC')->get();
         $data = ['orders' => $orders];
         return view('sellers.message.index',$data);
     }

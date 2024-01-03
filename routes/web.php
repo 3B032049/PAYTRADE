@@ -140,6 +140,7 @@ Route::group(['middleware' => 'seller'], function () {
 
 Route::group(['middleware' => 'admin'], function () {
     Route::prefix('admins')->name('admins.')->group(function () {
+        # 一般管理員
         Route::get('/', [AdminHomeController::class, 'index']);
         Route::get('/dashboard',[App\Http\Controllers\AdminHomeController::class,'index'])->name('dashboard');
 
@@ -150,19 +151,6 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/users/{user}/edit', [App\Http\Controllers\AdminUsersController::class, 'edit'])->name("users.edit");
         Route::patch('/users/{user}',[App\Http\Controllers\AdminUsersController::class,'update'])->name('users.update');
         Route::delete('/users/{user}', [App\Http\Controllers\AdminUsersController::class, 'destroy'])->name("users.destroy");
-
-        Route::get('/sellers',[App\Http\Controllers\AdminSellersController::class,'index'])->name('sellers.index');
-        Route::get('/sellers/search', [App\Http\Controllers\AdminSellersController::class, 'search'])->name('sellers.search');
-        Route::get('/sellers/create',[App\Http\Controllers\AdminSellersController::class,'create'])->name('sellers.create');
-        Route::patch('/sellers/{seller}/statusOn',[App\Http\Controllers\AdminSellersController::class,'statusOn'])->name('sellers.statusOn');
-        Route::patch('/sellers/{seller}/statusOff',[App\Http\Controllers\AdminSellersController::class,'statusOff'])->name('sellers.statusOff');
-        Route::post('/sellers', [App\Http\Controllers\AdminSellersController::class, 'store'])->name("sellers.store");
-        Route::get('/sellers/{seller}/edit', [App\Http\Controllers\AdminSellersController::class, 'edit'])->name("sellers.edit");
-        Route::patch('/sellers/{seller}/pass',[App\Http\Controllers\AdminSellersController::class,'pass'])->name('sellers.pass');
-        Route::patch('/sellers/{seller}/unpass',[App\Http\Controllers\AdminSellersController::class,'unpass'])->name('sellers.unpass');
-        Route::delete('/sellers/{seller}', [App\Http\Controllers\AdminSellersController::class, 'destroy'])->name("sellers.destroy");
-
-
 
         Route::get('/products',[App\Http\Controllers\AdminProductsController::class,'index'])->name('products.index');
         Route::get('/products/search', [App\Http\Controllers\AdminProductsController::class, 'search'])->name('products.search');
@@ -185,15 +173,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::patch('/product_categories/{product_category}',[App\Http\Controllers\AdminProductCategoriesController::class,'update'])->name('product_categories.update');
         Route::delete('/product_categories/{product_category}', [App\Http\Controllers\AdminProductCategoriesController::class, 'destroy'])->name("product_categories.destroy");
 
-        Route::get('/orders', [App\Http\Controllers\AdminOrdersController::class, 'index'])->name('orders.index');
-        Route::get('/orders/search', [App\Http\Controllers\AdminOrdersController::class, 'search'])->name('orders.search');
-        Route::get('/orders/{order}/info', [App\Http\Controllers\AdminOrdersController::class, 'show'])->name('orders.show');
-        Route::patch('/orders/{order}', [App\Http\Controllers\AdminOrdersController::class, 'cancel'])->name("orders.cancel");
-
-        Route::get('/moneys', [App\Http\Controllers\AdminMoneysController::class, 'index'])->name('moneys.index');
-        Route::get('/moneys/search', [App\Http\Controllers\AdminMoneysController::class, 'search'])->name('moneys.search');
-
-        //公告路由
+        #公告路由
         Route::get('/posts', [App\Http\Controllers\AdminPostsController::class, 'index'])->name("posts.index");
         Route::get('/posts/search', [App\Http\Controllers\AdminPostsController::class, 'search'])->name('posts.search');
         Route::get('/posts/create', [App\Http\Controllers\AdminPostsController::class, 'create'])->name("posts.create");
@@ -204,17 +184,43 @@ Route::group(['middleware' => 'admin'], function () {
         Route::patch('/posts/{post}', [App\Http\Controllers\AdminPostsController::class, 'update'])->name("posts.update");
         Route::delete('/posts/{post}', [App\Http\Controllers\AdminPostsController::class, 'destroy'])->name("posts.destroy");
 
+        # 高階管理員
+        Route::group(['middleware' => 'admin.high_level'], function () {
+            Route::get('/sellers',[App\Http\Controllers\AdminSellersController::class,'index'])->name('sellers.index');
+            Route::get('/sellers/search', [App\Http\Controllers\AdminSellersController::class, 'search'])->name('sellers.search');
+            Route::get('/sellers/create',[App\Http\Controllers\AdminSellersController::class,'create'])->name('sellers.create');
+            Route::patch('/sellers/{seller}/statusOn',[App\Http\Controllers\AdminSellersController::class,'statusOn'])->name('sellers.statusOn');
+            Route::patch('/sellers/{seller}/statusOff',[App\Http\Controllers\AdminSellersController::class,'statusOff'])->name('sellers.statusOff');
+            Route::post('/sellers', [App\Http\Controllers\AdminSellersController::class, 'store'])->name("sellers.store");
+            Route::get('/sellers/{seller}/edit', [App\Http\Controllers\AdminSellersController::class, 'edit'])->name("sellers.edit");
+            Route::patch('/sellers/{seller}/pass',[App\Http\Controllers\AdminSellersController::class,'pass'])->name('sellers.pass');
+            Route::patch('/sellers/{seller}/unpass',[App\Http\Controllers\AdminSellersController::class,'unpass'])->name('sellers.unpass');
+            Route::delete('/sellers/{seller}', [App\Http\Controllers\AdminSellersController::class, 'destroy'])->name("sellers.destroy");
 
-        //管理員操作路由
-        Route::get('/admins',[App\Http\Controllers\AdminAdminsController::class,'index'])->name('admins.index');
-        Route::get('/admins/search', [App\Http\Controllers\AdminAdminsController::class, 'search'])->name('admins.search');
-        Route::get('/admins/create',[App\Http\Controllers\AdminAdminsController::class,'create'])->name('admins.create');
-        Route::get('/admins/create_selected/{id}',[App\Http\Controllers\AdminAdminsController::class,'create_selcted'])->name('admins.create_selected');
-        Route::post('/admins', [App\Http\Controllers\AdminAdminsController::class, 'store'])->name("admins.store");
-        Route::post('/admins', [App\Http\Controllers\AdminAdminsController::class, 'store_level'])->name("admins.store_level");
-        Route::get('/admins/{admin}/edit', [App\Http\Controllers\AdminAdminsController::class, 'edit'])->name("admins.edit");
-        Route::patch('/admins/{admin}',[App\Http\Controllers\AdminAdminsController::class,'update'])->name('admins.update');
-        Route::delete('/admins/{admin}', [App\Http\Controllers\AdminAdminsController::class, 'destroy'])->name("admins.destroy");
+            Route::get('/orders', [App\Http\Controllers\AdminOrdersController::class, 'index'])->name('orders.index');
+            Route::get('/orders/search', [App\Http\Controllers\AdminOrdersController::class, 'search'])->name('orders.search');
+            Route::get('/orders/{order}/info', [App\Http\Controllers\AdminOrdersController::class, 'show'])->name('orders.show');
+            Route::patch('/orders/{order}', [App\Http\Controllers\AdminOrdersController::class, 'cancel'])->name("orders.cancel");
+
+            //管理員操作路由
+            Route::get('/admins',[App\Http\Controllers\AdminAdminsController::class,'index'])->name('admins.index');
+            Route::get('/admins/search', [App\Http\Controllers\AdminAdminsController::class, 'search'])->name('admins.search');
+            Route::get('/admins/create',[App\Http\Controllers\AdminAdminsController::class,'create'])->name('admins.create');
+            Route::get('/admins/create_selected/{id}',[App\Http\Controllers\AdminAdminsController::class,'create_selcted'])->name('admins.create_selected');
+            Route::post('/admins', [App\Http\Controllers\AdminAdminsController::class, 'store'])->name("admins.store");
+            Route::post('/admins', [App\Http\Controllers\AdminAdminsController::class, 'store_level'])->name("admins.store_level");
+            Route::get('/admins/{admin}/edit', [App\Http\Controllers\AdminAdminsController::class, 'edit'])->name("admins.edit");
+            Route::patch('/admins/{admin}',[App\Http\Controllers\AdminAdminsController::class,'update'])->name('admins.update');
+            Route::delete('/admins/{admin}', [App\Http\Controllers\AdminAdminsController::class, 'destroy'])->name("admins.destroy");
+        });
+
+        # 超級管理員
+        Route::group(['middleware' => 'admin.super'], function () {
+            Route::get('/moneys', [App\Http\Controllers\AdminMoneysController::class, 'index'])->name('moneys.index');
+            Route::get('/moneys/search', [App\Http\Controllers\AdminMoneysController::class, 'search'])->name('moneys.search');
+
+            Route::get('/settings',[App\Http\Controllers\AdminSettingsController::class,'index'])->name('settings.index');
+        });
     });
 });
 

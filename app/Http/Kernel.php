@@ -71,5 +71,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'user' => \App\Http\Middleware\UserMiddleware::class,
         'seller' => \App\Http\Middleware\UserMiddleware::class,
+        'admin.high_level' => \App\Http\Middleware\HighLevelAdmin::class,
+        'admin.super' => \App\Http\Middleware\SuperAdmin::class,
     ];
 }

@@ -17,6 +17,7 @@
             <td>
                 <div class="container mt-4 text-center">
                     <form action="{{ route('orders.index') }}" method="GET">
+                        @method('GET')
                         <button type="submit" class="btn btn-secondary mx-2">所有訂單</button>
                     </form>
                 </div>
@@ -24,7 +25,6 @@
             <td>
                 <div class="container mt-4 text-center">
                     <form action="{{ route('orders.filter') }}" method="GET">
-                        @csrf
                         @method('GET')
                         <input type="text" name="status" value="0" hidden>
                         <button type="submit" class="btn btn-secondary mx-2">未付款</button>
@@ -34,7 +34,6 @@
             <td>
                 <div class="container mt-4 text-center">
                     <form action="{{ route('orders.filter') }}" method="GET">
-                        @csrf
                         @method('GET')
                         <input type="text" name="status" value="1" hidden>
                         <button type="submit" class="btn btn-secondary mx-2">待出貨</button>
@@ -44,7 +43,6 @@
             <td>
                 <div class="container mt-4 text-center">
                     <form action="{{ route('orders.filter') }}" method="GET">
-                        @csrf
                         @method('GET')
                         <input type="text" name="status" value="4" hidden>
                         <button type="submit" class="btn btn-secondary mx-2">待收貨</button>
@@ -54,7 +52,6 @@
             <td>
                 <div class="container mt-4 text-center">
                     <form action="{{ route('orders.filter') }}" method="GET">
-                        @csrf
                         @method('GET')
                         <input type="text" name="status" value="5" hidden>
                         <button type="submit" class="btn btn-secondary mx-2">已完成</button>
@@ -64,7 +61,6 @@
             <td>
                 <div class="container mt-4 text-center">
                     <form action="{{ route('orders.filter') }}" method="GET">
-                        @csrf
                         @method('GET')
                         <input type="text" name="status" value="7" hidden>
                         <button type="submit" class="btn btn-secondary mx-2">未成立</button>

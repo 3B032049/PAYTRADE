@@ -13,11 +13,31 @@ class IndexController extends BaseController
 {
     public function index()
     {
-        $products = Product::orderBy('id','DESC')->where('status',3)->get();
+        $products = Product::orderBy('id', 'DESC')->where('status', 3)->get();
+
+        $buyingRatings = [];
+        $buyerMessages = [];
+
+        foreach ($products as $product) {
+            // 檢查是否有 orderDetail
+            if ($product->orderDetail) {
+                // 檢查是否有 message
+                if ($product->orderDetail->message) {
+                    $buyingRatings[] = $product->orderDetail->message->buying_rating;
+                    $buyerMessages[] = $product->orderDetail->message->buyer_message;
+                }
+            }
+        }
+
+
         $data = [
             'products' => $products,
+            'buyingRatings' => $buyingRatings,
+            'buyerMessages' => $buyerMessages,
         ];
-        return view('index',$data);
+
+        return view('index', $data);
     }
+
 }
 

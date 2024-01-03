@@ -125,9 +125,6 @@ class CartItemsController extends Controller
      */
     public function update(UpdateCartItemRequest $request, $id)
     {
-//        $this->validate($request,[
-//            'quantity' => 'required|integer|min:1',
-//        ]);
         $cartItem = CartItem::findOrFail($id);
         $cartItem->update(['quantity' => $request->quantity]);
         return redirect()->route('cart_items.index');

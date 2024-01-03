@@ -9,13 +9,13 @@
             @method('POST')
             @csrf
             <div class="form-group">
-                <label for="account" class="form-label">選擇使用者帳號</label>
-                <select id="account" name="account" class="form-control" onchange="navigateToRoute(this.value)">
-                    @foreach($users as $user_per)
-                        @if($user_per->account == $user->account)
-                            <option value="{{ route('admins.admins.create_selected', ['id' => $user_per->id]) }}" selected>{{ $user_per->name }}</option>
+                <label for="name" class="form-label">選擇使用者名稱</label>
+                <select id="name" name="name" class="form-control" onchange="navigateToRoute(this.value)">
+                    @foreach($users as $user)
+                        @if($user_selected->name == $user->name)
+                            <option value="{{ route('admins.admins.create_selected', ['id' => $user->id]) }}" selected>{{ $user->name }}</option>
                         @else
-                            <option value="{{ route('admins.admins.create_selected', ['id' => $user_per->id]) }}">{{ $user_per->name }}</option>
+                            <option value="{{ route('admins.admins.create_selected', ['id' => $user->id]) }}">{{ $user->name }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -23,39 +23,39 @@
             <div class="form-group">
                 <label for="position" class="form-label">職級</label>
                 <select id="position" name="position" class="form-control">
-                    <option value="user">使用者</option>
                     <option value=3>一般管理員</option>
-                    <option value=2>高階管理員</option>
+                    @if(Auth::user()->admin->position <= 2)
+                        <option value=2>高階管理員</option>
+                    @endif
+                    @if(Auth::user()->admin->position == 1)
+                        <option value=1>超級管理員</option>
+                    @endif
                 </select>
             </div>
-            <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-            <div class="form-group">
-                <label for="account" class="form-label">帳號</label>
-                <input id="account" name="account" type="text" class="form-control" value="{{ old('account',$user->account) }}" readonly>
-            </div>
+            <input type="hidden" name="user_id" id="user_id" value="{{ $user_selected->id }}">
             <div class="form-group">
                 <label for="name" class="form-label">姓名</label>
-                <input id="name" name="name" type="text" class="form-control" value="{{ old('name',$user->name) }}" readonly>
+                <input id="name" name="name" type="text" class="form-control" value="{{ old('name',$user_selected->name) }}" readonly>
             </div>
             <div class="form-group">
                 <label for="email" class="form-label">信箱</label>
-                <input id="email" name="email" type="text" class="form-control" value="{{ old('email',$user->email) }}" readonly>
+                <input id="email" name="email" type="text" class="form-control" value="{{ old('email',$user_selected->email) }}" readonly>
             </div>
             <div class="form-group">
                 <label for="sex" class="form-label">性別</label>
-                <input id="sex" name="sex" type="text" class="form-control" value="{{ old('sex',$user->sex) }}" readonly>
+                <input id="sex" name="sex" type="text" class="form-control" value="{{ old('sex',$user_selected->sex) }}" readonly>
             </div>
             <div class="form-group">
                 <label for="birthday" class="form-label">生日</label>
-                <input id="birthday" name="birthday" type="text" class="form-control" value="{{ old('birthday',$user->birthday) }}" readonly>
+                <input id="birthday" name="birthday" type="text" class="form-control" value="{{ old('birthday',$user_selected->birthday) }}" readonly>
             </div>
             <div class="form-group">
                 <label for="phone" class="form-label">電話</label>
-                <input id="phone" name="phone" type="text" class="form-control" value="{{ old('phone',$user->phone) }}" readonly>
+                <input id="phone" name="phone" type="text" class="form-control" value="{{ old('phone',$user_selected->phone) }}" readonly>
             </div>
             <div class="form-group">
                 <label for="address" class="form-label">地址</label>
-                <input id="address" name="address" type="text" class="form-control" value="{{ old('address',$user->address) }}" readonly>
+                <input id="address" name="address" type="text" class="form-control" value="{{ old('address',$user_selected->address) }}" readonly>
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">

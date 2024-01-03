@@ -13,7 +13,8 @@
                 <div class="fs-5 mb-5">
 {{--                    <span class="text-decoration-line-through">$45.00</span>--}}
                     <span>${{ $product->price }}</span>
-                </div><br><br><br><br><br><br><br><br>
+                </div><br><br><br><br>
+                <div>平均評分{{ $averageScore }}</div><br><br><br><br>
                 <p class="lead">{{ $product->content }}</p>
                 <div class="d-flex">
                     <form action="{{ route("cart_items.store",$product->id) }}" method="POST" role="form">

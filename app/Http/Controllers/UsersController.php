@@ -24,7 +24,8 @@ class UsersController extends Controller
         if (!$request->hasFile('photo')) {
             $user->photo = 'images/default.jpg';
         }
-        else if ($request->hasFile('photo')) {
+        else
+        {
             // Delete the old image from storage
             if ($user->photo) {
                 Storage::disk('user')->delete($user->photo);
@@ -39,15 +40,13 @@ class UsersController extends Controller
 
             // Set the new image URL in the Product instance
             $user->photo = $imageName;
-        }
 
-
-        // Update other user attributes
+            // Update other user attributes
             $user->update($request->except('photo'));
 
-        // Save the user model
+            // Save the user model
             $user->save();
-
+        }
 
         return redirect()->route('users.index');
 

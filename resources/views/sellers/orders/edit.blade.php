@@ -91,7 +91,21 @@
                     </div>
                 @elseif ($order->status == '7')
                     <div style="color:#002aff; font-weight:bold;">
-                        (取消)
+                        <form action="{{ route('sellers.orders.cancel',$order->id) }}" method="POST" role="form">
+                            @method('PATCH')
+                            @csrf
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-primary btn-sm">同意</button>
+                            </div>
+                        </form>
+
+                        <form action="{{ route('sellers.orders.notcancel',$order->id) }}" method="POST" role="form">
+                            @method('PATCH')
+                            @csrf
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-primary btn-sm">不同意</button>
+                            </div>
+                        </form>
                     </div>
                 @elseif ($order->status == '8')
                     <div style="color:#002aff; font-weight:bold;">

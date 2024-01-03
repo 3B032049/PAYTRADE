@@ -127,6 +127,8 @@ Route::group(['middleware' => 'seller'], function () {
         Route::patch('/orders/{order}/unpass', [App\Http\Controllers\SellerOrdersController::class, 'unpass'])->name('orders.unpass');
         Route::patch('/orders/{order}/transport', [App\Http\Controllers\SellerOrdersController::class, 'transport'])->name('orders.transport');
         Route::patch('/orders/{order}/arrive', [App\Http\Controllers\SellerOrdersController::class, 'arrive'])->name('orders.arrive');
+        Route::patch('/orders/{order}/cancel', [App\Http\Controllers\SellerOrdersController::class, 'cancel'])->name('orders.cancel');
+        Route::patch('/orders/{order}/notcancel', [App\Http\Controllers\SellerOrdersController::class, 'notcancel'])->name('orders.notcancel');
         Route::delete('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'destroy'])->name("orders.destroy");
 
         Route::get('/ordersmessage', [App\Http\Controllers\SellersOredersMessageController::class, 'index'])->name('message.index');

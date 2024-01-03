@@ -34,6 +34,11 @@
                 </div>
             </div>
         </div>
+        @if ($product->seller->user->photo == 'head.jpg')
+            <img class="card-img-top w-100 h-100 object-cover" src="{{ asset('images/head.jpg') }}" alt="{{ htmlspecialchars($product->seller->user->name) }}" />
+        @else
+            <img class="card-img-top w-100 h-100 object-cover" src="{{ asset('storage/user/' . $product->seller->user->photo) }}" alt="{{ htmlspecialchars($seller->user->name) }}" />
+        @endif
         <a href="{{ route("products.by_seller",$product->seller_id) }}">
         賣家：{{ $product->seller->user->name }} 賣場
         </a>

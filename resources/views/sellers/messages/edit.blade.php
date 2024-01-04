@@ -9,10 +9,9 @@
             <li class="breadcrumb-item active">編輯評價</li>
         </ol>
         @include('sellers.layouts.shared.errors')
-        <form action="{{ route('sellers.message.update',$order->id) }}" method="POST" role="form" enctype="multipart/form-data">
+        <form action="{{ route('sellers.messages.update',$order->id) }}" method="POST" role="form">
             @method('PATCH')
             @csrf
-{{--            <input type="hidden" name="order_id" value="{{ $order->id }}">--}}
             <div class="form-group">
                 <label for="name" class="form-label">買家名稱</label>
                 <input id="name" name="name" type="text" class="form-control" value="{{ old('name',$order->user->name) }}" readonly>

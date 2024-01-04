@@ -8,7 +8,7 @@
                 <a class="nav-link" href="{{ route('sellers.orders.index') }}">
                     訂單管理
                 </a>
-                <a class="nav-link" href="{{ route('sellers.message.index') }}">
+                <a class="nav-link" href="{{ route('sellers.messages.index') }}">
                     訂單評價管理
                 </a>
                 <a class="nav-link" href="{{ route('sellers.orders.show') }}">

@@ -4,21 +4,51 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class SellerOrdersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::orderby('id','ASC')->get();
+        $seller = Auth::user()->seller;
+        $perPage = $request->input('perPage', 10);
+        $orders = Order::orderby('id','ASC')->where('seller_id',$seller->id)->paginate($perPage);
         $data = ['orders' => $orders];
         return view('sellers.orders.index',$data);
     }
+
+    public function search(Request $request)
+    {
+        $seller = Auth::user()->seller;
+        $query = $request->input('query');
+        $perPage = $request->input('perPage', 10);
+
+        $orders = Order::where('seller_id', $seller->id)
+            ->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->whereHas('seller.user', function ($subQuery) use ($query) {
+                    $subQuery->where('name', 'like', "%$query%");
+                })
+                    ->orWhereHas('user', function ($subQuery) use ($query) {
+                        $subQuery->where('name', 'like', "%$query%");
+                    });
+            })
+            ->orderBy('id', 'ASC')
+            ->paginate($perPage);
+
+        return view('sellers.orders.index', [
+            'orders' => $orders,
+            'query' => $query,
+        ]);
+    }
+
     public function show()
     {
-        $orders = Order::where('status','5')->orderby('id','ASC')->get();
+        $seller = Auth::user()->seller;
+        $orders = Order::where('status','5')
+            ->where('seller_id',$seller->id)
+            ->orderby('id','ASC')->get();
         $data = ['orders' => $orders];
         return view('sellers.orders.show',$data);
-
     }
 
     /**

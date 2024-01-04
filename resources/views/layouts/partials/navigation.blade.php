@@ -9,6 +9,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">類別搜尋</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ route('home') }}">全部</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
                         @foreach ($bookCategories as $category)
                             <li><a class="dropdown-item" href="{{ route('products.by_category', $category->id) }}">{{ $category->name }}</a></li>
                         @endforeach
@@ -75,7 +79,7 @@
                         @endif
                         @if (Auth::check() && Auth::user()->isAdmin())
                             <li>
-                                <a class="dropdown-item" href="{{ route('admins.dashboard') }}" style="color:black">{{ __('後台管理') }}</a>
+                                <a class="dropdown-item" href="{{ route('admins.users.index') }}" style="color:black">{{ __('後台管理') }}</a>
                             </li>
                         @endif
                         <li>

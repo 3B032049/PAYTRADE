@@ -110,6 +110,7 @@ Route::group(['middleware' => 'user'], function () {
 Route::group(['middleware' => 'seller'], function () {
     Route::prefix('sellers')->name('sellers.')->group(function () {
         Route::get('/products', [App\Http\Controllers\SellerProductsController::class, 'index'])->name('products.index');
+        Route::get('/products/search', [App\Http\Controllers\SellerProductsController::class, 'search'])->name('products.search');
         Route::get('/products/create', [App\Http\Controllers\SellerProductsController::class, 'create'])->name('products.create');
         Route::post('/products', [App\Http\Controllers\SellerProductsController::class, 'store'])->name("products.store");
         Route::get('/products/{product}/edit', [App\Http\Controllers\SellerProductsController::class, 'edit'])->name("products.edit");
@@ -120,6 +121,7 @@ Route::group(['middleware' => 'seller'], function () {
         Route::delete('/products/{product}', [App\Http\Controllers\SellerProductsController::class, 'destroy'])->name("products.destroy");
 
         Route::get('/orders', [App\Http\Controllers\SellerOrdersController::class, 'index'])->name('orders.index');
+        Route::get('/orders/search', [App\Http\Controllers\SellerOrdersController::class, 'search'])->name('orders.search');
         Route::get('/orders/show', [App\Http\Controllers\SellerOrdersController::class, 'show'])->name('orders.show');
         Route::get('/orders/{order}/edit', [App\Http\Controllers\SellerOrdersController::class, 'edit'])->name("orders.edit");
         Route::patch('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'update'])->name('orders.update');
@@ -131,10 +133,11 @@ Route::group(['middleware' => 'seller'], function () {
         Route::patch('/orders/{order}/notcancel', [App\Http\Controllers\SellerOrdersController::class, 'notcancel'])->name('orders.notcancel');
         Route::delete('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'destroy'])->name("orders.destroy");
 
-        Route::get('/ordersmessage', [App\Http\Controllers\SellersOredersMessageController::class, 'index'])->name('message.index');
-        Route::get('/ordersmessage/{order}/edit', [App\Http\Controllers\SellersOredersMessageController::class, 'edit'])->name("message.edit");
-        Route::patch('/ordersmessage/{ordersmessage}', [App\Http\Controllers\SellersOredersMessageController::class, 'update'])->name('message.update');
-        Route::delete('/ordermessage/{message}', [App\Http\Controllers\SellersOredersMessageController::class, 'destroy'])->name("message.destroy");
+        Route::get('/messages', [App\Http\Controllers\SellerOrderMessagesController::class, 'index'])->name('messages.index');
+        Route::get('/messages/search', [App\Http\Controllers\SellerOrderMessagesController::class, 'search'])->name('messages.search');
+        Route::get('/messages/{order}/edit', [App\Http\Controllers\SellerOrderMessagesController::class, 'edit'])->name("messages.edit");
+        Route::patch('/messages/{message}', [App\Http\Controllers\SellerOrderMessagesController::class, 'update'])->name('messages.update');
+        Route::delete('/messages/{message}', [App\Http\Controllers\SellerOrderMessagesController::class, 'destroy'])->name("messages.destroy");
     });
 });
 

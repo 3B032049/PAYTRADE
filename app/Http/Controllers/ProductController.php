@@ -183,11 +183,11 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-
+        $perPage = $request->input('perPage', 12);
         // 搜尋商品
         $products = Product::where('name', 'like', "%$query%")
             ->where('status','=',3)
-            ->get();
+            ->paginate($perPage);
 
 //        // 搜尋賣家
 //        $sellers = Seller::where('name', 'like', "%$query%")->get();
@@ -203,9 +203,10 @@ class ProductController extends Controller
     public function by_category(Request $request,$category_id)
     {
         $selectedCategory = ProductCategory::find($category_id);
+        $perPage = $request->input('perPage', 12);
         $products = Product::where('product_category_id', $category_id)
             ->where('status', 3)
-            ->get();
+            ->paginate($perPage);
 
         return view('products.by_category', [
             'selectedCategory' => $selectedCategory,
@@ -216,11 +217,12 @@ class ProductController extends Controller
     public function by_category_search(Request $request,$category_id)
     {
         $query = $request->input('query');
+        $perPage = $request->input('perPage', 12);
         $selectedCategory = ProductCategory::find($category_id);
         $products = Product::where('product_category_id', $category_id)
             ->where('name', 'like', "%$query%")
             ->where('status', 3)
-            ->get();
+            ->paginate($perPage);
 
         return view('products.by_category', [
             'selectedCategory' => $selectedCategory,
@@ -229,11 +231,12 @@ class ProductController extends Controller
         ]);
     }
 
-    public function by_seller($seller_id)
+    public function by_seller(Request $request,$seller_id)
     {
+        $perPage = $request->input('perPage', 12);
         $products = Product::where('seller_id', $seller_id)
             ->where('status', 3)
-            ->orderby('id','ASC')->get();
+            ->orderby('id','ASC')->paginate($perPage);
         $seller = Seller::where('id', $seller_id)->first();
         $sellerCategories = ProductCategory::whereIn('id', $products->pluck('product_category_id'))->get();
         $data = ['products' => $products , 'seller' => $seller , 'sellerCategories' => $sellerCategories,];
@@ -244,6 +247,14 @@ class ProductController extends Controller
     public function by_seller_search(Request $request, $seller_id)
     {
         $query = $request->input('query');
+        $perPage = $request->input('perPage', 12);
+
+        $originalSellerCategories = ProductCategory::whereIn('id', function ($query) use ($seller_id) {
+            $query->select('product_category_id')
+                ->from('products')
+                ->where('seller_id', $seller_id)
+                ->where('status', 3);
+        })->get();
 
         $products = Product::where('seller_id', $seller_id)
             ->where('status', 3)
@@ -251,11 +262,11 @@ class ProductController extends Controller
                 $queryBuilder->where('name', 'like', '%' . $query . '%');
             })
             ->orderBy('id', 'ASC')
-            ->get();
+            ->paginate($perPage);
 
         $seller = Seller::find($seller_id);
 
-        $sellerCategories = ProductCategory::whereIn('id', $products->pluck('product_category_id'))->get();
+        $sellerCategories = $originalSellerCategories;
 
         $data = [
             'products' => $products,
@@ -267,17 +278,26 @@ class ProductController extends Controller
         return view('products.by_seller_search', $data);
     }
 
-    public function by_seller_and_category($seller_id, $category_id)
+    public function by_seller_and_category(Request $request,$seller_id, $category_id)
     {
+        $perPage = $request->input('perPage', 12);
+
+        $originalSellerCategories = ProductCategory::whereIn('id', function ($query) use ($seller_id) {
+            $query->select('product_category_id')
+                ->from('products')
+                ->where('seller_id', $seller_id)
+                ->where('status', 3);
+        })->get();
+
         $products = Product::where('seller_id', $seller_id)
             ->where('product_category_id', $category_id)
             ->where('status', 3)
             ->orderBy('id', 'ASC')
-            ->get();
+            ->paginate($perPage);
 
         $seller = Seller::find($seller_id);
 
-        $sellerCategories = ProductCategory::whereIn('id', $products->pluck('product_category_id'))->get();
+        $sellerCategories = $originalSellerCategories;
 
         $selectedCategory = ProductCategory::find($category_id);
 
@@ -294,7 +314,13 @@ class ProductController extends Controller
     public function by_seller_and_category_search(Request $request,$seller_id, $category_id)
     {
         $query = $request->input('query');
-
+        $perPage = $request->input('perPage', 12);
+        $originalSellerCategories = ProductCategory::whereIn('id', function ($query) use ($seller_id) {
+            $query->select('product_category_id')
+                ->from('products')
+                ->where('seller_id', $seller_id)
+                ->where('status', 3);
+        })->get();
         $products = Product::where('seller_id', $seller_id)
             ->where('product_category_id', $category_id)
             ->where('status', 3)
@@ -302,10 +328,10 @@ class ProductController extends Controller
                 $queryBuilder->where('name', 'like', '%' . $query . '%');
             })
             ->orderBy('id', 'ASC')
-            ->get();
+            ->paginate($perPage);
 
         $seller = Seller::find($seller_id);
-        $sellerCategories = ProductCategory::whereIn('id', $products->pluck('product_category_id'))->get();
+        $sellerCategories = $originalSellerCategories;
         $selectedCategory = ProductCategory::find($category_id);
 
         $data = [

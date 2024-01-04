@@ -110,6 +110,7 @@ Route::group(['middleware' => 'user'], function () {
 Route::group(['middleware' => 'seller'], function () {
     Route::prefix('sellers')->name('sellers.')->group(function () {
         Route::get('/products', [App\Http\Controllers\SellerProductsController::class, 'index'])->name('products.index');
+        Route::get('/products/search', [App\Http\Controllers\SellerProductsController::class, 'search'])->name('products.search');
         Route::get('/products/create', [App\Http\Controllers\SellerProductsController::class, 'create'])->name('products.create');
         Route::post('/products', [App\Http\Controllers\SellerProductsController::class, 'store'])->name("products.store");
         Route::get('/products/{product}/edit', [App\Http\Controllers\SellerProductsController::class, 'edit'])->name("products.edit");

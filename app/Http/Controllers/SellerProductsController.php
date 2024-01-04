@@ -12,12 +12,37 @@ use App\Models\ProductCategory;
 
 class SellerProductsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $seller = Auth::user()->seller;
-        $products = Product::orderby('id','ASC')->where('seller_id',$seller->id)->get();
+        $perPage = $request->input('perPage', 10);
+        $products = Product::orderby('id','ASC')->where('seller_id',$seller->id)->paginate($perPage);
         $data = ['products' => $products];
         return view('sellers.products.index',$data);
+    }
+
+    public function search(Request $request)
+    {
+        $seller = Auth::user()->seller;
+        $perPage = $request->input('perPage', 10);
+        $searchTerm = $request->input('query');
+
+        $products = Product::with(['seller.user'])
+            ->where('seller_id', $seller->id)
+            ->when($searchTerm, function ($query, $searchTerm) {
+                $query->whereHas('seller.user', function ($subQuery) use ($searchTerm) {
+                    $subQuery->where('name', 'like', "%$searchTerm%");
+                })->orWhere('name', 'like', "%$searchTerm%");
+            })
+            ->orderBy('id', 'ASC')
+            ->paginate($perPage);
+
+        $data = [
+            'products' => $products,
+            'query' => $searchTerm,
+        ];
+
+        return view('sellers.products.index', $data);
     }
 
     /**
@@ -176,24 +201,5 @@ class SellerProductsController extends Controller
     {
         $product->delete();
         return redirect()->route('sellers.products.index');
-    }
-
-
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-
-        // 搜尋商品
-        $products = Product::where('name', 'like', "%$query%")->get();
-
-//        // 搜尋賣家
-//        $sellers = Seller::where('name', 'like', "%$query%")->get();
-
-        // 返回結果
-        return view('products.search', [
-            'products' => $products,
-//            'sellers' => $sellers,
-            'query' => $query,
-        ]);
     }
 }

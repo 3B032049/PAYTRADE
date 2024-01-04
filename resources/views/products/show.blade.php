@@ -2,8 +2,13 @@
 
 @section('title','商品內容')
 
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> > {{ $product->name }}</p>
+    </div>
+@endsection
+
 @section('content')
-<hr>
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">

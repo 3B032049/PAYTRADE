@@ -2,8 +2,13 @@
 
 @section('title','二手書拍賣平台')
 
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> > {{ $seller->user->name }}賣場</p>
+    </div>
+@endsection
+
 @section('content')
-<hr>
 <div class="container px-4 px-lg-5 mt-2 mb-4">
     <form action="{{ route('products.by_seller.search',['seller_id' => $seller->id]) }}" method="GET" class="d-flex">
         <input type="text" name="query" class="form-control me-2" placeholder="關鍵字搜尋...">

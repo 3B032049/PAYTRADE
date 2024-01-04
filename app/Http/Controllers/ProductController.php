@@ -183,11 +183,11 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-
+        $perPage = $request->input('perPage', 12);
         // 搜尋商品
         $products = Product::where('name', 'like', "%$query%")
             ->where('status','=',3)
-            ->get();
+            ->paginate($perPage);
 
 //        // 搜尋賣家
 //        $sellers = Seller::where('name', 'like', "%$query%")->get();
@@ -203,9 +203,10 @@ class ProductController extends Controller
     public function by_category(Request $request,$category_id)
     {
         $selectedCategory = ProductCategory::find($category_id);
+        $perPage = $request->input('perPage', 12);
         $products = Product::where('product_category_id', $category_id)
             ->where('status', 3)
-            ->get();
+            ->paginate($perPage);
 
         return view('products.by_category', [
             'selectedCategory' => $selectedCategory,
@@ -216,11 +217,12 @@ class ProductController extends Controller
     public function by_category_search(Request $request,$category_id)
     {
         $query = $request->input('query');
+        $perPage = $request->input('perPage', 12);
         $selectedCategory = ProductCategory::find($category_id);
         $products = Product::where('product_category_id', $category_id)
             ->where('name', 'like', "%$query%")
             ->where('status', 3)
-            ->get();
+            ->paginate($perPage);
 
         return view('products.by_category', [
             'selectedCategory' => $selectedCategory,

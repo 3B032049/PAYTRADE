@@ -104,6 +104,8 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('orders/filter', [App\Http\Controllers\OrderController::class, 'filter'])->name('orders.filter');
     Route::get('orders/comment/{order}', [App\Http\Controllers\OrderController::class, 'comment'])->name('orders.comment');
     Route::PATCH('orders/{order}/store_comment', [App\Http\Controllers\OrderController::class, 'store_comment'])->name("orders.store_comment");
+    Route::get('orders/{order}/comment_edit', [App\Http\Controllers\OrderController::class, 'comment_edit'])->name('orders.comment_edit');
+    Route::PATCH('orders/{order}/update_comment', [App\Http\Controllers\OrderController::class, 'update_comment'])->name("orders.update_comment");
 
 });
 

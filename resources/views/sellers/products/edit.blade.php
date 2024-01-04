@@ -19,7 +19,7 @@
             <div class="form-group">
                 <label for="image_url" class="form-label">書籍圖片</label>
                 <input id="image_url" name="image_url" type="file" class="form-control" value="{{ old('image_url',$product->image_url ) }}" placeholder="請選擇商品圖片" onchange="previewImage(this);">
-                <img id="image-preview" src="#" alt="圖片預覽" style="display: none; width:200px; height:200px;" >
+                <img id="image-preview" src="{{ $product->image_url ? asset('storage/products/' . $product->image_url) : '#' }}" alt="圖片預覽" style="width:200px; height:200px; display: {{ $product->image_url ? 'block' : 'none' }}" >
             </div>
             <div class="form-group">
                 <label for="content" class="form-label">書籍內容</label>

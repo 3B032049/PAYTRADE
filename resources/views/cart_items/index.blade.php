@@ -99,7 +99,7 @@
                 </form>
 
             @else
-                <p class="text-gray-600">購物車內無商品。</p>
+                <div align="center"><p class="text-gray-600">目前購物車內無商品。</p></div>
             @endif
         </div>
     </div>

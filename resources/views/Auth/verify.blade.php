@@ -3,7 +3,6 @@
 @section('title','驗證信箱')
 
 @section('content')
-    <hr>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

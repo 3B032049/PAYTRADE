@@ -17,11 +17,12 @@
     <body>
         @include('layouts.partials.navigation')
         <section id="location">
+            <hr>
+            <div style="padding-left: 150px;">
+                @yield('page-path')
+            </div>
             @yield('content')
         </section>
-
-
-
         @include('layouts.partials.footer')
     </body>
 <html>

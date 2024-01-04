@@ -41,9 +41,9 @@
             <tr>
                 <td colspan="5">
                     <div class='form-row row'>
-                        <div class='col-xs-12 form-group required'>
+                        <div class='col-xs-12 form-group '>
                             <label class='control-label'>卡片號碼：</label> <input
-                                class='form-control' size='4' type='text'>
+                                class='form-control' size='4' type='text' required>
                         </div>
                     </div>
                 </td>
@@ -52,20 +52,20 @@
             <tr>
                 <td colspan="5">
                     <div class='form-row row'>
-                        <div class='col-xs-12 col-md-4 form-group cvc required'>
+                        <div class='col-xs-12 col-md-4 form-group cvc'>
                             <label class='control-label'>CVC</label>
                             <input autocomplete='off' class='form-control card-cvc' placeholder='e.g 415' size='4'
-                                   type='text'>
+                                   type='text' required>
                         </div>
-                        <div class='col-xs-12 col-md-4 form-group expiration required'>
+                        <div class='col-xs-12 col-md-4 form-group expiration'>
                             <label class='control-label'>到期月份</label> <input
                                 class='form-control card-expiry-month' placeholder='MM' size='2'
-                                type='text'>
+                                type='text' required>
                         </div>
-                        <div class='col-xs-12 col-md-4 form-group expiration required'>
+                        <div class='col-xs-12 col-md-4 form-group expiration'>
                             <label class='control-label'>到期年份</label> <input
                                 class='form-control card-expiry-year' placeholder='YYYY' size='4'
-                                type='text'>
+                                type='text' required>
                         </div>
                     </div>
                 </td>

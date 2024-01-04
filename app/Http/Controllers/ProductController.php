@@ -70,36 +70,39 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($product)
+    public function show($productId)
     {
         if (Auth::check())
         {
             $user = Auth::user();
             $cartItems = $user->CartItems;
+            $seller_id = $user->seller->id;
+            $product = Product::where('id',$productId)->first();
 
-            $product = Product::where('id', $product)->first();
             $averageScore = Message::getAverageScoreForProduct($product->id);
+            $AllMessages = Message::getAllMessagesForProduct($product->id);
+            $productsCount = Product::where('seller_id', $seller_id)->count();
 
-            // 取得相同 product_category_id 的其他產品
             $relatedProducts = Product::where('product_category_id', $product->product_category_id)
                 ->where('id', '!=', $product->id) // 排除當前產品
                 ->inRandomOrder() // 隨機排序
                 ->limit(4) // 限制取得的數量，根據你的需求調整
                 ->get();
+
 
             $data = [
                 'cartItems' => $cartItems,
                 'product' => $product,
+                'averageScore'=>$averageScore,
+                'AllMessages'=>$AllMessages,
                 'relatedProducts' => $relatedProducts,
-                'averageScore' => $averageScore,
+                'productsCount'=>$productsCount,
             ];
-
             return view('products.show', $data);
         }
         else
         {
-            $product = Product::where('id', $product)->first();
-
+            $product = Product::where('id',$productId)->first();
             // 取得相同 product_category_id 的其他產品
             $relatedProducts = Product::where('product_category_id', $product->product_category_id)
                 ->where('id', '!=', $product->id) // 排除當前產品
@@ -107,11 +110,19 @@ class ProductController extends Controller
                 ->limit(4) // 限制取得的數量，根據你的需求調整
                 ->get();
 
+            $averageScore = Message::getAverageScoreForProduct($product->id);
+            $AllMessages = Message::getAllMessagesForProduct($product->id);
+
+            $productsCount = Product::where('seller_id', $product->seller->id)->count();
+
             $data = [
                 'product' => $product,
+                'averageScore'=>$averageScore,
+                'AllMessages'=>$AllMessages,
                 'relatedProducts' => $relatedProducts,
-            ];
+                'productsCount'=>$productsCount,
 
+            ];
             return view('products.show', $data);
         }
     }

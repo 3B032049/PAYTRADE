@@ -103,6 +103,24 @@ class CartItemsController extends Controller
         return redirect()->route('home');
     }
 
+    public function quantity_minus(CartItem $cartItem)
+    {
+        //
+        $cartItem->quantity = max(1, $cartItem->quantity - 1);
+        $cartItem->save();
+
+        return redirect()->back()->with('success', 'Quantity decremented successfully.');
+    }
+
+    public function quantity_plus(CartItem $cartItem)
+    {
+        //
+        $quantity = $cartItem->product->quantity;
+        $cartItem->quantity = min($quantity, $cartItem->quantity + 1);
+        $cartItem->save();
+
+        return redirect()->back()->with('success', 'Quantity decremented successfully.');
+    }
 
     /**
      * Display the specified resource.

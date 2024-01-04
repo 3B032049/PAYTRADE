@@ -133,10 +133,11 @@ Route::group(['middleware' => 'seller'], function () {
         Route::patch('/orders/{order}/notcancel', [App\Http\Controllers\SellerOrdersController::class, 'notcancel'])->name('orders.notcancel');
         Route::delete('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'destroy'])->name("orders.destroy");
 
-        Route::get('/ordersmessage', [App\Http\Controllers\SellersOredersMessageController::class, 'index'])->name('message.index');
-        Route::get('/ordersmessage/{order}/edit', [App\Http\Controllers\SellersOredersMessageController::class, 'edit'])->name("message.edit");
-        Route::patch('/ordersmessage/{ordersmessage}', [App\Http\Controllers\SellersOredersMessageController::class, 'update'])->name('message.update');
-        Route::delete('/ordermessage/{message}', [App\Http\Controllers\SellersOredersMessageController::class, 'destroy'])->name("message.destroy");
+        Route::get('/messages', [App\Http\Controllers\SellerOrderMessagesController::class, 'index'])->name('messages.index');
+        Route::get('/messages/search', [App\Http\Controllers\SellerOrderMessagesController::class, 'search'])->name('messages.search');
+        Route::get('/messages/{order}/edit', [App\Http\Controllers\SellerOrderMessagesController::class, 'edit'])->name("messages.edit");
+        Route::patch('/messages/{message}', [App\Http\Controllers\SellerOrderMessagesController::class, 'update'])->name('messages.update');
+        Route::delete('/messages/{message}', [App\Http\Controllers\SellerOrderMessagesController::class, 'destroy'])->name("messages.destroy");
     });
 });
 

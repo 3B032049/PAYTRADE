@@ -100,10 +100,10 @@
                         @endif
                     </td>
                     <td style="text-align:center">
-                        <form action="{{ route('sellers.products.destroy',$product->id) }}" method="POST">
+                        <form id="deleteForm{{ $product->id }}" action="{{ route('sellers.products.destroy',$product->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">刪除</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $product->name }}', {{ $product->id }})">刪除</button>
                         </form>
                     </td>
                 </tr>
@@ -133,6 +133,14 @@
             @endif
         </div>
     </div>
+    <script>
+        function confirmDelete(product_name, productId)
+        {
+            if (confirm("確定要刪除書籍" + product_name + "嗎？")) {
+                document.getElementById('deleteForm' + productId).submit();
+            }
+        }
+    </script>
     <script>
         function changeRecordsPerPage() {
             const select = document.getElementById('records-per-page');

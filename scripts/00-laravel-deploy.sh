@@ -10,9 +10,6 @@ sudo apt-get install -y nodejs
 # 設定 npm 的 PATH
 export PATH="$PATH:/path/to/npm"
 
-# 設定 Node.js 模組的路徑
-export NODE_PATH="$NODE_PATH:/path/to/node_modules"
-
 echo "Caching config..."
 php artisan config:cache
 

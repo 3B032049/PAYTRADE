@@ -27,7 +27,11 @@
         </div>
         <div class="form-group">
             <label for="status" class="form-label">狀態</label>
-                @if ($order->status == '1')
+                @if ($order->status == '0')
+                <div style="color:#FF0000; font-weight:bold;">
+                    (未付款)
+                </div>
+                @elseif ($order->status == '1')
                     <div style="color:#FF0000; font-weight:bold;">
                         (待確認)
                         @if($order->status=='1')

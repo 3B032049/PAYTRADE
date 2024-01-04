@@ -121,6 +121,7 @@ Route::group(['middleware' => 'seller'], function () {
         Route::delete('/products/{product}', [App\Http\Controllers\SellerProductsController::class, 'destroy'])->name("products.destroy");
 
         Route::get('/orders', [App\Http\Controllers\SellerOrdersController::class, 'index'])->name('orders.index');
+        Route::get('/orders/search', [App\Http\Controllers\SellerOrdersController::class, 'search'])->name('orders.search');
         Route::get('/orders/show', [App\Http\Controllers\SellerOrdersController::class, 'show'])->name('orders.show');
         Route::get('/orders/{order}/edit', [App\Http\Controllers\SellerOrdersController::class, 'edit'])->name("orders.edit");
         Route::patch('/orders/{order}', [App\Http\Controllers\SellerOrdersController::class, 'update'])->name('orders.update');

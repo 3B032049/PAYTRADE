@@ -15,7 +15,7 @@ class SellerOrdersController extends Controller
     }
     public function show()
     {
-        $orders = Order::orderby('id','ASC')->get();
+        $orders = Order::where('status','5')->orderby('id','ASC')->get();
         $data = ['orders' => $orders];
         return view('sellers.orders.show',$data);
 
@@ -57,6 +57,18 @@ class SellerOrdersController extends Controller
     public function arrive(Order $order)
     {
         $order->status='4';
+        $order->save();
+        return redirect()->route('sellers.orders.index');
+    }
+    public function cancel(Order $order)
+    {
+        $order->status='7';
+        $order->save();
+        return redirect()->route('sellers.orders.index');
+    }
+    public function notcancel(Order $order)
+    {
+        $order->status='2';
         $order->save();
         return redirect()->route('sellers.orders.index');
     }

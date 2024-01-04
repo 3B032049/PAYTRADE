@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\Product;
 
 use App\Models\Seller;
@@ -77,6 +78,7 @@ class ProductController extends Controller
             $cartItems = $user->CartItems;
 
             $product = Product::where('id', $product)->first();
+            $averageScore = Message::getAverageScoreForProduct($product->id);
 
             // 取得相同 product_category_id 的其他產品
             $relatedProducts = Product::where('product_category_id', $product->product_category_id)
@@ -89,6 +91,7 @@ class ProductController extends Controller
                 'cartItems' => $cartItems,
                 'product' => $product,
                 'relatedProducts' => $relatedProducts,
+                'averageScore' => $averageScore,
             ];
 
             return view('products.show', $data);

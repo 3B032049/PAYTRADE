@@ -2,19 +2,25 @@
 
 @section('title','二手書拍賣平台')
 
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> >
+            <a href="{{ route('products.by_seller',['seller_id' => $seller->id]) }}">{{ $seller->user->name }}賣場</a>
+            @if ($selectedCategory)
+                >
+                {{ $selectedCategory->name }}類
+            @endif
+        </p>
+    </div>
+@endsection
+
 @section('content')
-<hr>
 <div class="container px-4 px-lg-5 mt-2 mb-4">
     <form action="{{ route('products.by_seller_and_category.search',['seller_id' => $seller->id, 'category_id' => $selectedCategory->id]) }}" method="GET" class="d-flex">
         <input type="text" name="query" class="form-control me-2" placeholder="關鍵字搜尋...">
         <button type="submit" class="btn btn-outline-dark">搜尋</button>
     </form>
 </div>
-@if ($selectedCategory)
-    <div class="container px-4 px-lg-5 mt-2 mb-4">
-        查找「{{ $selectedCategory->name }}」類商品
-    </div>
-@endif
 <!-- Responsive navbar-->
 <!-- Page Content-->
 <div class="container px-4 px-lg-5">
@@ -74,6 +80,17 @@
                             </div>
                         </div>
                     @endforeach
+                </div>
+                <div class="d-flex justify-content-center">
+                    @if ($products->currentPage() > 1)
+                        <a href="{{ $products->previousPageUrl() }}" class="btn btn-secondary">上一頁</a>
+                    @endif
+
+                    <span class="mx-2">全部 {{ $products->total() }} 筆書籍，目前位於第 {{ $products->currentPage() }} 頁，共 {{ $products->lastPage() }} 頁</span>
+
+                    @if ($products->hasMorePages())
+                        <a href="{{ $products->nextPageUrl() }}" class="btn btn-secondary">下一頁</a>
+                    @endif
                 </div>
             @else
                 <div align="center">

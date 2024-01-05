@@ -20,8 +20,11 @@ class OrderController extends Controller
     public function index()
     {
         $user = Auth::user();
+
         $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+
         $data = ['orders' => $orders];
+
         return view('orders.index',$data);
     }
 
@@ -127,9 +130,14 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $comment = Message::where('order_id', $order->id)->first();
+
         $orderDetails = OrderDetail::where('order_id', $order->id)->get();
 
-        $data = ['order_details' => $orderDetails];
+        $data = [
+            'order_details' => $orderDetails,
+            'has_comment' => $comment !== null, // 如果评论存在，has_comment 将为 true，否则为 false
+        ];
 
         return view('orders.show', $data);
     }
@@ -148,9 +156,9 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Order $order)
+    public function comment_edit(Order $order)
     {
-        //
+        return view('orders.comment_edit', ['order' => $order]);
     }
 
     /**
@@ -219,4 +227,23 @@ class OrderController extends Controller
         // Redirect back to the order list
         return view('orders.index', ['orders' => $orders]);
     }
+
+    public function update_comment(Request $request, Order $order)
+    {
+        $message = message::updateOrCreate(
+            ['order_id' => $order->id],
+            [
+                'buyer_message' => $request->input('buyer_message'),
+                'buying_rating' => $request->input('comment_rating'),
+            ]
+        );
+
+        if ($message) {
+            $message->save();
+        }
+
+        // 重定向到訂單列表頁面
+        return redirect()->route('orders.index');
+    }
+
 }

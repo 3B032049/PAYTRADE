@@ -1,9 +1,12 @@
 @extends('layouts.master')
 
 @section('title','個人資料')
-
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> > {{ $user->name }}</p>
+    </div>
+@endsection
 @section('content')
-    <hr>
     <section id="location">
         <div class="container">
             <div class="row justify-content-center">

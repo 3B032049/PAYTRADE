@@ -3,7 +3,6 @@
 @section('title','二手書拍賣平台')
 
 @section('content')
-<hr>
 <div class="container px-4 px-lg-5 mt-2 mb-4">
     <form action="{{ route('products.search') }}" method="GET" class="d-flex">
         <input type="text" name="query" class="form-control me-2" placeholder="關鍵字搜尋...">
@@ -30,6 +29,18 @@
                             <span class="price" style="color: red; font-size: 1.6em; font-weight: bold;">${{ $product->price }}</span>
                         </div>
                     </div>
+
+                    <div class="rating d-flex justify-content-center mb-4">
+{{--                        @for ($i = 5; $i >= 1; $i--)--}}
+{{--                            <input type="radio" id="star{{ $i }}" name="comment_rating" value="{{ $i }}">--}}
+{{--                            <label for="star{{ $i }}"><i class="fas fa-star"></i></label>--}}
+{{--                        @endfor--}}
+{{--                        @if($product->order_detail->message->buying_rating !='')--}}
+{{--                            <input type="radio" id="star" name="comment_rating" value="{{ $product->order_detail->message->buying_rating }}">--}}
+{{--                        @else--}}
+{{--                            目前無評價--}}
+{{--                        @endif--}}
+                    </div>
                     <!-- Product actions-->
                     <div class="card-footer p-3 pt-0 border-top-0 bg-transparent d-flex justify-content-center align-items-center">
                         <form action="{{ route("cart_items.store",$product->id) }}" method="POST" role="form">
@@ -48,6 +59,17 @@
             </div>
             @endforeach
         </div>
+            <div class="d-flex justify-content-center">
+                @if ($products->currentPage() > 1)
+                    <a href="{{ $products->previousPageUrl() }}" class="btn btn-secondary">上一頁</a>
+                @endif
+
+                <span class="mx-2">全部 {{ $products->total() }} 筆書籍，目前位於第 {{ $products->currentPage() }} 頁，共 {{ $products->lastPage() }} 頁</span>
+
+                @if ($products->hasMorePages())
+                    <a href="{{ $products->nextPageUrl() }}" class="btn btn-secondary">下一頁</a>
+                @endif
+            </div>
         @else
             <div align="center">
                 <h3>賣場內無商品</h3>
@@ -85,5 +107,25 @@
         }
     });
 </script>
+<style>
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        cursor: pointer;
+        font-size: 1.5em;
+        color: #ddd;
+    }
+
+    .rating input:checked ~ label {
+        color: #ffc107;
+    }
+</style>
 @endsection
 

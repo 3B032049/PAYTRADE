@@ -1,9 +1,12 @@
 @extends('products.index.layouts.master')
 
 @section('title', '訂單')
-
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> > <a href="{{ route('cart_items.index') }}">購物車</a> > 訂單結帳</p>
+    </div>
+@endsection
 @section('content')
-    <hr>
     <div class="wrapper">
         <div class="container mt-8">
             <h3 class="text-2xl mb-4" align="center">訂單結帳</h3>

@@ -2,25 +2,28 @@
 
 @section('title','二手書拍賣平台')
 
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> >
+            @if ($selectedCategory)
+                <a href="{{ route('products.by_category',$selectedCategory->id) }}">{{ $selectedCategory->name }}類</a>
+            @endif
+            @if (request()->has('query'))
+                >
+                查找「{{ request('query') }}」
+                <a class="btn btn-success btn-sm" href="{{ route('products.by_category',$selectedCategory->id) }}">取消搜尋</a>
+            @endif
+        </p>
+    </div>
+@endsection
+
 @section('content')
-    <hr>
     <div class="container px-4 px-lg-5 mt-2 mb-4">
         <form action="{{ route('products.by_category.search',$selectedCategory->id) }}" method="GET" class="d-flex">
             <input type="text" name="query" class="form-control me-2" placeholder="關鍵字搜尋...">
             <button type="submit" class="btn btn-outline-dark">搜尋</button>
         </form>
     </div>
-    @if ($selectedCategory)
-        <div class="container px-4 px-lg-5 mt-2 mb-4">
-            查找「{{ $selectedCategory->name }}」類商品
-        </div>
-    @endif
-    @if (request()->has('query'))
-        <div class="container px-4 px-lg-5 mt-2 mb-4">
-            查找「{{ request('query') }}」
-            <a class="btn btn-success btn-sm" href="{{ route('products.by_category',$selectedCategory->id) }}">取消搜尋</a>
-        </div>
-    @endif
     @if (count($products) > 0)
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
@@ -30,7 +33,7 @@
                         <div class="card h-100">
                             <!-- Product image-->
                             <a href="{{ route("products.show",$product->id) }}">
-                                <img class="card-img-top" src="{{ asset('storage/products/' . $product->image_url) }}" alt="{{ $product->title }}" />
+                                <img class="card-img-top" src="{{ asset('storage/products/' . $product->image_url) }}" alt="{{ $product->title }}" style="max-width: 150%; height: 250px"/>
                             </a>
                             <!-- Product details-->
                             <div class="card-body p-4">
@@ -61,6 +64,17 @@
             </div>
         </div>
     </section>
+    <div class="d-flex justify-content-center">
+        @if ($products->currentPage() > 1)
+            <a href="{{ $products->previousPageUrl() }}" class="btn btn-secondary">上一頁</a>
+        @endif
+
+        <span class="mx-2">全部 {{ $products->total() }} 筆書籍，目前位於第 {{ $products->currentPage() }} 頁，共 {{ $products->lastPage() }} 頁</span>
+
+        @if ($products->hasMorePages())
+            <a href="{{ $products->nextPageUrl() }}" class="btn btn-secondary">下一頁</a>
+        @endif
+    </div>
     @else
     <div class="container px-4 px-lg-5 mt-2 mb-4 mx-auto">無符合商品</div>
     @endif

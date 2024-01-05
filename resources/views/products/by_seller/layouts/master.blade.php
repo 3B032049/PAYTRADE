@@ -26,17 +26,13 @@
     <body>
         @include('products.by_seller.layouts.partials.navigation')
         <section id="location">
+            <hr>
+            <div style="padding-left: 150px;">
+                @yield('page-path')
+            </div>
             @yield('content')
         </section>
-
-{{--        <!-- Bootstrap core JS-->--}}
-{{--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>--}}
-{{--        <!-- Core theme JS-->--}}
-{{--        <script src="{{asset('js/scripts.js')}}"></script>--}}
-
         @include('products.by_seller.layouts.partials.footer')
-{{--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>--}}
-        <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
     </body>
 <html>

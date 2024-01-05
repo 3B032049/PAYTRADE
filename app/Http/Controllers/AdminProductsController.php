@@ -157,6 +157,9 @@ class AdminProductsController extends Controller
 
     public function destroy(Product $product)
     {
+        if ($product->image_url) {
+            Storage::disk('products')->delete($product->image_url);
+        }
         $product->delete();
         return redirect()->route('admins.products.index');
     }

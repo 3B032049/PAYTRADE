@@ -27,7 +27,11 @@
         </div>
         <div class="form-group">
             <label for="status" class="form-label">狀態</label>
-                @if ($order->status == '1')
+                @if ($order->status == '0')
+                <div style="color:#FF0000; font-weight:bold;">
+                    (未付款)
+                </div>
+                @elseif ($order->status == '1')
                     <div style="color:#FF0000; font-weight:bold;">
                         (待確認)
                         @if($order->status=='1')
@@ -77,7 +81,7 @@
                 @elseif ($order->status == '5')
                     <div style="color:#002aff; font-weight:bold;">
                         (已完成)
-                        <form action="{{ route('sellers.message.edit',$order->id) }}" method="GET" role="form">
+                        <form action="{{ route('sellers.messages.edit',$order->id) }}" method="GET" role="form">
                             @method('GET')
                             @csrf
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">

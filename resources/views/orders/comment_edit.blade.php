@@ -3,12 +3,13 @@
 @section('title', '訂單')
 
 @section('content')
+    <hr>
     <div class="wrapper">
         <div class="container mt-8">
             <h3 class="text-2xl mb-4" align="center">評論訂單</h3>
         </div>
     </div>
-    <form action="{{ route('orders.store_comment',$order->id) }}" method="POST" role="form">
+    <form action="{{ route('orders.update_comment',$order->id) }}" method="POST" role="form">
         @method('PATCH')
         @csrf
         <table class="min-w-full bg-white border border-gray-200 mx-auto" border="1">
@@ -20,7 +21,7 @@
                             <label for="seller_rating" class="form-label">滿意度</label>
                             <div class="rating d-flex justify-content-center mb-4">
                                 @for ($i = 5; $i >= 1; $i--)
-                                    <input type="radio" id="star{{ $i }}" name="comment_rating" value="{{ $i }}">
+                                    <input type="radio" id="star{{ $i }}" name="comment_rating" value="{{ $i }}" {{ old('buying_rating', optional($order->message)->buying_rating) == $i ? 'checked' : '' }}>
                                     <label for="star{{ $i }}"><i class="fas fa-star"></i></label>
                                 @endfor
                             </div>
@@ -35,9 +36,9 @@
                 <td  style="width: 415px">
                     <div class='form-row row'>
                         <div class='col-xs-12 form-group required'>
-                            <label for="comment" class="form-label">輸入評論內容</label>
-                            <textarea id="comment" name="comment" class="form-control" rows="10" placeholder="請輸入文章內容">
-                            </textarea>
+                            <label for="buyer_message" class="form-label">輸入評論內容</label>
+                            <textarea id="buyer_message" name="buyer_message" class="form-control" rows="10" placeholder="請輸入文章內容">
+                            {{ old('buyer_message', optional($order->message)->buyer_message) }}</textarea>
                         </div>
                     </div>
                 </td>
@@ -48,7 +49,7 @@
             <tr>
                 <td align="right">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="submit" class="btn btn-primary btn-sm">完成評論</button><br><br>
+                        <button type="submit" class="btn btn-primary btn-sm">儲存評論</button><br><br>
                     </div><br>
                 </td>
             </tr>

@@ -103,6 +103,24 @@ class CartItemsController extends Controller
         return redirect()->route('home');
     }
 
+    public function quantity_minus(CartItem $cartItem)
+    {
+        //
+        $cartItem->quantity = max(1, $cartItem->quantity - 1);
+        $cartItem->save();
+
+        return redirect()->back()->with('success', 'Quantity decremented successfully.');
+    }
+
+    public function quantity_plus(CartItem $cartItem)
+    {
+        //
+        $quantity = $cartItem->product->quantity;
+        $cartItem->quantity = min($quantity, $cartItem->quantity + 1);
+        $cartItem->save();
+
+        return redirect()->back()->with('success', 'Quantity decremented successfully.');
+    }
 
     /**
      * Display the specified resource.
@@ -125,9 +143,6 @@ class CartItemsController extends Controller
      */
     public function update(UpdateCartItemRequest $request, $id)
     {
-//        $this->validate($request,[
-//            'quantity' => 'required|integer|min:1',
-//        ]);
         $cartItem = CartItem::findOrFail($id);
         $cartItem->update(['quantity' => $request->quantity]);
         return redirect()->route('cart_items.index');

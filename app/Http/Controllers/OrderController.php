@@ -137,17 +137,18 @@ class OrderController extends Controller
         $data = [
             'order_details' => $orderDetails,
             'has_comment' => $comment !== null, // 如果评论存在，has_comment 将为 true，否则为 false
+            'order' => $order,
         ];
 
         return view('orders.show', $data);
     }
 
-    public function payment($order_id)
+    public function payment(Order $order)
     {
         //
 //        $order = Order::where('id',$order_id)->get();
-        $orderDetails = OrderDetail::where('order_id', $order_id)->get();
-        $data = ['order_details' => $orderDetails];
+        $orderDetails = OrderDetail::where('order_id', $order->id)->get();
+        $data = ['order_details' => $orderDetails,'order' => $order];
 
         return view('orders.payment', $data);
     }

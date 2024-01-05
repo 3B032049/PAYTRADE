@@ -4,11 +4,12 @@
 
 @section('page-path')
     <div>
-        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> >
-            <a href="{{ route('products.by_seller',['seller_id' => $seller->id]) }}">{{ $seller->user->name }}賣場</a>
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
+            <a href="{{ route('products.by_seller',['seller_id' => $seller->id]) }}" class="custom-link">{{ $seller->user->name }}賣場</a>
             @if ($selectedCategory)
                 >
-                <a href="{{ route('products.by_seller_and_category',['seller_id' => $seller->id, 'category_id' => $selectedCategory->id]) }}">{{ $selectedCategory->name }}類</a>
+                <a href="{{ route('products.by_seller_and_category',['seller_id' => $seller->id, 'category_id' => $selectedCategory->id]) }}" class="custom-link">{{ $selectedCategory->name }}類</a>
             @endif
             @if (request()->has('query'))
                 >

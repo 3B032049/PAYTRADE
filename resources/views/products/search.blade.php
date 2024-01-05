@@ -4,7 +4,8 @@
 
 @section('page-path')
     <div>
-        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> >
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
             @if (request()->has('query'))
                 查找「{{ request('query') }}」
                 <a class="btn btn-success btn-sm" href="{{ route('home') }}">取消搜尋</a>

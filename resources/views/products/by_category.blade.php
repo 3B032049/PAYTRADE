@@ -4,14 +4,16 @@
 
 @section('page-path')
     <div>
-        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> >
-            @if ($selectedCategory)
-                <a href="{{ route('products.by_category',$selectedCategory->id) }}">{{ $selectedCategory->name }}類</a>
-            @endif
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
             @if (request()->has('query'))
-                >
+                <a href="{{ route('products.by_category', $selectedCategory->id) }}" class="custom-link">
+                    {{ $selectedCategory->name }}類
+                </a> &gt;
                 查找「{{ request('query') }}」
                 <a class="btn btn-success btn-sm" href="{{ route('products.by_category',$selectedCategory->id) }}">取消搜尋</a>
+            @else
+                {{ $selectedCategory->name }}類
             @endif
         </p>
     </div>

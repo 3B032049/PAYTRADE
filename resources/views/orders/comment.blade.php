@@ -2,6 +2,17 @@
 
 @section('title', '訂單')
 
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
+            <a href="{{ route('orders.index') }}" class="custom-link">訂購清單</a> >
+            <a href="{{ route('orders.show',$order->id) }}" class="custom-link">訂單：{{ $order->id }}</a> >
+            評論
+        </p>
+    </div>
+@endsection
+
 @section('content')
     <div class="wrapper">
         <div class="container mt-8">
@@ -36,8 +47,7 @@
                     <div class='form-row row'>
                         <div class='col-xs-12 form-group required'>
                             <label for="comment" class="form-label">輸入評論內容</label>
-                            <textarea id="comment" name="comment" class="form-control" rows="10" placeholder="請輸入文章內容">
-                            </textarea>
+                            <textarea id="comment" name="comment" class="form-control" rows="10" placeholder="請輸入文章內容"></textarea>
                         </div>
                     </div>
                 </td>

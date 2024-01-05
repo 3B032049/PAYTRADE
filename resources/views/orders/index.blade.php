@@ -1,11 +1,16 @@
 @extends('products.index.layouts.master')
 
 @section('title', '訂單')
+
 @section('page-path')
     <div>
-        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> > 訂購清單</p>
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
+            訂購清單
+        </p>
     </div>
 @endsection
+
 @section('content')
     <div class="wrapper">
         <div class="container mt-8">

@@ -13,6 +13,12 @@
         <link href="{{asset('css/shopitem-styles.css')}}" rel="stylesheet" />
 
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+        <style>
+            .custom-link {
+                color: black; /* 設置字體顏色為黑色 */
+                text-decoration: none; /* 移除下劃線 */
+            }
+        </style>
     </head>
     <body>
         @include('layouts.partials.navigation')

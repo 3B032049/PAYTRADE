@@ -1,7 +1,11 @@
 @extends('products.index.layouts.master')
 
 @section('title', '購物車')
-
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> > 購物車</p>
+    </div>
+@endsection
 @section('content')
     <div class="wrapper">
         <div class="container mt-8">

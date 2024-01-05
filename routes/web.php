@@ -74,6 +74,8 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('cartItems/create', [App\Http\Controllers\CartItemsController::class, 'create'])->name("cart_items.create");
     Route::post('cartItems/{product}', [App\Http\Controllers\CartItemsController::class, 'store'])->name("cart_items.store");
     Route::post('cartItems/{product}/addToCart', [App\Http\Controllers\CartItemsController::class, 'addToCart'])->name("cart_items.addToCart");
+    Route::patch('cart_items/{cart_item}/quantity_minus/a', [App\Http\Controllers\CartItemsController::class, 'quantity_minus'])->name("cart_items.quantity_minus");
+    Route::patch('cart_items/{cart_item}/quantity_plus', [App\Http\Controllers\CartItemsController::class, 'quantity_plus'])->name("cart_items.quantity_plus");
 //    Route::post('cartItems/{product}', [App\Http\Controllers\CartItemsController::class, 'store_show'])->name("cart_items.store_show");
     Route::get('cartItems/{cartItem}/edit', [App\Http\Controllers\CartItemsController::class, 'edit'])->name("cart_items.edit");
     Route::patch('cartItems/{cartItem}', [App\Http\Controllers\CartItemsController::class, 'update'])->name("cart_items.update");
@@ -104,6 +106,8 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('orders/filter', [App\Http\Controllers\OrderController::class, 'filter'])->name('orders.filter');
     Route::get('orders/comment/{order}', [App\Http\Controllers\OrderController::class, 'comment'])->name('orders.comment');
     Route::PATCH('orders/{order}/store_comment', [App\Http\Controllers\OrderController::class, 'store_comment'])->name("orders.store_comment");
+    Route::get('orders/{order}/comment_edit', [App\Http\Controllers\OrderController::class, 'comment_edit'])->name('orders.comment_edit');
+    Route::PATCH('orders/{order}/update_comment', [App\Http\Controllers\OrderController::class, 'update_comment'])->name("orders.update_comment");
 
 });
 

@@ -3,6 +3,7 @@
 @section('title', '購物車')
 
 @section('content')
+    <hr>
     <div class="wrapper">
         <div class="container mt-8">
             <h1 class="text-2xl mb-4" align="center">購物車內容</h1>
@@ -19,14 +20,13 @@
                         $totalAmountBySeller = 0;
                     @endphp
 
-                    <table class="min-w-full bg-white border border-gray-200 mx-auto">
+                    <table class="mx-auto" border="0">
                         <tbody>
                         <tr>
                             <td class="py-2 px-4 border-b" colspan="7">
                                 賣家：{{ $seller->user->name }}
                             </td>
                         </tr>
-
                         @foreach ($items as $cartItem)
                             <tr>
                                 <td class="py-2 px-4 border-b">
@@ -40,18 +40,31 @@
                                     ${{ $cartItem->product->price }}
                                 </td>
                                 <td class="py-2 px-4 border-b">
-                                    <form action="{{ route('cart_items.update', $cartItem->id) }}" method="POST" id="updateCartItemForm">
+                                    <form action="{{ route('cart_items.quantity_minus', $cartItem->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <span class="quantity-span">
-                                    <button class="quantity-minus" type="submit" onclick="setOperationInput('minus')">-</button>
-                                    <input class="quantity-input" type="number"  name="quantity" value="{{ $cartItem->quantity }}" style="max-width: 6rem">
-                                    <button class="quantity-plus" type="submit" onclick="setOperationInput('plus')">+</button>
-                                    <input type="hidden" name="operation" id="operationInput" value="">
-                                    </span>
+                                        <button type="submit">-</button>
+                                        </span>
                                     </form>
                                 </td>
-                                <td class="py-2 px-4 border-b subtotal">
+                                <td class="py-2 px-4 border-b">
+                                    <form action="{{ route('cart_items.update', $cartItem->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input class="quantity-input" type="text"  name="quantity" value="{{ $cartItem->quantity }}" style="max-width: 6rem">
+                                    </form>
+                                </td>
+                                <td class="py-2 px-4 border-b" >
+                                    <form action="{{ route('cart_items.quantity_plus', $cartItem->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <span class="quantity-span">
+                                        <button type="submit">+</button>
+                                        </span>
+                                    </form>
+                                </td>
+                                <td class="py-2 px-4 border-b subtotal" align="left">
                                     ${{ number_format($cartItem->quantity * $cartItem->product->price, 0) }}
                                 </td>
                                 <td class="py-2 px-4 border-b">
@@ -62,14 +75,12 @@
                                     </form>
                                 </td>
                             </tr>
-
                             @php
                                 $totalAmountBySeller += $cartItem->quantity * $cartItem->product->price;
                             @endphp
                         @endforeach
                         </tbody>
                     </table>
-
                     @php
                         $totalAmount += $totalAmountBySeller;
                     @endphp
@@ -85,7 +96,7 @@
                 </div>
                 <br>
                 <div class="text-left" style="height: 80px">
-                    <strong>總金額：</strong>${{ number_format($totalAmount + $totalShippingFee, 0) }}
+                    <strong>總金額(含運費)：</strong>${{ number_format($totalAmount + $totalShippingFee, 0) }}
                 </div>
 
                 <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm" onsubmit="return prepareCheckout(event)">
@@ -98,7 +109,7 @@
                 </form>
 
             @else
-                <div align="center"><p class="text-gray-600">目前購物車內無商品。</p></div>
+                <p class="text-gray-600">購物車內無商品。</p>
             @endif
         </div>
     </div>
@@ -158,37 +169,12 @@
             const quantitySpans = document.querySelectorAll('.quantity-span');
             const totalAmountElement = document.getElementById('totalAmount');
 
-            quantitySpans.forEach(span => {
-                const quantityInput = span.querySelector('.quantity-input');
-                const minusButton = span.querySelector('.quantity-minus');
-                const plusButton = span.querySelector('.quantity-plus');
-
-                minusButton.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    updateQuantity(quantityInput, -1);
-                });
-
-                plusButton.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    updateQuantity(quantityInput, 1);
+            const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateTotalAmount();
                 });
             });
-
-            function updateQuantity(input, change) {
-                let newValue = parseInt(input.value) + change;
-                if (newValue < 1) {
-                    newValue = 1;
-                }
-                input.value = newValue;
-
-                const priceElement = input.closest('tr').querySelector('.price');
-                const subtotalElement = input.closest('tr').querySelector('.subtotal');
-                const productPrice = parseFloat(priceElement.dataset.price);
-                const subtotal = newValue * productPrice;
-
-                subtotalElement.textContent = `$${subtotal.toFixed(0)}`;
-                updateTotalAmount();
-            }
 
             function updateTotalAmount() {
                 const subtotalElements = document.querySelectorAll('.subtotal');
@@ -206,7 +192,6 @@
 
                 totalAmountElement.textContent = `$${totalAmount.toFixed(0)}`;
             }
-
         });
     </script>
 @endsection

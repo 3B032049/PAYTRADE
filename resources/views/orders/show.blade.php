@@ -17,9 +17,6 @@
             <th>數量</th>
             <th>小計</th>
         </tr>
-        @php
-            $totalSum = 0;
-        @endphp
         @foreach ($order_details as $order_detail)
             <tr>
                 <td class="py-2 px-4 border-b">
@@ -45,7 +42,7 @@
         <tr>
             <td>
                 <div class="text-center">
-                   訂單運費
+                    訂單運費
                 </div>
             </td>
             <td></td>
@@ -160,6 +157,38 @@
         <tr>
             <td colspan="5" ><div class="text-center"><hr></div></td>
         </tr>
+        @if($has_comment)
+            <tr>
+                <td>
+                    <div class="text-center">
+                        <strong>訂單評論</strong>
+                    </div>
+                </td>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="text-center" >
+                        滿意度
+                    </div>
+                </td>
+                <td colspan="4">
+                    <br>
+                    <div class="rating d-flex justify-content-center mb-4">
+                        @for ($i = 5; $i >= 1; $i--)
+                            <input type="radio" id="star{{ $i }}" name="comment_rating" value="{{ $i }}" {{ old('buying_rating', optional($order_detail->order->message)->buying_rating) == $i ? 'checked' : '' }} disabled>
+                            <label for="star{{ $i }}"><i class="fas fa-star"></i></label>
+                        @endfor
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                <textarea id="buyer_message" name="buyer_message" class="form-control" rows="10" placeholder="請輸入文章內容" readonly>
+                {{ old('buyer_message', optional($order_detail->order->message)->buyer_message) }}</textarea>
+                </td>
+            </tr>
+        @endif
         <tr>
             <td colspan="3"></td>
             <td>
@@ -183,19 +212,29 @@
                         </div>
                     </form>
                 @elseif($order_detail->order->status == '5')
-                    <form action="{{ route('orders.comment', $order_detail->order->id) }}" method="GET">
-                        @csrf
-                        @method('GET')
-                        <div class="text-left">
-                            <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">評論</button><br><br>
-                        </div>
-                    </form>
+                    @if($has_comment)
+                        <form action="{{ route('orders.comment_edit', $order_detail->order->id) }}" method="GET">
+                            @csrf
+                            @method('GET')
+                            <div class="text-left">
+                                <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">修改評論</button><br><br>
+                            </div>
+                        </form>
+                    @else
+                        <form action="{{ route('orders.comment', $order_detail->order->id) }}" method="GET">
+                            @csrf
+                            @method('GET')
+                            <div class="text-left">
+                                <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">評論</button><br><br>
+                            </div>
+                        </form>
+                    @endif
                 @elseif($order_detail->order->status != '7' and $order_detail->order->status != '5')
-                    <form action="{{ route('orders.cancel_order', $order_detail->order->id) }}" method="POST">
+                    <form id="cancelForm{{ $order_detail->order->id }}" action="{{ route('orders.cancel_order', $order_detail->order->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="text-left">
-                            <button class="btn btn-outline-dark mx-6 mt-auto" type="submit">取消訂單</button><br><br>
+                            <button class="btn btn-outline-dark mx-6 mt-auto" onclick="confirmCancel('{{ $order_detail->order->id }}')" type="button">取消訂單</button><br><br>
                         </div>
                     </form>
                 @endif
@@ -205,3 +244,47 @@
     </table>
 @endsection
 
+<script>
+    function confirmCancel(orderId) {
+        if (confirm("確定要取消訂單嗎？")) {
+            document.getElementById('cancelForm' + orderId).submit();
+        }
+    }
+</script>
+<script>
+    function previewImage(input) {
+        var preview = document.getElementById('image-preview');
+        var file = input.files[0];
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            preview.src = reader.result;
+            preview.style.display = 'block';
+        }
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+        }
+    }
+</script>
+<style>
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        cursor: pointer;
+        font-size: 1.5em;
+        color: #ddd;
+    }
+
+    .rating input:checked ~ label {
+        color: #ffc107;
+    }
+</style>

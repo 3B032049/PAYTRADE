@@ -51,6 +51,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
+Route::get('/detail', [App\Http\Controllers\IndexController::class, 'detail'])->name('detail');
 Route::get('products/search', [App\Http\Controllers\ProductController::class, 'search'])->name('products.search');
 Route::get('products/{product}/show', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::get('products/by_category/{category_id}/show', [App\Http\Controllers\ProductController::class, 'by_category'])->name('products.by_category');

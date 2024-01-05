@@ -2,6 +2,12 @@
 
 @section('title','最新公告')
 
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> > 最新公告</p>
+    </div>
+@endsection
+
 @section('content')
     <section class="py-5">
         <div class="container">

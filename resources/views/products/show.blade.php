@@ -59,9 +59,7 @@
                         </form>
                     </div>
                 </div>
-<<<<<<< HEAD
             </div>
-        </div>
         <div class="border p-3">
             <div class="d-flex align-items-center">
                 <div class="rounded-circle overflow-hidden" style="width: 150px; height: 150px;">
@@ -78,9 +76,6 @@
                         查看賣場
                     </a>
                 </div>
-                <div class="m-lg-4">
-
-                </div>
             </div>
         </div>
     </div>
@@ -88,42 +83,41 @@
 
 
 <!-- Related items section-->
-<section class="py-5 bg-light">
-    <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="fw-bolder mb-4">相關商品</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            @foreach ($relatedProducts as $relatedProduct)
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <a href="{{ route("products.show",$relatedProduct->id) }}">
-                        <img class="card-img-top" src="{{ asset('storage/products/' . $relatedProduct->image_url) }}" alt="..." style="max-width: 150%; height: 250px" />
-                        </a>
-                            <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">{{ $relatedProduct->name }}</h5>
-                                <!-- Product price-->
-                                ${{ $relatedProduct->price }}
-                            </div>
+{{--<section class="py-5 bg-light">--}}
+{{--    <div class="container px-4 px-lg-5 mt-5">--}}
+{{--        <h2 class="fw-bolder mb-4">相關商品</h2>--}}
+{{--        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">--}}
+{{--            @foreach ($relatedProducts as $relatedProduct)--}}
+{{--                <div class="col mb-5">--}}
+{{--                    <div class="card h-100">--}}
+{{--                        <!-- Product image-->--}}
+{{--                        <a href="{{ route("products.show",$relatedProduct->id) }}">--}}
+{{--                        <img class="card-img-top" src="{{ asset('storage/products/' . $relatedProduct->image_url) }}" alt="..." style="max-width: 150%; height: 250px" />--}}
+{{--                        </a>--}}
+{{--                            <!-- Product details-->--}}
+{{--                        <div class="card-body p-4">--}}
+{{--                            <div class="text-center">--}}
+{{--                                <!-- Product name-->--}}
+{{--                                <h5 class="fw-bolder">{{ $relatedProduct->name }}</h5>--}}
+{{--                                <!-- Product price-->--}}
+{{--                                ${{ $relatedProduct->price }}--}}
+{{--                            </div>--}}
 
-                        </div>
-                        <div class="ml-3">
-                            <span>賣家：{{ $product->seller->user->name }} 賣場</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span>商品數量：{{ $productsCount }} </span><br>
-                            <a href="{{ route("products.by_seller",$product->seller_id) }}">
-                                查看賣場
-                            </a>
-                        </div>
-                        <div class="m-lg-4">
+{{--                        </div>--}}
+{{--                        <div class="ml-3">--}}
+{{--                            <span>賣家：{{ $product->seller->user->name }} 賣場</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--}}
+{{--                            <span>商品數量：{{ $productsCount }} </span><br>--}}
+{{--                            <a href="{{ route("products.by_seller",$product->seller_id) }}">--}}
+{{--                                查看賣場--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
+{{--            </div>--}}
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+{{--        </div>--}}
+{{--    </section>--}}
     <section class="py-5">
         <div class="container">
             {{-- Display the overall title --}}

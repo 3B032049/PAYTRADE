@@ -2,6 +2,16 @@
 
 @section('title', '訂單')
 
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
+            <a href="{{ route('orders.index') }}" class="custom-link">訂購清單</a> >
+            訂單：{{ $order->id }}
+        </p>
+    </div>
+@endsection
+
 @section('content')
     <div class="wrapper">
         <div class="container mt-8">
@@ -184,8 +194,7 @@
             </tr>
             <tr>
                 <td colspan="5">
-                <textarea id="buyer_message" name="buyer_message" class="form-control" rows="10" placeholder="請輸入文章內容" readonly>
-                {{ old('buyer_message', optional($order_detail->order->message)->buyer_message) }}</textarea>
+                <textarea id="buyer_message" name="buyer_message" class="form-control" rows="10" placeholder="請輸入文章內容" readonly>{{ old('buyer_message', optional($order_detail->order->message)->buyer_message) }}</textarea>
                 </td>
             </tr>
         @endif

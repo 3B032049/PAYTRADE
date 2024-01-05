@@ -2,6 +2,17 @@
 
 @section('title', '訂單')
 
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
+            <a href="{{ route('orders.index') }}" class="custom-link">訂購清單</a> >
+            <a href="{{ route('orders.show',$order->id) }}" class="custom-link">訂單：{{ $order->id }}</a> >
+            付款
+        </p>
+    </div>
+@endsection
+
 @section('content')
     <div class="wrapper">
         <div class="container mt-8">

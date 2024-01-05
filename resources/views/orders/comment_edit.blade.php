@@ -2,6 +2,17 @@
 
 @section('title', '訂單')
 
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
+            <a href="{{ route('orders.index') }}" class="custom-link">訂購清單</a> >
+            <a href="{{ route('orders.show',$order->id) }}" class="custom-link">訂單：{{ $order->id }}</a> >
+            編輯評論
+        </p>
+    </div>
+@endsection
+
 @section('content')
     <hr>
     <div class="wrapper">
@@ -37,8 +48,7 @@
                     <div class='form-row row'>
                         <div class='col-xs-12 form-group required'>
                             <label for="buyer_message" class="form-label">輸入評論內容</label>
-                            <textarea id="buyer_message" name="buyer_message" class="form-control" rows="10" placeholder="請輸入文章內容">
-                            {{ old('buyer_message', optional($order->message)->buyer_message) }}</textarea>
+                            <textarea id="buyer_message" name="buyer_message" class="form-control" rows="10" placeholder="請輸入文章內容">{{ old('buyer_message', optional($order->message)->buyer_message) }}</textarea>
                         </div>
                     </div>
                 </td>

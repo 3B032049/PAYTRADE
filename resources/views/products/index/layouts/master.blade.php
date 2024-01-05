@@ -15,6 +15,12 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>賣家賣場</title>
+        <style>
+            .custom-link {
+                color: black; /* 設置字體顏色為黑色 */
+                text-decoration: none; /* 移除下劃線 */
+            }
+        </style>
     </head>
     <body>
         @include('layouts.partials.navigation')

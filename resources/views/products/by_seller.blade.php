@@ -4,7 +4,10 @@
 
 @section('page-path')
     <div>
-        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> > {{ $seller->user->name }}賣場</p>
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
+            {{ $seller->user->name }}賣場
+        </p>
     </div>
 @endsection
 

@@ -1,7 +1,14 @@
 @extends('products.index.layouts.master')
 
 @section('title', '購物車')
-
+@section('page-path')
+    <div>
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
+            購物車
+        </p>
+    </div>
+@endsection
 @section('content')
     <div class="wrapper">
         <div class="container mt-8">
@@ -108,7 +115,7 @@
                 </form>
 
             @else
-                <p class="text-gray-600">購物車內無商品。</p>
+                <div align="center"><p class="text-gray-600">購物車內無商品。</p></div>
             @endif
         </div>
     </div>

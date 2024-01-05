@@ -22,6 +22,7 @@
                     <table border="0">
                         <tr>
                             <td>
+                                @if(count($AllMessages) > 0)
                                 <div class="rating d-flex justify-content-center mb-4">
                                     @php
                                         $count = 0
@@ -34,6 +35,9 @@
                                         <label for="star{{ $i }}"><i class="fas fa-star"></i></label>
                                     @endfor
                                 </div>
+                                @else
+                                    <div align="center"><p>目前無評論</p></div>
+                                @endif
                             </td>
                         </tr>
                     </table><br><br><br><br><br><br><br><br><br><br><br><br>

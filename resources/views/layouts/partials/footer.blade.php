@@ -23,7 +23,7 @@
             <div class="d-flex flex-column justify-content-start">
                 <a class="text-black-50 mb-2" href="{{ route('login') }}">登入</a>
                 <a class="text-black-50 mb-2" href="{{ route('register') }}">註冊</a>
-                <a class="text-black-50 mb-2" href="{{ route('profile.edit') }}">個人資料查詢</a>
+                <a class="text-black-50 mb-2" href="{{ route('users.index') }}">個人資料查詢</a>
 
             </div>
         </div>

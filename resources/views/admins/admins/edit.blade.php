@@ -17,8 +17,16 @@
                 <input id="name" name="name" type="text" class="form-control" value="{{ old('name',$admin->user->name	) }}" placeholder="請輸入帳號">
             </div>
             <div class="form-group">
-                <label for="position" class="form-label">階級</label>
-                <input id="position" name="position" type="text" class="form-control" value="{{ old('position	',$admin->position	) }}" placeholder="請輸入姓名">
+                <label for="position" class="form-label">職級</label>
+                <select id="position" name="position" class="form-control">
+                    <option value=3>一般管理員</option>
+                    @if(Auth::user()->admin->position <= 2)
+                        <option value=2>高階管理員</option>
+                    @endif
+                    @if(Auth::user()->admin->position == 1)
+                        <option value=1>超級管理員</option>
+                    @endif
+                </select>
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">

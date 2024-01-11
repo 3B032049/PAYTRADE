@@ -50,10 +50,10 @@
                             @csrf
                             @method('POST')
                             <span class="quantity-span">
-                        <button class="quantity-minus" type="button">-</button>
-                        <input class="quantity-input" type="text"  name="quantity" value="1" style="max-width: 5rem">
-                        <button class="quantity-plus" type="button">+</button>
-                        </span>
+                                <button class="quantity-minus" data-product-id="{{ $product->id }}" type="button">-</button>
+                                <input class="quantity-input" data-product-id="{{ $product->id }}" type="text" min="1" max="{{ $product->quantity }}" name="quantity" value="1" style="max-width: 5rem" oninput="checkQuantity(this)">
+                                <button class="quantity-plus" data-product-id="{{ $product->id }}" type="button">+</button>
+                            </span>
                             {{--                        <input class="form-control text-center me-3" id="inputQuantity" name="quantity" type="number" value="1" style="max-width: 3rem">--}}
                             <br><br><button class="btn btn-outline-dark flex-shrink-0" type="submit">
                                 加入購物車
@@ -83,44 +83,6 @@
         </div>
     </div>
 </section>
-
-
-<!-- Related items section-->
-{{--<section class="py-5 bg-light">--}}
-{{--    <div class="container px-4 px-lg-5 mt-5">--}}
-{{--        <h2 class="fw-bolder mb-4">相關商品</h2>--}}
-{{--        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">--}}
-{{--            @foreach ($relatedProducts as $relatedProduct)--}}
-{{--                <div class="col mb-5">--}}
-{{--                    <div class="card h-100">--}}
-{{--                        <!-- Product image-->--}}
-{{--                        <a href="{{ route("products.show",$relatedProduct->id) }}">--}}
-{{--                        <img class="card-img-top" src="{{ asset('storage/products/' . $relatedProduct->image_url) }}" alt="..." style="max-width: 150%; height: 250px" />--}}
-{{--                        </a>--}}
-{{--                            <!-- Product details-->--}}
-{{--                        <div class="card-body p-4">--}}
-{{--                            <div class="text-center">--}}
-{{--                                <!-- Product name-->--}}
-{{--                                <h5 class="fw-bolder">{{ $relatedProduct->name }}</h5>--}}
-{{--                                <!-- Product price-->--}}
-{{--                                ${{ $relatedProduct->price }}--}}
-{{--                            </div>--}}
-
-{{--                        </div>--}}
-{{--                        <div class="ml-3">--}}
-{{--                            <span>賣家：{{ $product->seller->user->name }} 賣場</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--}}
-{{--                            <span>商品數量：{{ $productsCount }} </span><br>--}}
-{{--                            <a href="{{ route("products.by_seller",$product->seller_id) }}">--}}
-{{--                                查看賣場--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            @endforeach--}}
-{{--            </div>--}}
-
-{{--        </div>--}}
-{{--    </section>--}}
     <section class="py-5">
         <div class="container">
             {{-- Display the overall title --}}
@@ -197,6 +159,23 @@
     </section>
 
     <script>
+        function checkQuantity(input) {
+            // 獲取輸入框的值
+            let newValue = parseInt(input.value);
+
+            // 獲取庫存範圍
+            let maxInventory = parseInt(input.getAttribute('max'));
+            let minInventory = parseInt(input.getAttribute('min'));
+
+            // 如果輸入值不是一個有效的數字，或者超出庫存範圍，進行相應處理
+            if (isNaN(newValue) || newValue < minInventory || newValue > maxInventory) {
+                // 顯示警告或執行其他處理方式，例如將數量重置為庫存範圍內的值
+                alert('輸入超過庫存數量!');
+                input.value = Math.min(Math.max(newValue, minInventory), maxInventory);
+            }
+        }
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const quantitySpans = document.querySelectorAll('.quantity-span');
 
@@ -204,23 +183,36 @@
                 const quantityInput = span.querySelector('.quantity-input');
                 const minusButton = span.querySelector('.quantity-minus');
                 const plusButton = span.querySelector('.quantity-plus');
+                const productId = quantityInput.getAttribute('data-product-id'); // 獲取商品 ID
 
                 minusButton.addEventListener('click', function(event) {
                     event.preventDefault();
-                    updateQuantity(quantityInput, -1);
+                    updateQuantity(quantityInput, -1, productId);
                 });
 
                 plusButton.addEventListener('click', function(event) {
                     event.preventDefault();
-                    updateQuantity(quantityInput, 1);
+                    updateQuantity(quantityInput, 1, productId);
                 });
             });
 
-            function updateQuantity(input, change) {
+            function updateQuantity(input, change, productId) {
                 let newValue = parseInt(input.value) + change;
+
                 if (newValue < 1) {
                     newValue = 1;
                 }
+
+                // 在這裡你可以使用 productId，執行與商品相關的操作，例如檢查是否超過庫存
+                // 如果你的商品信息需要從後端獲取，你可能需要進行 Ajax 請求來獲取該商品的庫存等信息
+
+                // 檢查是否超過庫存，這裡改成使用 quantity 屬性
+                if (input.getAttribute('max') && newValue > parseInt(input.getAttribute('max'))) {
+                    newValue = parseInt(input.getAttribute('max'));
+                    // 可以顯示提示或採取其他處理方式，例如禁用按鈕
+                    alert('超過庫存數量！');
+                }
+
                 input.value = newValue;
             }
         });

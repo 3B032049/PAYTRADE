@@ -17,9 +17,6 @@
                 <a class="btn btn-success btn-sm" href="{{ route('admins.sellers.index') }}">取消搜尋</a>
             </div>
         @endif
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-success btn-sm" href="{{ route('admins.users.create') }}">新增用戶</a>
-        </div>
         <table class="table">
             <thead>
             <tr>

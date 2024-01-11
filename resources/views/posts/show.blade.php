@@ -6,7 +6,7 @@
     <div>
         <p style="font-size: 1.2em;">
             <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> >
-            <a href="{{ route('posts.index') }}">最新公告</a> >
+            <a href="{{ route('posts.index') }}" class="custom-link">最新公告</a> >
             {{ $post->title }}
         </p>
     </div>

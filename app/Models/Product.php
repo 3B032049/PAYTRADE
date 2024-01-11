@@ -31,12 +31,12 @@ class Product extends Model
 //    }
 
 
-    public function ProductCategory(): BelongsTo
+    public function productCategory(): BelongsTo
     {
         return $this->belongsTo(ProductCategory::class);
     }
 
-    public function CartItem(): HasMany
+    public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
     }
@@ -45,7 +45,7 @@ class Product extends Model
         return $this->belongsTo(Seller::class);
     }
 
-    public function OrderDetails()
+    public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class);
     }

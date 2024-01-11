@@ -61,6 +61,12 @@ class CartItemsController extends Controller
     public function store(StoreCartItemRequest $request, Product $product)
     {
         $user = Auth::user();
+
+        // 判斷使用者是否擁有該商品
+        if ($product->seller->user->id == $user->id) {
+            return back()->with('error', '您不能購買自己的商品！');
+        }
+
         $cartItem = $user->cartItems()->where('product_id', $product->id)->first();
 
         if ($cartItem) {
@@ -76,7 +82,6 @@ class CartItemsController extends Controller
             ]);
         }
 
-//        return redirect()->back()->with('success', '成功加入購物車!');
         return redirect()->route('home');
     }
 
@@ -84,6 +89,12 @@ class CartItemsController extends Controller
     {
 
         $user = Auth::user();
+
+        // 判斷使用者是否擁有該商品
+        if ($product->seller->user->id == $user->id) {
+            return back()->with('error', '您不能購買自己的商品！');
+        }
+
         $cartItem = $user->cartItems()->where('product_id', $product->id)->first();
 
         if ($cartItem) {
@@ -98,6 +109,8 @@ class CartItemsController extends Controller
                 'quantity' => 1,
             ]);
         }
+
+        return redirect()->route('home');
 
 //        return redirect()->back()->with('success', '成功加入購物車!');
         return redirect()->route('home');

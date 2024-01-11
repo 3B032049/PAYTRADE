@@ -115,11 +115,27 @@
                     <div style="color:#002aff; font-weight:bold;">
                         (未成立)
                     </div>
-
                 @endif
-
+            <br>
         </div>
-
+        <div class="form-group">
+            <label class="form-label">訂單明細</label>
+            @foreach($order->orderDetails as $orderDetail)
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <strong>{{ $orderDetail->product->name }}</strong>
+                    </div>
+                    <div class="col-md-3">
+                        <span>數量: {{ $orderDetail->quantity }}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <span>價格: ${{ $orderDetail->product->price }}</span>
+                    </div>
+                </div>
+            @endforeach
+            <label class="form-label">運費：$60</label><br>
+            <label class="form-label">總金額：${{ $order->price }}</label>
+        </div>
     </div>
     <script>
         function previewImage(input) {

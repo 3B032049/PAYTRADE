@@ -3,6 +3,16 @@
 @section('title','商品內容')
 
 @section('page-path')
+    @if (session('error'))
+        <script>
+            alert("{{ session('error') }}");
+        </script>
+    @endif
+    @if (session('success'))
+        <script>
+            alert("{{ session('success') }}");
+        </script>
+    @endif
     <div>
         <p style="font-size: 1.2em;">
             <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;
@@ -59,6 +69,13 @@
                                 加入購物車
                             </button>
                             庫存量：{{ $product->quantity }}
+                        </form>
+                    </div><br>
+                    <div class="d-flex">
+                        <form id="directPurchaseForm" action="{{ route('orders.show_create') }}" method="GET">
+                            @csrf
+                            @method('GET')
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="directPurchase()">直接購買</button>
                         </form>
                     </div>
                 </div>
@@ -255,4 +272,22 @@
             color: #ffc107;
         }
     </style>
+    <script>
+        function directPurchase() {
+            // 收集所需的商品信息
+            const selectedItems = '{{ $product->id }}';  // 這裡使用了商品詳細頁的範例，你可能需要根據實際情況調整
+
+            // 在表單中添加一個隱藏字段，用於傳遞所選商品的信息
+            const selectedItemsInput = document.createElement('input');
+            selectedItemsInput.type = 'hidden';
+            selectedItemsInput.name = 'selected_items';
+            selectedItemsInput.value = selectedItems;
+
+            // 將隱藏字段添加到表單中
+            document.getElementById('directPurchaseForm').appendChild(selectedItemsInput);
+
+            // 提交表單
+            document.getElementById('directPurchaseForm').submit();
+        }
+    </script>
 @endsection

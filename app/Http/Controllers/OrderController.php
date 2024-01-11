@@ -17,12 +17,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-
-        $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
-
+        $perPage = $request->input('perPage', 10);
+        $orders = Order::where('user_id', $user->id)->paginate($perPage);
         $data = ['orders' => $orders];
 
         return view('orders.index',$data);
@@ -43,6 +42,64 @@ class OrderController extends Controller
 
         // 現在，$selectedProducts 將包含所選商品的信息，你可以將它傳遞給結帳視圖
         return view('orders.create', ['selectedCartItems' => $selectedCartItems]);
+    }
+
+    public function show_create(Request $request)
+    {
+        $user = Auth::user();
+        $selectedItems = $request->input('selected_items');
+
+        $selectedCartItems = Product::where('id', $selectedItems)
+            ->first();
+
+        // 判斷使用者是否擁有該商品
+        if ($selectedCartItems->seller->user->id == $user->id) {
+            return back()->with('error', '您不能購買自己的商品！');
+        }
+        return view('orders.show_create', ['selectedCartItems' => $selectedCartItems]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function show_store(StoreOrderRequest $request, Product $product)
+    {
+        // 創建一個新的訂單
+        $order = new Order();
+        $order->user_id = auth()->user()->id;
+        $order->seller_id = 1;
+        $order->status = 0;
+        $order->date = now();
+        $order->pay = 0;
+
+        // 使用 $product 來獲取價格
+        $order->price = $product->price + 60;
+
+        $order->receiver = $request->receiver;
+        $order->receiver_phone = $request->receiver_phone;
+        $order->receiver_address = $request->receiver_address;
+
+        // 儲存訂單
+        $order->save();
+
+        // 創建一個新的訂單明細
+        $orderDetail = new OrderDetail();
+        $orderDetail->order_id = $order->id;
+        $orderDetail->product_id = $product->id; // 使用 $product->id 來獲取商品ID
+        $orderDetail->quantity = 1;
+
+        // 儲存訂單明細
+        $orderDetail->save();
+
+        // 扣除商品庫存
+        $product->decrement('quantity', 1);
+
+        // 檢查庫存是否為 0，如果是，設置商品的 status 為 4
+        if ($product->quantity === 0) {
+            $product->update(['status' => 4]);
+        }
+
+        return redirect()->route('home');
     }
 
     /**
@@ -249,6 +306,25 @@ class OrderController extends Controller
 
         // 重定向到訂單列表頁面
         return redirect()->route('orders.index');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $perPage = $request->input('perPage', 10);
+
+        $orders = Order::whereHas('seller.user', function ($queryBuilder) use ($query) {
+            $queryBuilder->where('name', 'like', "%$query%");
+        })
+            ->orWhereHas('user', function ($queryBuilder) use ($query) {
+                $queryBuilder->where('name', 'like', "%$query%");
+            })
+            ->paginate($perPage);
+
+        return view('orders.index', [
+            'orders' => $orders,
+            'query' => $query,
+        ]);
     }
 
 }

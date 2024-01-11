@@ -3,6 +3,16 @@
 @section('title','二手書拍賣平台')
 
 @section('page-path')
+    @if (session('error'))
+        <script>
+            alert("{{ session('error') }}");
+        </script>
+    @endif
+    @if (session('success'))
+        <script>
+            alert("{{ session('success') }}");
+        </script>
+    @endif
     <div>
         <p style="font-size: 1.2em;">
             <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> &gt;

@@ -4,7 +4,11 @@
 
 @section('page-path')
     <div>
-        <p style="font-size: 1.2em;"><a href="{{ route('home') }}">首頁</a> > <a href="{{ route('posts.index') }}">最新公告</a> > {{ $post->title }}</p>
+        <p style="font-size: 1.2em;">
+            <a href="{{ route('home') }}"><i class="fa fa-home"></i></a> >
+            <a href="{{ route('posts.index') }}">最新公告</a> >
+            {{ $post->title }}
+        </p>
     </div>
 @endsection
 

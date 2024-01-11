@@ -75,13 +75,13 @@ class ProductController extends Controller
         if (Auth::check())
         {
             $user = Auth::user();
-            $cartItems = $user->CartItems;
-            $seller_id = $user->seller->id;
+            $cartItems = $user->cartItems;
+
             $product = Product::where('id',$productId)->first();
 
             $averageScore = Message::getAverageScoreForProduct($product->id);
             $AllMessages = Message::getAllMessagesForProduct($product->id);
-            $productsCount = Product::where('seller_id', $seller_id)->where('status', 3)->count();
+            $productsCount = Product::where('seller_id', $product->seller->id)->where('status', 3)->count();
 
             $relatedProducts = Product::where('product_category_id', $product->product_category_id)
                 ->where('id', '!=', $product->id) // 排除當前產品

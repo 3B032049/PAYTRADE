@@ -17,7 +17,7 @@
             @if ($cartItems->count() > 0)
                 @php
                     $cartItemsBySeller = $cartItems->groupBy('product.seller.id');
-                    $totalAmount = 0;
+//                    $totalAmount = 0;
                 @endphp
 
                 @foreach ($cartItemsBySeller as $sellerId => $items)
@@ -87,22 +87,27 @@
                         @endforeach
                         </tbody>
                     </table>
-                    @php
-                        $totalAmount += $totalAmountBySeller;
-                    @endphp
+{{--                    @php--}}
+{{--                        $totalAmount += $totalAmountBySeller;--}}
+{{--                    @endphp--}}
                 @endforeach
 
                 <hr>
 
-                <div class="text-left">
+                <div class="text-left" id="totalShippingFeeDisplay">
                     <strong>商品總運費：</strong>${{ number_format($totalShippingFee, 0) }}
                 </div>
-                <div class="text-left">
-                    <strong>商品總金額：</strong>${{ number_format($totalAmount, 0) }}
+                <script>
+                    const totalShippingFee = {{ $totalShippingFee }};
+                </script>
+                <div class="text-left" >
+                    <strong>商品總金額：</strong>
+                    <div id="totalAmountWithoutShippingFeeDisplay" style="display: inline;">${{ number_format($totalAmountWithoutShippingFee, 0) }}</div>
                 </div>
                 <br>
-                <div class="text-left" style="height: 80px">
-                    <strong>總金額(含運費)：</strong>${{ number_format($totalAmount + $totalShippingFee, 0) }}
+                <div class="text-left" style="min-height: 80px">
+                    <strong>總金額(含運費)：</strong>
+                    <div id="totalAmountDisplay" style="display: inline;">${{ number_format($totalAmount, 0) }}</div>
                 </div>
 
                 <form action="{{ route('orders.create') }}" method="GET" id="checkoutForm" onsubmit="return prepareCheckout(event)">
@@ -179,22 +184,54 @@
                 });
             });
 
+            // 新增變數用來保存沒有加運費的總金額
+            let totalAmountWithoutShippingFee = {{ $totalAmount }};
+
             function updateTotalAmount() {
+                const checkboxesToUpdate = document.querySelectorAll('input[name="selected_items[]"]');
                 const subtotalElements = document.querySelectorAll('.subtotal');
                 let totalAmount = 0;
-                let totalShippingFee = parseFloat(document.getElementById('totalShippingFee').textContent.replace('$', ''));
+                let totalShippingFee = parseFloat(document.getElementById('totalShippingFeeDisplay').innerText.replace('商品總運費：$', '').replace(/,/g, ''));
 
-                subtotalElements.forEach(subtotalElement => {
-                    const checkbox = subtotalElement.closest('tr').querySelector('input[name="selected_items[]"]');
+                checkboxesToUpdate.forEach((checkbox, index) => {
                     if (checkbox.checked) {
-                        totalAmount += parseFloat(subtotalElement.textContent.replace('$', ''));
+                        const subtotalElement = subtotalElements[index];
+
+                        if (subtotalElement) {
+                            const subtotalTextContent = subtotalElement.textContent;
+                            const subtotalValue = parseFloat(subtotalTextContent.replace(/,/g, '').replace('$', ''));
+
+                            if (!isNaN(subtotalValue)) {
+                                totalAmount += subtotalValue;
+                            } else {
+                                console.error(`Subtotal value at index ${index} is NaN:`, subtotalTextContent);
+                            }
+                        } else {
+                            console.error(`Subtotal element at index ${index} is null or undefined.`);
+                        }
                     }
                 });
 
                 totalAmount += totalShippingFee;
 
-                // Update the total amount element
-                document.getElementById('totalAmount').textContent = `$${totalAmount.toFixed(0)}`;
+                // 更新總金額
+                const totalAmountElement = document.getElementById('totalAmountDisplay');
+                if (totalAmountElement) {
+                    totalAmountElement.textContent = `$${totalAmount.toFixed(0)}`;
+                } else {
+                    console.error('Total Amount Element not found!');
+                }
+
+                // 更新沒有加運費的總金額
+                totalAmountWithoutShippingFee = totalAmount - totalShippingFee;
+
+                // 更新顯示沒有加運費的總金額
+                const totalAmountWithoutShippingFeeElement = document.getElementById('totalAmountWithoutShippingFeeDisplay');
+                if (totalAmountWithoutShippingFeeElement) {
+                    totalAmountWithoutShippingFeeElement.textContent = `$${totalAmountWithoutShippingFee.toFixed(0)}`;
+                } else {
+                    console.error('Total Amount Without Shipping Fee Element not found!');
+                }
             }
         });
     </script>

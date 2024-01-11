@@ -19,6 +19,7 @@
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ route('posts.index') }}">最新公告</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ route('contacts.create') }}">聯絡我們</a></li>
             </ul>
 
             <ul class="navbar-nav">
@@ -74,7 +75,7 @@
                                 <a class="dropdown-item" href="{{ route('sellers.create') }}" style="color:black">{{ __('申請成為賣家') }}</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ route('home') }}" style="color:black">{{ __('訂購清單') }}</a>
+                                <a class="dropdown-item" href="{{ route('orders.index') }}" style="color:black">{{ __('訂購清單') }}</a>
                             </li>
                         @endif
                         @if (Auth::check() && Auth::user()->isAdmin())

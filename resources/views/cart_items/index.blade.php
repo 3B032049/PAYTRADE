@@ -172,9 +172,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const quantitySpans = document.querySelectorAll('.quantity-span');
-            const totalAmountElement = document.getElementById('totalAmount');
-
             const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
@@ -196,7 +193,8 @@
 
                 totalAmount += totalShippingFee;
 
-                totalAmountElement.textContent = `$${totalAmount.toFixed(0)}`;
+                // Update the total amount element
+                document.getElementById('totalAmount').textContent = `$${totalAmount.toFixed(0)}`;
             }
         });
     </script>

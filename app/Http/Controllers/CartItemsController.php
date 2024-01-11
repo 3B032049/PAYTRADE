@@ -82,7 +82,7 @@ class CartItemsController extends Controller
             ]);
         }
 
-        return redirect()->route('home');
+        return redirect()->back()->with('success', '成功加入購物車!');
     }
 
     public function addToCart(Product $product)
@@ -110,10 +110,7 @@ class CartItemsController extends Controller
             ]);
         }
 
-        return redirect()->route('home');
-
-//        return redirect()->back()->with('success', '成功加入購物車!');
-        return redirect()->route('home');
+        return redirect()->back()->with('success', '成功加入購物車!');
     }
 
     public function quantity_minus(CartItem $cartItem)

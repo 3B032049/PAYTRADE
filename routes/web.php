@@ -104,6 +104,8 @@ Route::group(['middleware' => 'user'], function () {
 
     Route::get('orders/{order}/payment', [App\Http\Controllers\OrderController::class, 'payment'])->name("orders.payment");
     Route::patch('orders/{order}/update_pay', [App\Http\Controllers\OrderController::class, 'update_pay'])->name("orders.update_pay");
+    Route::get('orders/show_create', [App\Http\Controllers\OrderController::class, 'show_create'])->name("orders.show_create");
+    Route::post('orders/show_store/{product}', [App\Http\Controllers\OrderController::class, 'show_store'])->name("orders.show_store");
     Route::patch('orders/{order}/cancel_order', [App\Http\Controllers\OrderController::class, 'cancel_order'])->name("orders.cancel_order");
     Route::patch('orders/{order}/complete_order', [App\Http\Controllers\OrderController::class, 'complete_order'])->name("orders.complete_order");
     Route::get('orders/filter', [App\Http\Controllers\OrderController::class, 'filter'])->name('orders.filter');

@@ -14,8 +14,13 @@ class IndexController extends BaseController
 {
     public function index(Request $request)
     {
+        $perPage = $request->input('perPage', 12);
 
-        $products = Product::orderBy('id', 'DESC')->where('status', 3)->get();
+        // 只獲取庫存不為0的商品
+        $products = Product::where('status', 3)
+            ->where('quantity', '>', 0)
+            ->orderBy('id', 'DESC')
+            ->paginate($perPage);
 
         $buyingRatings = [];
         $buyerMessages = [];
@@ -31,9 +36,6 @@ class IndexController extends BaseController
             }
         }
 
-        $perPage = $request->input('perPage', 12);
-        $products = Product::orderBy('id','DESC')->where('status',3)->paginate($perPage);
-
         $data = [
             'products' => $products,
             'buyingRatings' => $buyingRatings,
@@ -42,6 +44,7 @@ class IndexController extends BaseController
 
         return view('index', $data);
     }
+
     public function detail()
     {
         $products = Product::orderby('id','ASC')->where('status',3)->get();

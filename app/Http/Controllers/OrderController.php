@@ -17,12 +17,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-
-        $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
-
+        $perPage = $request->input('perPage', 10);
+        $orders = Order::where('user_id', $user->id)->paginate($perPage);
         $data = ['orders' => $orders];
 
         return view('orders.index',$data);
@@ -307,6 +306,25 @@ class OrderController extends Controller
 
         // 重定向到訂單列表頁面
         return redirect()->route('orders.index');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $perPage = $request->input('perPage', 10);
+
+        $orders = Order::whereHas('seller.user', function ($queryBuilder) use ($query) {
+            $queryBuilder->where('name', 'like', "%$query%");
+        })
+            ->orWhereHas('user', function ($queryBuilder) use ($query) {
+                $queryBuilder->where('name', 'like', "%$query%");
+            })
+            ->paginate($perPage);
+
+        return view('orders.index', [
+            'orders' => $orders,
+            'query' => $query,
+        ]);
     }
 
 }
